@@ -1,8 +1,12 @@
+import { Route } from 'react-router-dom';
+import GlobalStyle from './GlobalStyle';
+import Register from './pages/Register';
 
 function App() {
   return (
     <>
-     <div>첫 페이지</div>
+      <GlobalStyle />
+      <Register />
     </>
   );
 }
