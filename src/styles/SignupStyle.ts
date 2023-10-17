@@ -145,7 +145,7 @@ export const SignupBottombox = styled.div`
         text-decoration-line: underline;
       }
 
-      & > button {
+      /* & > button {
         width: 97px;
         height: 43px;
         border-radius: 7px;
@@ -158,7 +158,10 @@ export const SignupBottombox = styled.div`
         font-style: normal;
         font-weight: 600;
         line-height: normal;
-      }
+      } */
+    }
+    .btn {
+      width: 97px;
     }
   }
 `;

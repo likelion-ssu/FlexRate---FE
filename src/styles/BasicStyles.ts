@@ -22,3 +22,31 @@ export const BasicInput = styled.input`
     border-color: transparent;
   }
 `;
+
+/** 버튼 스타일링 컴포넌트*/
+interface ButtonProps {
+  width?: string;
+  height?: string;
+}
+
+export const Button = styled.button<ButtonProps>`
+  width: ${(props) => props.width || '100%'};
+  height: ${(props) => props.height || '43px'};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 7px;
+  border: none;
+  background: var(--Primary, #63c393);
+
+  color: var(--White, #fff);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
