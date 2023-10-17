@@ -1,5 +1,5 @@
 import RadioThree from '@/components/RadioThree';
-import { BasicInput } from '@/styles/BasicStyles';
+import { BasicInput, Button } from '@/styles/BasicStyles';
 import styled from 'styled-components';
 
 const Article = styled.article`
@@ -123,6 +123,10 @@ const ApplicationSec = styled.section`
 
     li {
       width: 100%;
+
+      & > BUtton {
+        margin-top: 35px;
+      }
     }
 
     & > label {
@@ -158,29 +162,6 @@ const ApplicationSec = styled.section`
       flex-direction: column;
       gap: 9px;
     }
-  }
-`;
-
-const Button = styled.button`
-  margin-top: 35px;
-  display: flex;
-  width: 100%;
-  height: 55px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 7px;
-  border: none;
-  background: var(--Primary, #63c393);
-
-  color: var(--White, #fff);
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-
-  &:hover {
-    cursor: pointer;
   }
 `;
 
@@ -255,7 +236,7 @@ const LoanQualification = () => {
             />
           </li>
           <li>
-            <Button>대출 신청하기</Button>
+            <Button height="55px">대출 신청하기</Button>
           </li>
         </ul>
       </ApplicationSec>
