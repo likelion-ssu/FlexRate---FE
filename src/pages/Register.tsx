@@ -2,11 +2,11 @@ import RadioTwo from '@/components/RadioTwo';
 import SearchAddress from '@/components/SearchAddress';
 import {
   Wrapper,
-  BasicInput,
   SignupBox,
   SignupInfobox,
   SignupBottombox,
 } from '@/styles/SignupStyle';
+import { BasicInput } from '@/styles/BasicStyles';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { styled } from 'styled-components';

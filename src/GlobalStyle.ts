@@ -5,6 +5,7 @@ import PretendardBold from './assets/fonts/Pretendard-Bold.woff2';
 import PretendardExtraBold from './assets/fonts/Pretendard-ExtraBold.woff2';
 
 const GlobalStyle = createGlobalStyle`
+
     @font-face {
         font-family: 'Pretendard';
         font-weight: 200;
