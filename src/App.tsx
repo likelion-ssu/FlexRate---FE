@@ -4,9 +4,17 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import MainHeader from './components/MainHeader';
 import Main from './pages/Main';
+import LoanQualification from './pages/LoanQualification';
 
 const Body = styled.div`
-  padding-top: 64px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 64px;
+  margin-bottom: 10rem;
+  box-sizing: border-box;
 `;
 
 function App() {
@@ -20,6 +28,7 @@ function App() {
             <Route path="/main" element={<Main />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Register />} />
+            <Route path="/Qualification" element={<LoanQualification />} />
           </Routes>
         </Body>
       </BrowserRouter>

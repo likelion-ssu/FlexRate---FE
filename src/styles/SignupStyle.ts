@@ -1,12 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 230px;
+  margin-top: 166px;
 `;
 
 export const SignupBox = styled.div`
@@ -150,7 +145,7 @@ export const SignupBottombox = styled.div`
         text-decoration-line: underline;
       }
 
-      & > button {
+      /* & > button {
         width: 97px;
         height: 43px;
         border-radius: 7px;
@@ -163,21 +158,10 @@ export const SignupBottombox = styled.div`
         font-style: normal;
         font-weight: 600;
         line-height: normal;
-      }
+      } */
     }
-  }
-`;
-
-export const BasicInput = styled.input`
-  width: 568px;
-  height: 55px;
-  border-radius: 7px;
-  border: 1.5px solid var(--Gray3, #d9d9d9);
-
-  padding: 0px 28px;
-
-  &:focus {
-    outline: 1.5px solid var(--Primary, #63c393);
-    border: none;
+    .btn {
+      width: 97px;
+    }
   }
 `;

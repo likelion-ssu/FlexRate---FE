@@ -2,11 +2,11 @@ import RadioTwo from '@/components/RadioTwo';
 import SearchAddress from '@/components/SearchAddress';
 import {
   Wrapper,
-  BasicInput,
   SignupBox,
   SignupInfobox,
   SignupBottombox,
 } from '@/styles/SignupStyle';
+import { BasicInput, Button } from '@/styles/BasicStyles';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { styled } from 'styled-components';
@@ -240,8 +240,8 @@ const Register = () => {
               <p>이미 계정이 있다면?</p>
               <h4>로그인</h4>
             </span>
-            <span>
-              <button>회원가입</button>
+            <span className="btn">
+              <Button>회원가입</Button>
             </span>
           </div>
         </SignupBottombox>
