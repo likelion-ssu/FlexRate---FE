@@ -1,10 +1,13 @@
-import AreaChart from '../components/AreaChart';
+
+import SemiCircleCharts from '@/components/SemiCircleChart';
 
 const Main = () => {
+  const tmp = 67;
   return (
     <div>
-      main page
-      <AreaChart></AreaChart>
+      <div>main page</div>
+      <SemiCircleCharts num={tmp} />
+
     </div>
   );
 };
