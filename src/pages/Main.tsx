@@ -1,3 +1,4 @@
+
 import SemiCircleCharts from '@/components/SemiCircleChart';
 
 const Main = () => {
@@ -6,6 +7,7 @@ const Main = () => {
     <div>
       <div>main page</div>
       <SemiCircleCharts num={tmp} />
+
     </div>
   );
 };
