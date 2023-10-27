@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/Logos/flexrateLogo.png';
 
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
   border-bottom: 1px solid #d9d9d9;
   padding: 13px 37px 14px 22px;
   background-color: white;
@@ -12,6 +15,12 @@ const Header = styled.header`
   left: 0;
   right: 0;
   z-index: 2;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 const Logo = styled.button`
   background-color: #fff;
@@ -21,6 +30,10 @@ const Logo = styled.button`
 
   width: 199px;
   margin-right: 30px;
+
+  & > img {
+    height: 2rem;
+  }
 `;
 const Button = styled.button`
   background-color: white;
@@ -53,7 +66,9 @@ const MainHeader = () => {
   return (
     <Header>
       <div>
-        <Logo>로고</Logo>
+        <Logo>
+          <img src={logo} alt="로고" />
+        </Logo>
         <Button onClick={() => navigate('/main')}>메인</Button>
         <Button>금융 대시보드</Button>
       </div>

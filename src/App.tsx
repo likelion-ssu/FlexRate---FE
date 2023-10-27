@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import MainHeader from './components/MainHeader';
 import Main from './pages/Main';
 import LoanQualification from './pages/LoanQualification';
+import Dashboard from './pages/Dashboard';
 
 const Body = styled.div`
   width: 100%;
@@ -29,6 +30,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Register />} />
             <Route path="/Qualification" element={<LoanQualification />} />
+            <Route path="dashboard" element={<Dashboard />} />
           </Routes>
         </Body>
       </BrowserRouter>
