@@ -12,6 +12,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { styled } from 'styled-components';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import flexrateLogo from '../assets/Logos/flexrateLogo.png';
 
 const SelectDate = styled(DatePicker)`
   width: 568px;
@@ -26,13 +27,22 @@ const SelectDate = styled(DatePicker)`
   }
 `;
 
+const Logo = styled.img`
+  width: 222px;
+  height: 64px;
+  font-size: 40px;
+  margin-right: 350px;
+  margin-bottom: 40px;
+`;
+
 const Register = () => {
   const [startDate, setStartDate] = useState(new Date());
 
   return (
     <Wrapper>
       <SignupBox>
-        <div className="logo">로고</div>
+        {/* <div className="logo">로고</div> */}
+        <Logo src={flexrateLogo} alt="flexrateLogo" />
         <p>회원가입</p>
         <SignupInfobox>
           <ul>

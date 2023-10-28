@@ -5,7 +5,6 @@ const Main = () => {
   const tmp = 37;
   return (
     <div>
-      <div>main page</div>
       <SemiCircleCharts num={tmp} />
       <AreaChart />
     </div>

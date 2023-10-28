@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import visible from '../assets/imgs/visible.png';
+import flexrateLogo from '../assets/Logos/flexrateLogo.png';
 
 const Container = styled.div`
   display: flex;
@@ -15,11 +16,11 @@ const LoginBox = styled.form`
   align-items: center;
   width: 568px;
 `;
-const Logo = styled.div`
+const Logo = styled.img`
   width: 222px;
   height: 64px;
   font-size: 40px;
-  margin-right: 300px;
+  margin-right: 350px;
 `;
 const LoginText = styled.div`
   width: 100%;
@@ -132,7 +133,7 @@ const Login = () => {
   return (
     <Container>
       <LoginBox onSubmit={handleSubmit}>
-        <Logo>로고</Logo>
+        <Logo src={flexrateLogo}></Logo>
         <LoginText>로그인</LoginText>
         <Content>아이디</Content>
         <Input
