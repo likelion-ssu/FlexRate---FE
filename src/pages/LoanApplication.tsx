@@ -182,8 +182,8 @@ const LoanApplication = () => {
           <p>개인회생자 여부</p>
         </div>
         <div>
-          <RadioTwo prop1="예" prop2="아니오" commonname="" />
-          <RadioTwo prop1="예" prop2="아니오" commonname="" />
+          <RadioTwo prop1="예" prop2="아니오" commonname="y/n" />
+          <RadioTwo prop1="예" prop2="아니오" commonname="y/n" />
         </div>
       </Credit>
 
