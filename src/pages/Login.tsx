@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import visible from '../assets/imgs/visible.png';
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 90px;
+  width: 568px;
 `;
-const LoginBox = styled.div`
+const LoginBox = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,10 +38,36 @@ const Content = styled.div`
   margin: 40px 0px 9px 0px;
 `;
 const Input = styled.input`
+  width: 95%;
+  height: 55px;
+  border-radius: 7px;
+  border: 1.5px solid #d9d9d9;
+  ${({ invalid }) => invalid && 'border-color: red;'}
+  padding-left: 25px;
+`;
+const PasswordBox = styled.div`
+  position: relative;
   width: 100%;
   height: 55px;
   border-radius: 7px;
   border: 1.5px solid #d9d9d9;
+  ${({ invalid }) => invalid && 'border-color: red;'}
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+`;
+const PasswordInput = styled.input`
+  border: none;
+  width: 90%;
+  height: 90%;
+  padding-left: 25px;
+`;
+const ImgButton = styled.button`
+  border: none;
+  background-color: white;
+  margin-right: 10px;
 `;
 const Wrapper = styled.div`
   width: 100%;
@@ -75,22 +105,65 @@ const LoginButton = styled.button`
 const Login = () => {
   const navigate = useNavigate();
 
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [loginFailed, setLoginFailed] = useState(false);
+
+  const handleUsernameChange = (e: any) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e: any) => {
+    setPassword(e.target.value);
+  };
+
+  const handleTogglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    //로그인 api 호출
+
+    setLoginFailed(true); //로그인 실패시
+  };
+
   return (
     <Container>
-      <LoginBox>
+      <LoginBox onSubmit={handleSubmit}>
         <Logo>로고</Logo>
         <LoginText>로그인</LoginText>
         <Content>아이디</Content>
-        <Input></Input>
+        <Input
+          type="text"
+          id="username"
+          value={username}
+          onChange={handleUsernameChange}
+          invalid={loginFailed}
+        ></Input>
         <Content>비밀번호</Content>
-        <Input></Input>
+
+        <PasswordBox>
+          <PasswordInput
+            type={passwordVisible ? 'text' : 'password'}
+            id="password"
+            value={password}
+            onChange={handlePasswordChange}
+            invalid={loginFailed}
+          ></PasswordInput>
+          <ImgButton type="button" onClick={handleTogglePasswordVisibility}>
+            <img src={visible} alt="" />
+          </ImgButton>
+        </PasswordBox>
+
         <Wrapper>
           <LeftButtonWrapper>
             <Button onClick={() => navigate('/signup')}>회원가입</Button>
             <div>|</div>
             <Button>비밀번호 찾기</Button>
           </LeftButtonWrapper>
-          <LoginButton>로그인</LoginButton>
+          <LoginButton type="submit">로그인</LoginButton>
         </Wrapper>
       </LoginBox>
     </Container>

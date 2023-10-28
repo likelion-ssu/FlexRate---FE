@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import MainHeader from './components/MainHeader';
 import Main from './pages/Main';
 import LoanQualification from './pages/LoanQualification';
+import LoanApplication from './pages/LoanApplication';
 import Dashboard from './pages/Dashboard';
 
 const Body = styled.div`
@@ -30,6 +31,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Register />} />
             <Route path="/Qualification" element={<LoanQualification />} />
+            <Route path="/LoanApplication" element={<LoanApplication />} />
             <Route path="dashboard" element={<Dashboard />} />
           </Routes>
         </Body>
