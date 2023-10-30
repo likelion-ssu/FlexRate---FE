@@ -92,7 +92,7 @@ const CreditInput = styled(HalfInput)`
 
 const LoanApplication = () => {
   const [stage, setStage] = useState(1);
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   //dropdown
   const [selectedJob, setSelectedJob] = useState('');
@@ -137,14 +137,14 @@ const LoanApplication = () => {
         onChange={handleEmploymentChange}
       />
 
-      {/* 월까지만 받도록 수정 */}
       <p>입사년월</p>
       <SelectDate
-        selected={startDate}
-        onChange={(date: Date) => setStartDate(date)}
-        dateFormat="yyyy-MM-dd"
+        selected={selectedDate}
+        onChange={(date: Date) => setSelectedDate(date)}
+        dateFormat="yyyy년 MM월"
         popperPlacement="bottom"
         showPopperArrow={false}
+        showMonthYearPicker
       />
 
       <p>학력</p>
