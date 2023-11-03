@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import visible from '../assets/imgs/visible.png';
 import flexrateLogo from '../assets/Logos/flexrateLogo.png';
+import { BasicInput } from '@/styles/BasicStyles';
 
 const Container = styled.div`
   display: flex;
@@ -15,6 +16,16 @@ const LoginBox = styled.form`
   flex-direction: column;
   align-items: center;
   width: 568px;
+  & > p {
+    color: #ef4a3e;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: left;
+    width: 100%;
+  }
 `;
 const Logo = styled.img`
   width: 222px;
@@ -38,37 +49,22 @@ const Content = styled.div`
   text-align: left;
   margin: 40px 0px 9px 0px;
 `;
-const Input = styled.input`
-  width: 95%;
-  height: 55px;
-  border-radius: 7px;
-  border: 1.5px solid #d9d9d9;
+const Input = styled(BasicInput)`
   ${({ invalid }) => invalid && 'border-color: red;'}
-  padding-left: 25px;
+  width: 90%;
+  z-index: 1;
 `;
-const PasswordBox = styled.div`
+const PwBox = styled.div`
   position: relative;
   width: 100%;
-  height: 55px;
-  border-radius: 7px;
-  border: 1.5px solid #d9d9d9;
-  ${({ invalid }) => invalid && 'border-color: red;'}
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-`;
-const PasswordInput = styled.input`
-  border: none;
-  width: 90%;
-  height: 90%;
-  padding-left: 25px;
 `;
 const ImgButton = styled.button`
   border: none;
   background-color: white;
-  margin-right: 10px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 2; /* 버튼은 input 위에 나타나도록 설정 */
 `;
 const Wrapper = styled.div`
   width: 100%;
@@ -109,7 +105,8 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [loginFailed, setLoginFailed] = useState(false);
+  const [IdFailed, setIdFailed] = useState(false);
+  const [PwFailed, setPwFailed] = useState(false);
 
   const handleUsernameChange = (e: any) => {
     setUsername(e.target.value);
@@ -127,7 +124,8 @@ const Login = () => {
     e.preventDefault();
     //로그인 api 호출
 
-    setLoginFailed(true); //로그인 실패시
+    setIdFailed(true);
+    setPwFailed(true);
   };
 
   return (
@@ -141,22 +139,24 @@ const Login = () => {
           id="username"
           value={username}
           onChange={handleUsernameChange}
-          invalid={loginFailed}
+          invalid={IdFailed}
         ></Input>
-        <Content>비밀번호</Content>
+        {IdFailed && <p>아이디가 틀렸습니다. 다시 한 번 입력해 주세요.</p>}
 
-        <PasswordBox>
-          <PasswordInput
+        <Content>비밀번호</Content>
+        <PwBox>
+          <Input
             type={passwordVisible ? 'text' : 'password'}
             id="password"
             value={password}
             onChange={handlePasswordChange}
-            invalid={loginFailed}
-          ></PasswordInput>
+            invalid={PwFailed}
+          ></Input>
           <ImgButton type="button" onClick={handleTogglePasswordVisibility}>
             <img src={visible} alt="" />
           </ImgButton>
-        </PasswordBox>
+        </PwBox>
+        {PwFailed && <p>비밀번호가 틀렸습니다. 다시 한 번 입력해 주세요.</p>}
 
         <Wrapper>
           <LeftButtonWrapper>
