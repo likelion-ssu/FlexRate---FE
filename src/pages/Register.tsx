@@ -16,6 +16,9 @@ import flexrateLogo from '../assets/Logos/flexrateLogo.png';
 import visible from '../assets/imgs/visible.png';
 import Password from '@/components/RegisterComs/Password';
 
+import { useRecoilState } from 'recoil';
+import { registerInfo } from '../state/register';
+
 interface RegisterValue {
   user_id: string;
   pwd: string;
@@ -28,16 +31,7 @@ interface RegisterValue {
 }
 
 const Register = () => {
-  const [registerValue, setRegisterValue] = useState<RegisterValue>({
-    user_id: '',
-    pwd: '',
-    nickname: '',
-    birth_year: new Date(),
-    gender: false, // 초기값을 적절하게 설정합니다 (예: 성별을 boolean으로 처리한다면 false가 기본값일 수 있습니다)
-    phone_num: '',
-    email: '',
-    address: '',
-  });
+  const [registerValue, setRegisterValue] = useRecoilState(registerInfo);
 
   return (
     <Wrapper>
