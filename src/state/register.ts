@@ -8,6 +8,7 @@ export const registerInfo = atom({
     nickname: '',
     birth_year: new Date(),
     gender: false,
+    nation: false,
     phone_num: '',
     email: '',
     address: '',

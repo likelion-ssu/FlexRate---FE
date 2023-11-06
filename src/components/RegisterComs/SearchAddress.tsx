@@ -4,6 +4,45 @@ import { styled } from 'styled-components';
 
 //상태관리
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .invisible {
+    position: absolute;
+    right: 23px;
+    top: 46px;
+  }
+
+  .areamodal {
+    position: absolute;
+    z-index: 1;
+  }
+
+  input {
+    width: 568px;
+    height: 55px;
+    border-radius: 7px;
+    border: 1.5px solid var(--Gray3, #d9d9d9);
+    padding: 0px 28px;
+
+    &:focus {
+      outline: 1.5px solid var(--Primary, #63c393);
+      border: none;
+    }
+  }
+
+  .input::-webkit-input-placeholder {
+    color: var(--Gray6, #8c8c8c);
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+`;
+
 const RegisterStoreAddress = () => {
   const [modal, setmodal] = useState(false); //모달띄울지 말지
   //주소 state
@@ -31,45 +70,6 @@ const RegisterStoreAddress = () => {
     // setAddress(fullAddress);
     setmodal(false);
   };
-
-  const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    .invisible {
-      position: absolute;
-      right: 23px;
-      top: 46px;
-    }
-
-    .areamodal {
-      position: absolute;
-      z-index: 1;
-    }
-
-    input {
-      width: 568px;
-      height: 55px;
-      border-radius: 7px;
-      border: 1.5px solid var(--Gray3, #d9d9d9);
-      padding: 0px 28px;
-
-      &:focus {
-        outline: 1.5px solid var(--Primary, #63c393);
-        border: none;
-      }
-    }
-
-    .input::-webkit-input-placeholder {
-      color: var(--Gray6, #8c8c8c);
-      font-family: Pretendard;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: normal;
-    }
-  `;
 
   return (
     <Wrapper>

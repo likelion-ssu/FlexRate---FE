@@ -70,6 +70,14 @@ export const SignupInfobox = styled.div`
         cursor: pointer;
       }
 
+      .notequal {
+        position: absolute;
+        bottom: -25px;
+        font-size: 16px;
+        margin: 0px;
+        color: #ef4a3e;
+      }
+
       & > label {
         color: #262626;
         font-family: Pretendard;

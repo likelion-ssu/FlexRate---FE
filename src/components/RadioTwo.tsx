@@ -4,9 +4,10 @@ interface radiotwoprops {
   prop1: string;
   prop2: string;
   commonname: string;
+  onRadioChange: (value: React.ChangeEvent<HTMLInputElement>) => void; //부모에 선택된 input 태그를 event 째로 넘겨줌
 }
 
-export const Wrapper = styled.div`
+const Form = styled.form`
   display: flex;
   gap: 10px;
   & > label {
@@ -42,18 +43,33 @@ export const Wrapper = styled.div`
 `;
 
 const RadioTwo = (props: radiotwoprops) => {
-  const { prop1, prop2, commonname } = props;
+  const { prop1, prop2, commonname, onRadioChange } = props;
+
+  // 라디오 버튼의 변경을 핸들링하는 함수
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onRadioChange(event);
+  };
   return (
-    <Wrapper>
+    <Form>
       <label>
-        <input type="radio" name={commonname}></input>
+        <input
+          type="radio"
+          name={commonname}
+          value="false" //0
+          onChange={handleChange}
+        />
         <span>{prop1}</span>
       </label>
       <label>
-        <input type="radio" name={commonname}></input>
+        <input
+          type="radio"
+          name={commonname}
+          value="true" //1
+          onChange={handleChange}
+        ></input>
         <span>{prop2}</span>
       </label>
-    </Wrapper>
+    </Form>
   );
 };
 

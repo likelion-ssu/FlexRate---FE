@@ -2,10 +2,12 @@ import styled from 'styled-components';
 import { BasicInput } from '@/styles/BasicStyles';
 import visible from '../../assets/imgs/visible.png';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { registerInfo } from '../../state/register';
 
 const Password = () => {
-  const [password, setPassword] = useState('');
+  const [registerValue, setRegisterValue] = useRecoilState(registerInfo);
   const [pwisvisible, setPwisvisible] = useState(false);
   const [passwordValidations, setPasswordValidations] = useState({
     isLongEnough: false,
@@ -27,7 +29,10 @@ const Password = () => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
+    setRegisterValue({
+      ...registerValue,
+      pwd: event.target.value,
+    });
     validatePassword(event.target.value);
   };
 
@@ -40,7 +45,7 @@ const Password = () => {
       <BasicInput
         type={pwisvisible ? 'text' : 'password'}
         onChange={handleChange}
-        value={password}
+        value={registerValue.pwd}
       ></BasicInput>
       <img className="invisible" src={visible} alt="가리기" onClick={showPwd} />
       <ValidationText
