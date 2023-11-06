@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 
 //상태관리
 
@@ -46,8 +46,8 @@ const Wrapper = styled.div`
 const RegisterStoreAddress = () => {
   const [modal, setmodal] = useState(false); //모달띄울지 말지
   //주소 state
-  // const [address,setAddress]=useRecoilState(storeAddress);
-  // const [detailAddress,setDetailAddress]=useRecoilState(storeDetailAddress);
+  const [address, setAddress] = useState('');
+  const [detailAddress, setDetailAddress] = useState('');
   //상세주소검색
   const handleComplete = (data) => {
     let fullAddress = data.address; //기본 주소
@@ -67,7 +67,7 @@ const RegisterStoreAddress = () => {
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
 
-    // setAddress(fullAddress);
+    setAddress(fullAddress);
     setmodal(false);
   };
 
@@ -88,6 +88,7 @@ const RegisterStoreAddress = () => {
           e.preventDefault();
           setmodal(true);
         }}
+        defaultValue={address}
       />
       <svg
         className="invisible"
@@ -107,7 +108,8 @@ const RegisterStoreAddress = () => {
       <input
         type="text"
         placeholder="상세 주소"
-        // defaultValue={address}
+        value={detailAddress}
+        onChange={(e) => setDetailAddress(e.target.value)}
       />
     </Wrapper>
   );

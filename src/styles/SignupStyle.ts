@@ -131,7 +131,7 @@ export const SignupBottombox = styled.div`
         font-weight: 500;
         line-height: normal;
       }
-      & > h4 {
+      & > Link {
         //나중에 Link로 바꿔줄거임
         color: var(--Primary, #63c393);
         font-family: Pretendard;

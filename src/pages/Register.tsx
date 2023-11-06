@@ -64,6 +64,10 @@ const Register = () => {
     console.log(registerValue);
   }, [registerValue]);
 
+  const submitRegister = () => {
+    //서버통신
+  };
+
   return (
     <Wrapper>
       <SignupBox>
@@ -73,9 +77,10 @@ const Register = () => {
         <SignupInfobox>
           <ul>
             <li>
-              <label>아이디</label>
+              <label htmlFor="user_id">아이디</label>
               <BasicInput
                 type="text"
+                id="user_id"
                 name="user_id"
                 value={registerValue.user_id}
                 onChange={handleinput}
@@ -255,10 +260,10 @@ const Register = () => {
           <div>
             <span>
               <p>이미 계정이 있다면?</p>
-              <h4>로그인</h4>
+              <Link to="/login">로그인</Link>
             </span>
             <span className="btn">
-              <Button>회원가입</Button>
+              <Button onClick={submitRegister}>회원가입</Button>
             </span>
           </div>
         </SignupBottombox>
