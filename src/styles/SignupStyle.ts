@@ -67,6 +67,7 @@ export const SignupInfobox = styled.div`
         position: absolute;
         right: 23px;
         top: 46px;
+        cursor: pointer;
       }
 
       & > label {
@@ -76,18 +77,6 @@ export const SignupInfobox = styled.div`
         font-style: normal;
         font-weight: 500;
         line-height: normal;
-      }
-
-      & > .pwCheck {
-        color: var(--Gray6, #909090);
-        font-family: Pretendard;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 300;
-        line-height: normal;
-
-        display: flex;
-        justify-content: center;
       }
     }
   }
