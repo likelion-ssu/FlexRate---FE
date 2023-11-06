@@ -7,6 +7,7 @@ import Main from './pages/Main';
 import LoanQualification from './pages/LoanQualification';
 import LoanApplication from './pages/LoanApplication';
 import Dashboard from './pages/Dashboard';
+import LoanAgree from './pages/LoanAgree';
 
 const Body = styled.div`
   width: 100%;
@@ -31,6 +32,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Register />} />
             <Route path="/Qualification" element={<LoanQualification />} />
+            <Route path="/Agree" element={<LoanAgree />} />
             <Route path="/LoanApplication" element={<LoanApplication />} />
             <Route path="dashboard" element={<Dashboard />} />
           </Routes>
