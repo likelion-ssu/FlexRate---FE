@@ -1,7 +1,7 @@
 import RadioThree from '@/components/RadioThree';
 import RadioTwo from '@/components/RadioTwo';
 import { BasicInput, Button } from '@/styles/BasicStyles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Dropdown from '@/components/Dropdown';
 import DatePicker from 'react-datepicker';
@@ -93,6 +93,8 @@ const CreditInput = styled(HalfInput)`
 const LoanApplication = () => {
   const [stage, setStage] = useState(1);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [personalRecovery, setPersonalRecovery] = useState('');
+  const [recoveryPayment, setRecoveryPayment] = useState('');
 
   //dropdown
   const [selectedJob, setSelectedJob] = useState('');
@@ -115,6 +117,13 @@ const LoanApplication = () => {
   };
   const handlePurposeChange = (value: string) => {
     setSelectedPurpose(value);
+  };
+
+  const personalRecoveryChange = (value: string) => {
+    setPersonalRecovery(value);
+  };
+  const recoveryPaymentChange = (value: string) => {
+    setRecoveryPayment(value);
   };
 
   return (
@@ -179,11 +188,22 @@ const LoanApplication = () => {
         />
         <div>
           <p>개인회생자 여부</p>
-          <p>개인회생자 여부</p>
+          <p>개인회생 납부 여부</p>
         </div>
         <div>
-          <RadioTwo prop1="예" prop2="아니오" commonname="y/n" />
-          <RadioTwo prop1="예" prop2="아니오" commonname="y/n" />
+          <RadioTwo
+            prop1="예"
+            prop2="아니오"
+            commonname="personalRecovery"
+            onChange={personalRecoveryChange}
+          />
+          <RadioTwo
+            prop1="예"
+            prop2="아니오"
+            commonname="recoveryPayment"
+            onChange={recoveryPaymentChange}
+            disabled={personalRecovery !== '예'}
+          />
         </div>
       </Credit>
 

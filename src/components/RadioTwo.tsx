@@ -1,9 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface radiotwoprops {
   prop1: string;
   prop2: string;
   commonname: string;
+  onChange?: (selectedValue: string) => void;
+  disabled?: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -39,18 +41,44 @@ export const Wrapper = styled.div`
       color: var(--Primary_Pressed_1, #4d9a75);
     }
   }
+
+  //아래에서 회색처리하는게 안되서 일단 전체에 적용함
+  ${({ disable }) =>
+    disable &&
+    css`
+      background-color: #f1f1f1;
+      color: #bfbfbf;
+    `}
 `;
 
 const RadioTwo = (props: radiotwoprops) => {
-  const { prop1, prop2, commonname } = props;
+  const { prop1, prop2, commonname, onChange, disabled = false } = props;
+
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedValue = event.target.value;
+    onChange(selectedValue); // 선택된 값 알림
+  };
+
   return (
-    <Wrapper>
+    <Wrapper disable={disabled}>
       <label>
-        <input type="radio" name={commonname}></input>
+        <input
+          type="radio"
+          name={commonname}
+          value={prop1}
+          onChange={handleRadioChange}
+          disabled={disabled}
+        ></input>
         <span>{prop1}</span>
       </label>
       <label>
-        <input type="radio" name={commonname}></input>
+        <input
+          type="radio"
+          name={commonname}
+          value={prop2}
+          onChange={handleRadioChange}
+          disabled={disabled}
+        ></input>
         <span>{prop2}</span>
       </label>
     </Wrapper>
