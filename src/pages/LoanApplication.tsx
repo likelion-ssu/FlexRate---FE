@@ -119,11 +119,17 @@ const LoanApplication = () => {
     setSelectedPurpose(value);
   };
 
-  const personalRecoveryChange = (value: string) => {
-    setPersonalRecovery(value);
+  // const personalRecoveryChange = (value: string) => {
+  //   setPersonalRecovery(value);
+  // };
+  // const recoveryPaymentChange = (value: string) => {
+  //   setRecoveryPayment(value);
+  // };
+  const personalRecoveryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPersonalRecovery(e.target.value);
   };
-  const recoveryPaymentChange = (value: string) => {
-    setRecoveryPayment(value);
+  const recoveryPaymentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRecoveryPayment(e.target.value);
   };
 
   return (
@@ -195,14 +201,14 @@ const LoanApplication = () => {
             prop1="예"
             prop2="아니오"
             commonname="personalRecovery"
-            onChange={personalRecoveryChange}
+            onRadioChange={personalRecoveryChange}
           />
           <RadioTwo
             prop1="예"
             prop2="아니오"
             commonname="recoveryPayment"
-            onChange={recoveryPaymentChange}
-            disabled={personalRecovery !== '예'}
+            onRadioChange={recoveryPaymentChange}
+            disabled={personalRecovery !== 'false'}
           />
         </div>
       </Credit>
