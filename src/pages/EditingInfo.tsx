@@ -101,57 +101,96 @@ const CancelButton = styled(CompleteButton)`
   color: #4d9a75;
 `;
 
-const LoanApplication = () => {
+const EditingInfo = () => {
   const [myLoanApplyInfo, setMyLoanApplyInfo] = useRecoilState(loanApplyInfo);
 
-  const [academicName, setAcademicName] = useState('');
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [income, setIncome] = useState('');
-  const [creditScore, setCreditScore] = useState('');
-  const [homeType, setHomeType] = useState('');
-  const [personalRecovery, setPersonalRecovery] = useState(
-    myLoanApplyInfo.myPersonalRecovery,
-  );
-  const [recoveryPayment, setRecoveryPayment] = useState(
-    myLoanApplyInfo.myRecoveryPayment,
-  );
+  // const [academicName, setAcademicName] = useState('');
+  // const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  // const [income, setIncome] = useState('');
+  // const [creditScore, setCreditScore] = useState('');
+  // const [homeType, setHomeType] = useState('');
+  // const [personalRecovery, setPersonalRecovery] = useState(
+  //   myLoanApplyInfo.myPersonalRecovery,
+  // );
+  // const [recoveryPayment, setRecoveryPayment] = useState(
+  //   myLoanApplyInfo.myRecoveryPayment,
+  // );
 
-  //dropdown
-  const [selectedJob, setSelectedJob] = useState('');
-  const [selectedEmployment, setSelectedEmployment] = useState('');
-  const [selectedAcademicType, setSelectedAcademic] = useState('');
-  const [selectedPurpose, setSelectedPurpose] = useState('');
+  const [loanValue, setLoanValue] = useState({
+    academicName: '',
+    selectedDate: new Date(),
+    income: '',
+    creditScore: '',
+    homeType: '',
+    personalRecovery: myLoanApplyInfo.personalRecovery,
+    recoveryPayment: myLoanApplyInfo.recoveryPayment,
+    selectedJob: '',
+    selectedEmployment: '',
+    selectedAcademicType: '',
+    selectedPurpose: '',
+  });
+
+  // //dropdown
+  // const [selectedJob, setSelectedJob] = useState('');
+  // const [selectedEmployment, setSelectedEmployment] = useState('');
+  // const [selectedAcademicType, setSelectedAcademic] = useState('');
+  // const [selectedPurpose, setSelectedPurpose] = useState('');
   const jobOptions = ['직장인', '사업자', '프리랜서', '기타'];
   const employmentOptions = ['정규직', '계약직', '기타'];
   const academicTypeOptions = ['고졸', '전문대졸', '대졸', '석사', '박사'];
   const purposeOptions = ['목적1', '목적2', '목적3', '목적4', '목적5'];
 
-  const handleJobChange = (value: string) => {
-    setSelectedJob(value);
+  // const handleJobChange = (value: string) => {
+  //   setSelectedJob(value);
+  // };
+  // const handleEmploymentChange = (value: string) => {
+  //   setSelectedEmployment(value);
+  // };
+  // const handleAcademicChange = (value: string) => {
+  //   setSelectedAcademic(value);
+  // };
+  // const handlePurposeChange = (value: string) => {
+  //   setSelectedPurpose(value);
+  // };
+  // const handleAcademicNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setAcademicName(e.target.value);
+  // };
+  // const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setIncome(e.target.value);
+  // };
+  // const handleCreditScoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setCreditScore(e.target.value);
+  // };
+  // const personalRecoveryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setPersonalRecovery(e.target.value);
+  // };
+  // const recoveryPaymentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setRecoveryPayment(e.target.value);
+  // };
+
+  const handleinput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoanValue({
+      ...loanValue,
+      [e.target.name]: e.target.value,
+    });
+    console.log(loanValue);
   };
-  const handleEmploymentChange = (value: string) => {
-    setSelectedEmployment(value);
+
+  //boolean타입 handle
+  const handleBooleanInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoanValue({
+      ...loanValue,
+      [e.target.name]: e.target.value === 'true',
+    });
+    console.log(loanValue);
   };
-  const handleAcademicChange = (value: string) => {
-    setSelectedAcademic(value);
-  };
-  const handlePurposeChange = (value: string) => {
-    setSelectedPurpose(value);
-  };
-  const handleAcademicNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAcademicName(e.target.value);
-  };
-  const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIncome(e.target.value);
-  };
-  const handleCreditScoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCreditScore(e.target.value);
-  };
-  const personalRecoveryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPersonalRecovery(e.target.value);
-  };
-  const recoveryPaymentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRecoveryPayment(e.target.value);
+
+  const handleDropdown = (name: string, value: string) => {
+    setLoanValue({
+      ...loanValue,
+      [name]: value,
+    });
+    console.log(loanValue);
   };
 
   return (
@@ -163,42 +202,48 @@ const LoanApplication = () => {
       <p>업종</p>
       <Dropdown
         options={jobOptions}
-        value={selectedJob}
-        onChange={handleJobChange}
-        ph={myLoanApplyInfo.myJob}
+        name="selectedJob"
+        value={loanValue.selectedJob}
+        onChange={handleDropdown}
+        ph={myLoanApplyInfo.selectedJob}
       />
 
       <p>고용형태</p>
       <Dropdown
         options={employmentOptions}
-        value={selectedEmployment}
-        onChange={handleEmploymentChange}
-        ph={myLoanApplyInfo.myEmployment}
+        name="selectedEmployment"
+        value={loanValue.selectedEmployment}
+        onChange={handleDropdown}
+        ph={myLoanApplyInfo.selectedEmployment}
       />
 
       <p>입사년월</p>
       <SelectDate
-        selected={selectedDate}
-        onChange={(date: Date) => setSelectedDate(date)}
+        selected={myLoanApplyInfo.selectedDate}
+        onChange={(date: Date) =>
+          setLoanValue({ ...loanValue, selectedDate: date })
+        }
         dateFormat="yyyy년 MM월"
         popperPlacement="bottom"
         showPopperArrow={false}
         showMonthYearPicker
-        placeholderText={(myLoanApplyInfo.myDate as Date).toLocaleDateString()}
       />
 
       <p>학력</p>
       <Academic>
         <HalfInput
-          placeholder={myLoanApplyInfo.myAcademicName}
-          onChange={handleAcademicNameChange}
+          placeholder={myLoanApplyInfo.academicName}
+          name="academicName"
+          value={loanValue.academicName}
+          onChange={handleinput}
         ></HalfInput>
         <DropdownWrapper>
           <Dropdown
             options={academicTypeOptions}
-            value={selectedAcademicType}
-            onChange={handleAcademicChange}
-            ph={myLoanApplyInfo.myAcademicType}
+            name="selectedAcademicType"
+            value={loanValue.selectedAcademicType}
+            onChange={handleDropdown}
+            ph={myLoanApplyInfo.selectedAcademicType}
           />
         </DropdownWrapper>
       </Academic>
@@ -211,12 +256,16 @@ const LoanApplication = () => {
         </div>
         <div>
           <CreditInput
-            placeholder={myLoanApplyInfo.myIncome + '만원'}
-            onChange={handleIncomeChange}
+            placeholder={myLoanApplyInfo.income + '만원'}
+            name="income"
+            value={loanValue.income}
+            onChange={handleinput}
           ></CreditInput>
           <CreditInput
-            placeholder={myLoanApplyInfo.myCreditScore + '점'}
-            onChange={handleCreditScoreChange}
+            placeholder={myLoanApplyInfo.creditScore + '점'}
+            name="creditScore"
+            value={loanValue.creditScore}
+            onChange={handleinput}
           ></CreditInput>
         </div>
         <p>주거정보</p>
@@ -235,14 +284,14 @@ const LoanApplication = () => {
             prop1="예"
             prop2="아니오"
             commonname="personalRecovery"
-            onRadioChange={personalRecoveryChange}
+            onRadioChange={handleBooleanInput}
           />
           <RadioTwo
             prop1="예"
             prop2="아니오"
             commonname="recoveryPayment"
-            onRadioChange={recoveryPaymentChange}
-            disabled={personalRecovery !== 'false'}
+            onRadioChange={handleBooleanInput}
+            disabled={loanValue.personalRecovery !== true}
           />
         </div>
       </Credit>
@@ -252,9 +301,10 @@ const LoanApplication = () => {
         <p>목적</p>
         <Dropdown
           options={purposeOptions}
-          value={selectedPurpose}
-          onChange={handlePurposeChange}
-          ph={myLoanApplyInfo.myPurpose}
+          name="selectedPurpose"
+          value={loanValue.selectedPurpose}
+          onChange={handleDropdown}
+          ph={myLoanApplyInfo.selectedPurpose}
         />
       </Wrapper>
 
@@ -264,4 +314,4 @@ const LoanApplication = () => {
   );
 };
 
-export default LoanApplication;
+export default EditingInfo;

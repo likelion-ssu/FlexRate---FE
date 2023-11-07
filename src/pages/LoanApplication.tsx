@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Dropdown from '@/components/Dropdown';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 const Container = styled.div`
   display: flex;
@@ -91,51 +92,48 @@ const CreditInput = styled(HalfInput)`
 `;
 
 const LoanApplication = () => {
-  const [stage, setStage] = useState(1);
-  const [academicName, setAcademicName] = useState('');
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [income, setIncome] = useState('');
-  const [creditScore, setCreditScore] = useState('');
-  const [homeType, setHomeType] = useState('');
-  const [personalRecovery, setPersonalRecovery] = useState('');
-  const [recoveryPayment, setRecoveryPayment] = useState('');
+  const [loanValue, setLoanValue] = useState({
+    academicName: '',
+    selectedDate: new Date(),
+    income: '',
+    creditScore: '',
+    homeType: '',
+    personalRecovery: false,
+    recoveryPayment: false,
+    selectedJob: '',
+    selectedEmployment: '',
+    selectedAcademicType: '',
+    selectedPurpose: '',
+  });
 
-  //dropdown
-  const [selectedJob, setSelectedJob] = useState('');
-  const [selectedEmployment, setSelectedEmployment] = useState('');
-  const [selectedAcademicType, setSelectedAcademic] = useState('');
-  const [selectedPurpose, setSelectedPurpose] = useState('');
   const jobOptions = ['직장인', '사업자', '프리랜서', '기타'];
   const employmentOptions = ['정규직', '계약직', '기타'];
   const academicTypeOptions = ['고졸', '전문대졸', '대졸', '석사', '박사'];
   const purposeOptions = ['목적1', '목적2', '목적3', '목적4', '목적5'];
 
-  const handleJobChange = (value: string) => {
-    setSelectedJob(value);
+  const handleinput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoanValue({
+      ...loanValue,
+      [e.target.name]: e.target.value,
+    });
+    console.log(loanValue);
   };
-  const handleEmploymentChange = (value: string) => {
-    setSelectedEmployment(value);
+
+  //boolean타입 handle
+  const handleBooleanInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoanValue({
+      ...loanValue,
+      [e.target.name]: e.target.value === 'true',
+    });
+    console.log(loanValue);
   };
-  const handleAcademicChange = (value: string) => {
-    setSelectedAcademic(value);
-  };
-  const handlePurposeChange = (value: string) => {
-    setSelectedPurpose(value);
-  };
-  const handleAcademicNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAcademicName(e.target.value);
-  };
-  const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIncome(e.target.value);
-  };
-  const handleCreditScoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCreditScore(e.target.value);
-  };
-  const personalRecoveryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPersonalRecovery(e.target.value);
-  };
-  const recoveryPaymentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRecoveryPayment(e.target.value);
+
+  const handleDropdown = (name: string, value: string) => {
+    setLoanValue({
+      ...loanValue,
+      [name]: value,
+    });
+    console.log(loanValue);
   };
 
   return (
@@ -147,21 +145,25 @@ const LoanApplication = () => {
       <p>업종</p>
       <Dropdown
         options={jobOptions}
-        value={selectedJob}
-        onChange={handleJobChange}
+        name="selectedJob"
+        value={loanValue.selectedJob}
+        onChange={handleDropdown}
       />
 
       <p>고용형태</p>
       <Dropdown
         options={employmentOptions}
-        value={selectedEmployment}
-        onChange={handleEmploymentChange}
+        name="selectedEmployment"
+        value={loanValue.selectedEmployment}
+        onChange={handleDropdown}
       />
 
       <p>입사년월</p>
       <SelectDate
-        selected={selectedDate}
-        onChange={(date: Date) => setSelectedDate(date)}
+        selected={loanValue.selectedDate}
+        onChange={(date: Date) =>
+          setLoanValue({ ...loanValue, selectedDate: date })
+        }
         dateFormat="yyyy년 MM월"
         popperPlacement="bottom"
         showPopperArrow={false}
@@ -172,13 +174,16 @@ const LoanApplication = () => {
       <Academic>
         <HalfInput
           placeholder="학교명"
-          onChange={handleAcademicNameChange}
+          name="academicName"
+          value={loanValue.academicName}
+          onChange={handleinput}
         ></HalfInput>
         <DropdownWrapper>
           <Dropdown
             options={academicTypeOptions}
-            value={selectedAcademicType}
-            onChange={handleAcademicChange}
+            name="selectedAcademicType"
+            value={loanValue.selectedAcademicType}
+            onChange={handleDropdown}
             ph="(필수)학력선택"
           />
         </DropdownWrapper>
@@ -193,11 +198,15 @@ const LoanApplication = () => {
         <div>
           <CreditInput
             placeholder="만원"
-            onChange={handleIncomeChange}
+            name="income"
+            value={loanValue.income}
+            onChange={handleinput}
           ></CreditInput>
           <CreditInput
             placeholder="점"
-            onChange={handleCreditScoreChange}
+            name="creditScore"
+            value={loanValue.creditScore}
+            onChange={handleinput}
           ></CreditInput>
         </div>
         <p>주거정보</p>
@@ -216,14 +225,14 @@ const LoanApplication = () => {
             prop1="예"
             prop2="아니오"
             commonname="personalRecovery"
-            onRadioChange={personalRecoveryChange}
+            onRadioChange={handleBooleanInput}
           />
           <RadioTwo
             prop1="예"
             prop2="아니오"
             commonname="recoveryPayment"
-            onRadioChange={recoveryPaymentChange}
-            disabled={personalRecovery !== 'false'}
+            onRadioChange={handleBooleanInput}
+            disabled={loanValue.personalRecovery !== true}
           />
         </div>
       </Credit>
@@ -233,12 +242,13 @@ const LoanApplication = () => {
         <p>목적</p>
         <Dropdown
           options={purposeOptions}
-          value={selectedPurpose}
-          onChange={handlePurposeChange}
+          name="selectedPurpose"
+          value={loanValue.selectedPurpose}
+          onChange={handleDropdown}
         />
       </Wrapper>
 
-      <button onClick={() => setStage(2)}>다음 단계 (1/2)</button>
+      <button>다음 단계 (1/2)</button>
     </Container>
   );
 };

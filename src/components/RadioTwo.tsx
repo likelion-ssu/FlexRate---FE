@@ -76,7 +76,7 @@ const RadioTwo = (props: radiotwoprops) => {
         <RadioInput
           type="radio"
           name={commonname}
-          value="false" //0
+          value="true"
           onChange={handleRadioChange}
           disabled={disabled}
         ></RadioInput>
@@ -86,7 +86,7 @@ const RadioTwo = (props: radiotwoprops) => {
         <RadioInput
           type="radio"
           name={commonname}
-          value="true" //1
+          value="false"
           onChange={handleRadioChange}
           disabled={disabled}
         ></RadioInput>
