@@ -9,6 +9,7 @@ import LoanApplication from './pages/LoanApplication';
 import Dashboard from './pages/Dashboard';
 import LoanAgree from './pages/LoanAgree';
 import LoanDisagree from './pages/LoanDisagree';
+import EditingInfo from './pages/EditingInfo';
 
 const Body = styled.div`
   width: 100%;
@@ -37,6 +38,7 @@ function App() {
             <Route path="/DisAgree" element={<LoanDisagree />} />
             <Route path="/LoanApplication" element={<LoanApplication />} />
             <Route path="dashboard" element={<Dashboard />} />
+            <Route path="/editInfo" element={<EditingInfo />} />
           </Routes>
         </Body>
       </BrowserRouter>

@@ -92,18 +92,22 @@ const CreditInput = styled(HalfInput)`
 
 const LoanApplication = () => {
   const [stage, setStage] = useState(1);
+  const [academicName, setAcademicName] = useState('');
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [income, setIncome] = useState('');
+  const [creditScore, setCreditScore] = useState('');
+  const [homeType, setHomeType] = useState('');
   const [personalRecovery, setPersonalRecovery] = useState('');
   const [recoveryPayment, setRecoveryPayment] = useState('');
 
   //dropdown
   const [selectedJob, setSelectedJob] = useState('');
   const [selectedEmployment, setSelectedEmployment] = useState('');
-  const [selectedAcademic, setSelectedAcademic] = useState('');
+  const [selectedAcademicType, setSelectedAcademic] = useState('');
   const [selectedPurpose, setSelectedPurpose] = useState('');
   const jobOptions = ['직장인', '사업자', '프리랜서', '기타'];
   const employmentOptions = ['정규직', '계약직', '기타'];
-  const academicOptions = ['고졸', '전문대졸', '대졸', '석사', '박사'];
+  const academicTypeOptions = ['고졸', '전문대졸', '대졸', '석사', '박사'];
   const purposeOptions = ['목적1', '목적2', '목적3', '목적4', '목적5'];
 
   const handleJobChange = (value: string) => {
@@ -118,13 +122,15 @@ const LoanApplication = () => {
   const handlePurposeChange = (value: string) => {
     setSelectedPurpose(value);
   };
-
-  // const personalRecoveryChange = (value: string) => {
-  //   setPersonalRecovery(value);
-  // };
-  // const recoveryPaymentChange = (value: string) => {
-  //   setRecoveryPayment(value);
-  // };
+  const handleAcademicNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAcademicName(e.target.value);
+  };
+  const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIncome(e.target.value);
+  };
+  const handleCreditScoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCreditScore(e.target.value);
+  };
   const personalRecoveryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPersonalRecovery(e.target.value);
   };
@@ -164,11 +170,14 @@ const LoanApplication = () => {
 
       <p>학력</p>
       <Academic>
-        <HalfInput placeholder="학교명"></HalfInput>
+        <HalfInput
+          placeholder="학교명"
+          onChange={handleAcademicNameChange}
+        ></HalfInput>
         <DropdownWrapper>
           <Dropdown
-            options={academicOptions}
-            value={selectedAcademic}
+            options={academicTypeOptions}
+            value={selectedAcademicType}
             onChange={handleAcademicChange}
             ph="(필수)학력선택"
           />
@@ -182,8 +191,14 @@ const LoanApplication = () => {
           <p>신용등급</p>
         </div>
         <div>
-          <CreditInput placeholder="만원"></CreditInput>
-          <CreditInput placeholder="점"></CreditInput>
+          <CreditInput
+            placeholder="만원"
+            onChange={handleIncomeChange}
+          ></CreditInput>
+          <CreditInput
+            placeholder="점"
+            onChange={handleCreditScoreChange}
+          ></CreditInput>
         </div>
         <p>주거정보</p>
         <RadioThree
