@@ -53,20 +53,22 @@ const DropdownItem = styled.div`
 interface DropdownProps {
   options: string[];
   value: string;
-  onChange: (value: string) => void;
+  name: string;
+  onChange: (name: string, value: string) => void;
   ph?: string; //placeholder , 기본값을 빈 문자열로 설정
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
   options,
   value,
+  name,
   onChange,
   ph = '',
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const handleItemClick = (item: string) => {
-    onChange(item);
+  const handleItemClick = (name: string, item: string) => {
+    onChange(name, item);
     setIsOpen(false);
   };
 
@@ -81,7 +83,10 @@ const Dropdown: React.FC<DropdownProps> = ({
       {isOpen && (
         <DropdownContent>
           {options.map((item) => (
-            <DropdownItem key={item} onClick={() => handleItemClick(item)}>
+            <DropdownItem
+              key={item}
+              onClick={() => handleItemClick(name, item)}
+            >
               {item}
             </DropdownItem>
           ))}
