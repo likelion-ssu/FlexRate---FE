@@ -29,7 +29,8 @@ function App() {
         <MainHeader />
         <Body>
           <Routes>
-            <Route path="/" element={<Navigate to="/main" />} />
+            <Route path="/" element={<Navigate to="/dashboard" />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/main" element={<Main />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Register />} />
