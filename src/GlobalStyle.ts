@@ -33,9 +33,8 @@ const GlobalStyle = createGlobalStyle`
         src: url(${PretendardExtraBold}) format('woff2');    
         unicode-range: U+AC00-D7A3;
     }
-    * {
-    	font-family: 'Pretendard';
-      box-sizing: border-box;
+    body {
+    font-family: 'Pretendard',serif;
     }
 `;
 

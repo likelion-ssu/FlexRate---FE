@@ -37,10 +37,6 @@ const Logo = styled.button`
   }
 `;
 
-// interface ButtonProps {
-//   active?: boolean;
-// }
-
 const Button = styled.button<{ $active?: boolean }>`
   background-color: white;
   border: none;

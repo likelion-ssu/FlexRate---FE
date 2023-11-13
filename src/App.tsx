@@ -11,10 +11,9 @@ import LoanAgree from './pages/LoanAgree';
 import LoanDisagree from './pages/LoanDisagree';
 import EditingInfo from './pages/EditingInfo';
 import MainSidebar from './components/MainSidebar';
+import GlobalStyle from './GlobalStyle';
 
 const Body = styled.div`
-  width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,8 +26,9 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <GlobalStyle />
         <MainHeader />
-        <MainSidebar />
+        {/* <MainSidebar /> */}
         <Body>
           <Routes>
             <Route path="/" element={<Navigate to="/dashboard" />} />
