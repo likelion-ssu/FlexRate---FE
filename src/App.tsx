@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard';
 import LoanAgree from './pages/LoanAgree';
 import LoanDisagree from './pages/LoanDisagree';
 import EditingInfo from './pages/EditingInfo';
+import MainSidebar from './components/MainSidebar';
 
 const Body = styled.div`
   width: 100%;
@@ -27,6 +28,7 @@ function App() {
     <>
       <BrowserRouter>
         <MainHeader />
+        <MainSidebar />
         <Body>
           <Routes>
             <Route path="/" element={<Navigate to="/dashboard" />} />

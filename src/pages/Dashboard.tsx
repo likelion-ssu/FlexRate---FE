@@ -1,6 +1,6 @@
-/**대시포드 페이지 */
+/**대시보드 페이지 */
 const Dashboard = () => {
-  return <div>어케 나오나</div>;
+  return <div></div>;
 };
 
 export default Dashboard;

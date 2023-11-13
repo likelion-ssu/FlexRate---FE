@@ -37,14 +37,14 @@ const Logo = styled.button`
   }
 `;
 
-interface ButtonProps {
-  active?: boolean;
-}
+// interface ButtonProps {
+//   active?: boolean;
+// }
 
-const Button = styled.button<ButtonProps>`
+const Button = styled.button<{ $active?: boolean }>`
   background-color: white;
   border: none;
-  border-bottom: ${(props) => (props.active ? '3px solid #63c393' : 'none')};
+  border-bottom: ${(props) => (props.$active ? '3px solid #63c393' : 'none')};
   height: 100%;
   font-size: 16px;
   font-weight: 500;
@@ -84,12 +84,12 @@ const MainHeader = () => {
         <Logo>
           <img src={logo} alt="로고" />
         </Logo>
-        <Button onClick={() => navigate('/main')} active={nowpath === 'main'}>
+        <Button onClick={() => navigate('/main')} $active={nowpath === 'main'}>
           메인
         </Button>
         <Button
           onClick={() => navigate('/dashboard')}
-          active={nowpath === 'dashboard'}
+          $active={nowpath === 'dashboard'}
         >
           한 눈에 보는 대시보드
         </Button>
