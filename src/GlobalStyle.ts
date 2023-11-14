@@ -10,28 +10,28 @@ const GlobalStyle = createGlobalStyle`
         font-family: 'Pretendard';
         font-weight: 200;
         src: url(${PretendardExtraLight}) format('woff2');    
-        unicode-range: U+AC00-D7A3;
+        /* unicode-range: U+AC00-D7A3; */
     }
 
     @font-face {
         font-family: 'Pretendard';
         font-weight: 400;
         src: url(${PretendardRegular}) format('woff2');    
-        unicode-range: U+AC00-D7A3;
+        /* unicode-range: U+AC00-D7A3; */
     }
 
     @font-face {
         font-family: 'Pretendard';
         font-weight: 700;
         src: url(${PretendardBold}) format('woff2');    
-        unicode-range: U+AC00-D7A3;
+        /* unicode-range: U+AC00-D7A3; */
     }
 
     @font-face {
         font-family: 'Pretendard';
         font-weight: 800;
         src: url(${PretendardExtraBold}) format('woff2');    
-        unicode-range: U+AC00-D7A3;
+        /* unicode-range: U+AC00-D7A3; */
     }
     body {
     font-family: 'Pretendard',serif;

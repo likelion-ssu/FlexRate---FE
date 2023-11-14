@@ -1,6 +1,7 @@
 import MainSidebar from '@/components/MainSidebar';
 import { styled } from 'styled-components';
 import React, { useState, useEffect } from 'react';
+import DashHeader from '@/components/DashboardComs/dashHeader';
 const useNarrowScreen = () => {
   // 초기 상태 설정
   const [isNarrowScreen, setIsNarrowScreen] = useState(window.innerWidth > 600);
@@ -10,12 +11,9 @@ const useNarrowScreen = () => {
     const handleResize = () => {
       setIsNarrowScreen(window.innerWidth > 1000);
     };
-
-    // 이벤트 리스너 추가
-    window.addEventListener('resize', handleResize);
-
-    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
+    window.addEventListener('resize', handleResize); // 이벤트 리스너 추가
     return () => {
+      // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
       window.removeEventListener('resize', handleResize);
     };
   }, []);
@@ -32,12 +30,20 @@ const Dashboard = () => {
       <MainDashBoard $isNarrowScreen={isNarrowScreen}>
         <div id="Date"></div>
         <GridContainer>
-          <div className="item1">1</div>
+          <div className="item1">
+            <DashHeader />
+          </div>{' '}
+          {/*대출상품, 상환날짜, 납부 회차*/}
           <div className="item2">2</div>
+          {/*알림*/}
           <div className="item3">3</div>
+          {/*대출금리,신용평가 점수*/}
           <div className="item4">4</div>
+          {/*이번달 대출금*/}
           <div className="item5">5</div>
+          {/*금리변화*/}
           <div className="item6">6</div>
+          {/*대출 히스토리*/}
         </GridContainer>
       </MainDashBoard>
     </Wrapper>
@@ -68,8 +74,7 @@ const GridContainer = styled.div`
   gap: 18px; /* 그리드 사이의 간격 */
   .item1 {
     grid-area: 1 / 1 / 2 / 4;
-    background-color: black;
-  } /* 첫 번째 행, 1~2열 */
+  } /* 나의 대출 상품,이번달 대출금 상환 날짜, 대출금 납부 회차 */
   .item2 {
     grid-area: 1 / 4 / 4 / 5;
     background-color: black;
