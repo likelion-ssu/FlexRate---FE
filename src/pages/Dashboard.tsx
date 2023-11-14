@@ -1,7 +1,7 @@
 import MainSidebar from '@/components/MainSidebar';
 import { styled } from 'styled-components';
 import React, { useState, useEffect } from 'react';
-import DashHeader from '@/components/DashboardComs/dashHeader';
+import DashHeader from '@/components/DashboardComs/DashHeader';
 const useNarrowScreen = () => {
   // 초기 상태 설정
   const [isNarrowScreen, setIsNarrowScreen] = useState(window.innerWidth > 600);
