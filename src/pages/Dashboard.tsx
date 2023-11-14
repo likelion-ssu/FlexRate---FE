@@ -2,6 +2,8 @@ import MainSidebar from '@/components/MainSidebar';
 import { styled } from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import DashHeader from '@/components/DashboardComs/DashHeader';
+import LoanTobepaid from '@/components/DashboardComs/LoanTobepaid';
+
 const useNarrowScreen = () => {
   // 초기 상태 설정
   const [isNarrowScreen, setIsNarrowScreen] = useState(window.innerWidth > 600);
@@ -38,7 +40,9 @@ const Dashboard = () => {
           {/*알림*/}
           <div className="item3">3</div>
           {/*대출금리,신용평가 점수*/}
-          <div className="item4">4</div>
+          <div className="item4">
+            <LoanTobepaid></LoanTobepaid>
+          </div>
           {/*이번달 대출금*/}
           <div className="item5">5</div>
           {/*금리변화*/}
@@ -85,7 +89,7 @@ const GridContainer = styled.div`
   } /* 2~3행, 첫 번째 열 */
   .item4 {
     grid-area: 2 / 2 / 4 / 4;
-    background-color: black;
+    /* background-color: black; */
   } /* 2~3행, 2~3열 */
   .item5 {
     grid-area: 4 / 1 / 6 / 3;

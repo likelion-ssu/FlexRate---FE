@@ -1,8 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
-import PretendardExtraLight from './assets/fonts/Pretendard-ExtraLight.woff2';
-import PretendardRegular from './assets/fonts/Pretendard-Regular.woff2';
-import PretendardBold from './assets/fonts/Pretendard-Bold.woff2';
-import PretendardExtraBold from './assets/fonts/Pretendard-ExtraBold.woff2';
+import PretendardExtraLight from './assets/fonts/Pretendard/Pretendard-Light.woff2';
+import PretendardRegular from './assets/fonts/Pretendard/Pretendard-Regular.woff2';
+import PretendardBold from './assets/fonts/Pretendard/Pretendard-Bold.woff2';
+import PretendardExtraBold from './assets/fonts/Pretendard/Pretendard-ExtraBold.woff2';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -33,6 +33,14 @@ const GlobalStyle = createGlobalStyle`
         src: url(${PretendardExtraBold}) format('woff2');    
         /* unicode-range: U+AC00-D7A3; */
     }
+
+    @font-face {
+    font-family: 'SUIT';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
     body {
     font-family: 'Pretendard',serif;
     }
