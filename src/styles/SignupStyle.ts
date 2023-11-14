@@ -67,6 +67,15 @@ export const SignupInfobox = styled.div`
         position: absolute;
         right: 23px;
         top: 46px;
+        cursor: pointer;
+      }
+
+      .notequal {
+        position: absolute;
+        bottom: -25px;
+        font-size: 16px;
+        margin: 0px;
+        color: #ef4a3e;
       }
 
       & > label {
@@ -76,18 +85,6 @@ export const SignupInfobox = styled.div`
         font-style: normal;
         font-weight: 500;
         line-height: normal;
-      }
-
-      & > .pwCheck {
-        color: var(--Gray6, #909090);
-        font-family: Pretendard;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 300;
-        line-height: normal;
-
-        display: flex;
-        justify-content: center;
       }
     }
   }
@@ -134,7 +131,7 @@ export const SignupBottombox = styled.div`
         font-weight: 500;
         line-height: normal;
       }
-      & > h4 {
+      & > Link {
         //나중에 Link로 바꿔줄거임
         color: var(--Primary, #63c393);
         font-family: Pretendard;

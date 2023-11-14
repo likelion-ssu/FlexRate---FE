@@ -1,14 +1,53 @@
 import { useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 
 //상태관리
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .invisible {
+    position: absolute;
+    right: 23px;
+    top: 46px;
+  }
+
+  .areamodal {
+    position: absolute;
+    z-index: 1;
+  }
+
+  input {
+    width: 568px;
+    height: 55px;
+    border-radius: 7px;
+    border: 1.5px solid var(--Gray3, #d9d9d9);
+    padding: 0px 28px;
+
+    &:focus {
+      outline: 1.5px solid var(--Primary, #63c393);
+      border: none;
+    }
+  }
+
+  .input::-webkit-input-placeholder {
+    color: var(--Gray6, #8c8c8c);
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+`;
 
 const RegisterStoreAddress = () => {
   const [modal, setmodal] = useState(false); //모달띄울지 말지
   //주소 state
-  // const [address,setAddress]=useRecoilState(storeAddress);
-  // const [detailAddress,setDetailAddress]=useRecoilState(storeDetailAddress);
+  const [address, setAddress] = useState('');
+  const [detailAddress, setDetailAddress] = useState('');
   //상세주소검색
   const handleComplete = (data) => {
     let fullAddress = data.address; //기본 주소
@@ -28,48 +67,9 @@ const RegisterStoreAddress = () => {
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
 
-    // setAddress(fullAddress);
+    setAddress(fullAddress);
     setmodal(false);
   };
-
-  const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    .invisible {
-      position: absolute;
-      right: 23px;
-      top: 46px;
-    }
-
-    .areamodal {
-      position: absolute;
-      z-index: 1;
-    }
-
-    input {
-      width: 568px;
-      height: 55px;
-      border-radius: 7px;
-      border: 1.5px solid var(--Gray3, #d9d9d9);
-      padding: 0px 28px;
-
-      &:focus {
-        outline: 1.5px solid var(--Primary, #63c393);
-        border: none;
-      }
-    }
-
-    .input::-webkit-input-placeholder {
-      color: var(--Gray6, #8c8c8c);
-      font-family: Pretendard;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: normal;
-    }
-  `;
 
   return (
     <Wrapper>
@@ -88,6 +88,7 @@ const RegisterStoreAddress = () => {
           e.preventDefault();
           setmodal(true);
         }}
+        defaultValue={address}
       />
       <svg
         className="invisible"
@@ -107,7 +108,8 @@ const RegisterStoreAddress = () => {
       <input
         type="text"
         placeholder="상세 주소"
-        // defaultValue={address}
+        value={detailAddress}
+        onChange={(e) => setDetailAddress(e.target.value)}
       />
     </Wrapper>
   );

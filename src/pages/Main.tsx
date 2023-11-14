@@ -31,9 +31,9 @@ const Main = () => {
   console.log(featureValues);
   // console.log(model.predictScore(featureValues));
 
+
   return (
     <div>
-      <div>main page</div>
       <SemiCircleCharts num={tmp} />
     </div>
   );
