@@ -48,5 +48,6 @@ export const Button = styled.button<ButtonProps>`
 
   &:hover {
     cursor: pointer;
+    opacity: 0.8;
   }
 `;
