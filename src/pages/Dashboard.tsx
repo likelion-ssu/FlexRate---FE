@@ -61,7 +61,7 @@ const MainDashBoard = styled.span<{ $isNarrowScreen: boolean }>`
   position: fixed;
   width: ${(props) => (props.$isNarrowScreen ? 'calc(100% - 300px)' : '100%')};
   height: calc(100% - 150px);
-  background-color: beige;
+  /* background-color: beige; */
   margin: 30px 15px;
 `;
 
