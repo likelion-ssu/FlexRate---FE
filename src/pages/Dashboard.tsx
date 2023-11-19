@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import DashHeader from '@/components/DashboardComs/DashHeader';
 import LoanTobepaid from '@/components/DashboardComs/LoanTobepaid';
 import RateChange from '@/components/DashboardComs/RateChange';
-
+import Notification from '@/components/DashboardComs/Notification';
 
 const useNarrowScreen = () => {
   // 초기 상태 설정
@@ -36,9 +36,11 @@ const Dashboard = () => {
         <GridContainer>
           <div className="item1">
             <DashHeader />
-          </div>{' '}
+          </div>
           {/*대출상품, 상환날짜, 납부 회차*/}
-          <div className="item2">2</div>
+          <div className="item2">
+            <Notification />
+          </div>
           {/*알림*/}
           <div className="item3">3</div>
           {/*대출금리,신용평가 점수*/}
@@ -69,7 +71,6 @@ const MainDashBoard = styled.span<{ $isNarrowScreen: boolean }>`
   position: fixed;
   width: ${(props) => (props.$isNarrowScreen ? 'calc(100% - 300px)' : '100%')};
   height: calc(100% - 150px);
-  /* background-color: beige; */
   margin: 30px 15px;
 `;
 
@@ -85,7 +86,6 @@ const GridContainer = styled.div`
   } /* 나의 대출 상품,이번달 대출금 상환 날짜, 대출금 납부 회차 */
   .item2 {
     grid-area: 1 / 4 / 4 / 5;
-    background-color: black;
   } /* 첫 번째 행, 3~4열 */
   .item3 {
     grid-area: 2 / 1 / 4 / 2;
@@ -93,11 +93,9 @@ const GridContainer = styled.div`
   } /* 2~3행, 첫 번째 열 */
   .item4 {
     grid-area: 2 / 2 / 4 / 4;
-    /* background-color: black; */
   } /* 2~3행, 2~3열 */
   .item5 {
     grid-area: 4 / 1 / 6 / 3;
-    /* background-color: black; */
   } /* 4~5행, 1~2열 */
   .item6 {
     grid-area: 4 / 3 / 6 / 5;
