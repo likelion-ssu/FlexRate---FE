@@ -8,6 +8,9 @@ import Notification from '@/components/DashboardComs/Notification';
 import LoanHistory from '@/components/DashboardComs/LoanHistory';
 import Test from '@/components/DashboardComs/FlipCard';
 
+import { useRecoilState } from 'recoil';
+import { CoachMarkStage } from '@/state/CoachMarkStage';
+
 const useNarrowScreen = () => {
   // 초기 상태 설정
   const [isNarrowScreen, setIsNarrowScreen] = useState(window.innerWidth > 600);
@@ -28,10 +31,15 @@ const useNarrowScreen = () => {
 };
 /**대시보드 페이지 */
 const Dashboard = () => {
+  const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
+
+  // stage 값에 접근
+  const { mode } = coachMark;
+
   const isNarrowScreen = useNarrowScreen();
 
   return (
-    <Wrapper $isNarrowScreen={isNarrowScreen}>
+    <Wrapper $isNarrowScreen={isNarrowScreen} $isVisible={mode}>
       {isNarrowScreen ? <MainSidebar /> : <></>}
       <MainDashBoard $isNarrowScreen={isNarrowScreen}>
         <div id="Date"></div>
@@ -66,17 +74,27 @@ const Dashboard = () => {
   );
 };
 
-const Wrapper = styled.div<{ $isNarrowScreen: boolean }>`
+const Wrapper = styled.div<{ $isNarrowScreen: boolean; $isVisible: boolean }>`
   margin-left: ${(props) => (props.$isNarrowScreen ? '265px' : '0')};
-
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+
+  &::before {
+    display: ${({ $isVisible }) => ($isVisible ? 'block' : 'none')};
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(25, 25, 25, 0.85); // 어두운 오버레이
+    z-index: 3; // 오버레이 z-index
+  }
 `;
 
 const MainDashBoard = styled.span<{ $isNarrowScreen: boolean }>`
-  position: fixed;
-  background-color: #fff;
+  position: absolute;
   width: ${(props) => (props.$isNarrowScreen ? 'calc(100% - 300px)' : '100%')};
   height: calc(100% - 150px);
   margin: 30px 15px;

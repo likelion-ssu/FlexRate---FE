@@ -13,7 +13,7 @@ import EditingInfo from './pages/EditingInfo';
 import MainSidebar from './components/MainSidebar';
 import GlobalStyle from './GlobalStyle';
 
-const Body = styled.div`
+const MainLayout = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,7 +29,7 @@ function App() {
         <GlobalStyle />
         <MainHeader />
         {/* <MainSidebar /> */}
-        <Body>
+        <MainLayout>
           <Routes>
             <Route path="/" element={<Navigate to="/dashboard" />} />
             <Route path="/dashboard" element={<Dashboard />} />
@@ -43,7 +43,7 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="/editInfo" element={<EditingInfo />} />
           </Routes>
-        </Body>
+        </MainLayout>
       </BrowserRouter>
     </>
   );

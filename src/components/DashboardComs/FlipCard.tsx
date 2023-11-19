@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import flip1 from '@/assets/imgs/Flip1.png';
 
-const CardContainer = styled.div<{ isFlipped: boolean }>`
+const CardContainer = styled.div<{ $isFlipped: boolean }>`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -11,14 +11,14 @@ const CardContainer = styled.div<{ isFlipped: boolean }>`
   cursor: pointer;
 `;
 
-const CardFlipper = styled.div<{ isFlipped: boolean }>`
+const CardFlipper = styled.div<{ $isFlipped: boolean }>`
   width: 100%;
   height: 100%;
   position: relative;
   transition: transform 0.6s;
   transform-style: preserve-3d;
-  transform: ${({ isFlipped }) =>
-    isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)'};
+  transform: ${({ $isFlipped }) =>
+    $isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)'};
 `;
 
 const CardFace = styled.div`
@@ -53,8 +53,8 @@ const FlipCard: React.FC = () => {
   };
 
   return (
-    <CardContainer onClick={handleClick} isFlipped={isFlipped}>
-      <CardFlipper isFlipped={isFlipped}>
+    <CardContainer onClick={handleClick} $isFlipped={isFlipped}>
+      <CardFlipper $isFlipped={isFlipped}>
         <CardFront>Front Side</CardFront>
         <CardBack>Back Side</CardBack>
       </CardFlipper>
