@@ -65,6 +65,7 @@ const Dash = {
     align-items: flex-end;
     gap: 0.5rem;
     & > img {
+      width: 90px;
       margin-bottom: 0.25rem;
     }
   `,
