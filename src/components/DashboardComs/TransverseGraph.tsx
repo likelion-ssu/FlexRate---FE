@@ -85,7 +85,7 @@ const TransverseGraph: React.FC<BarChartProps> = ({ value }) => {
 
   return (
     <Wrapper>
-      <div className="percent">{value}%</div>
+      <div className="percent">{value}% </div>
       <Svg ref={ref} />
     </Wrapper>
   );
@@ -106,7 +106,7 @@ const Wrapper = styled.div`
     line-height: normal;
 
     &::after {
-      content: '/100%';
+      content: '/ 100%';
       color: var(--Gray3, #d9d9d9);
       font-family: SUIT;
       font-size: 10px;

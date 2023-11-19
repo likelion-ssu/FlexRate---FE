@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from 'styled-components';
 import payback from '../../assets/imgs/paybackTag.png';
 import TransverseGraph from './TransverseGraph';
+import AmountSection from './AmountSection';
 
 const LoanTobepaid = () => {
   const value = 70; // 예시 데이터
@@ -17,12 +18,19 @@ const LoanTobepaid = () => {
       <Dash.Grape>
         <TransverseGraph value={value} />
       </Dash.Grape>
-      <div>
-        <span>
-          <p>원리금</p>
-          <div>250,000원</div>
-          <div>3,000,000원/12개월</div>
-        </span>
+      <div className="amount-section">
+        <AmountSection
+          title="원리금"
+          amount="250,000"
+          totalAmount="3,000,000원"
+          period="12개월"
+        />
+        <AmountSection
+          title="이자"
+          amount="30,000"
+          totalAmount="3,000,000원"
+          period="12개월"
+        />
       </div>
     </Dash.Wrapper>
   );
@@ -39,6 +47,10 @@ const Dash = {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+
+    .amount-section {
+      display: flex;
+    }
   `,
   Title: styled.p`
     color: var(--Gray8, #595959);
