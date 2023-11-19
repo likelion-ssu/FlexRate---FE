@@ -6,6 +6,7 @@ import LoanTobepaid from '@/components/DashboardComs/LoanTobepaid';
 import RateChange from '@/components/DashboardComs/RateChange';
 import Notification from '@/components/DashboardComs/Notification';
 import LoanHistory from '@/components/DashboardComs/LoanHistory';
+import Test from '@/components/DashboardComs/FlipCard';
 
 const useNarrowScreen = () => {
   // 초기 상태 설정
@@ -43,7 +44,9 @@ const Dashboard = () => {
             <Notification />
           </div>
           {/*알림*/}
-          <div className="item3">3</div>
+          <div className="item3">
+            <Test />
+          </div>
           {/*대출금리,신용평가 점수*/}
           <div className="item4">
             <LoanTobepaid></LoanTobepaid>
@@ -94,7 +97,6 @@ const GridContainer = styled.div`
   } /* 첫 번째 행, 3~4열 */
   .item3 {
     grid-area: 2 / 1 / 4 / 2;
-    background-color: black;
   } /* 2~3행, 첫 번째 열 */
   .item4 {
     grid-area: 2 / 2 / 4 / 4;
