@@ -1,0 +1,52 @@
+.custom-tooltip {
+  padding: 11px;
+  background: #fff;
+  font-size: 0.9em;
+  line-height: 1.4;
+  border: 1px solid #f1f1f1;
+  border-radius: 7px;
+}
+.inner-box {
+  border-left: 4.5px solid #59c3c2;
+  padding: 3px 0px 2px 10px;
+  border-radius: 2px;
+  gap: 2em;
+}
+.num {
+  font-family: SUIT;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 25px;
+}
+.per {
+  font-family: SUIT;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 12px;
+}
+.date {
+  color: #8c8c8c;
+  font-family: SUIT;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 12px;
+}
+.text {
+  font-family: SUIT;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 12px;
+  color: #595959;
+}
+.change {
+  padding: 2px 4px;
+  margin-left: 3.5em;
+  background-color: #f6fdf6;
+  color: #3a7a2f;
+  font-family: SUIT;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 9px;
+  border-radius: 3px;
+  border: 1px;
+}
