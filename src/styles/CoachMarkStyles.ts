@@ -36,6 +36,11 @@ const TooltipFooter = styled.div`
     line-height: 15px;
   }
 
+  & > span {
+    display: flex;
+    gap: 0.5rem;
+  }
+
   & > button {
     width: 40px;
     height: 20px;
@@ -54,4 +59,21 @@ const TooltipFooter = styled.div`
   }
 `;
 
-export { TooltipFooter, TooltipText, PointColorText };
+const Btn = styled.button`
+  width: 40px;
+  height: 20px;
+  border-radius: 5px;
+  background-color: #529ef7;
+  border: none;
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 10px;
+  font-weight: 700;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 90%;
+  }
+`;
+
+export { TooltipFooter, TooltipText, PointColorText, Btn };

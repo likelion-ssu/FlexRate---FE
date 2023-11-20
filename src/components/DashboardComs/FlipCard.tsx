@@ -2,14 +2,35 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import flip1 from '@/assets/imgs/Flip1.png';
 import upCircle from '../../assets/imgs/upCircle.png';
+import { useRecoilState } from 'recoil';
+import { CoachMarkStage } from '@/state/CoachMarkStage';
+import Tooltip3 from '../CoachMarksComs/Tooltip3';
 
-const CardContainer = styled.div<{ $isFlipped: boolean }>`
+const CardContainer = styled.div<{ $isFlipped: boolean; $isVisible: boolean }>`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
   border-radius: 8px;
-  overflow: hidden;
+  /* overflow: hidden; */
   cursor: pointer;
+  position: relative;
+
+  z-index: ${({ $isVisible }) => ($isVisible ? '10' : '1')};
+  //코치마크
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    bottom: -5px;
+    left: -5px; /* 테두리 바깥쪽 영역 */
+    z-index: ${({ $isVisible }) =>
+      $isVisible ? '-1' : '0'}; /* div 뒤에 배치 */
+    background-color: #fff;
+    border-radius: 10px;
+    display: ${({ $isVisible }) => ($isVisible ? 'block' : 'none')};
+  }
 `;
 
 const CardFlipper = styled.div<{ $isFlipped: boolean }>`
@@ -148,6 +169,17 @@ const CardBack = styled(CardFace)`
 `;
 
 const FlipCard: React.FC = () => {
+  const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
+
+  // stage 값에 접근
+  const { stage, mode } = coachMark;
+
+  // stage 값을 업데이트하는 함수
+  const updateStage = (newStage: number) => {
+    setCoachMark({ ...coachMark, stage: newStage });
+  };
+
+  let isVisible = mode && stage === 3;
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleClick = () => {
@@ -155,7 +187,11 @@ const FlipCard: React.FC = () => {
   };
 
   return (
-    <CardContainer onClick={handleClick} $isFlipped={isFlipped}>
+    <CardContainer
+      onClick={handleClick}
+      $isFlipped={isFlipped}
+      $isVisible={isVisible}
+    >
       <CardFlipper $isFlipped={isFlipped}>
         <CardFront>
           <div>
@@ -197,6 +233,7 @@ const FlipCard: React.FC = () => {
         </CardFront>
         <CardBack></CardBack>
       </CardFlipper>
+      {isVisible && <Tooltip3 />}
     </CardContainer>
   );
 };

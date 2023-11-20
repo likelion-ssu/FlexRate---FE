@@ -51,7 +51,7 @@ const Tooltip2 = () => {
         <span className="stageStatus">
           {stage}/{totalStage}
         </span>
-        <button
+        <S.Btn
           onClick={(e) => {
             e.preventDefault();
             setState((prev) => ({
@@ -61,7 +61,7 @@ const Tooltip2 = () => {
           }}
         >
           다음
-        </button>
+        </S.Btn>
       </S.TooltipFooter>
     </TooltipContainer>
   );
