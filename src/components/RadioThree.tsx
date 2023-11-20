@@ -5,6 +5,7 @@ interface radiothreeprops {
   prop2: string;
   prop3: string;
   commonname: string;
+  onRadioChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Wrapper = styled.div`
@@ -48,19 +49,38 @@ export const Wrapper = styled.div`
 `;
 
 const RadioThree = (props: radiothreeprops) => {
-  const { prop1, prop2, prop3, commonname } = props;
+  const { prop1, prop2, prop3, commonname, onRadioChange } = props;
+  // 라디오 버튼의 변경을 핸들링하는 함수
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onRadioChange(event);
+  };
   return (
     <Wrapper>
       <label>
-        <input type="radio" name={commonname}></input>
+        <input
+          type="radio"
+          name={commonname}
+          value={1}
+          onChange={handleRadioChange}
+        ></input>
         <span>{prop1}</span>
       </label>
       <label>
-        <input type="radio" name={commonname}></input>
+        <input
+          type="radio"
+          name={commonname}
+          value={2}
+          onChange={handleRadioChange}
+        ></input>
         <span>{prop2}</span>
       </label>
       <label>
-        <input type="radio" name={commonname}></input>
+        <input
+          type="radio"
+          name={commonname}
+          value={3}
+          onChange={handleRadioChange}
+        ></input>
         <span>{prop3}</span>
       </label>
     </Wrapper>

@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import profileImg from '@/assets/imgs/profileImg.png';
 
 import { useRecoilState } from 'recoil';
 import { CoachMarkStage } from '@/state/CoachMarkStage';
+import { useNavigate } from 'react-router-dom';
 
 const MainSidebar = () => {
   const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
+  const nav = useNavigate();
 
   // stage 값에 접근
   const { stage, mode } = coachMark;
@@ -20,7 +23,7 @@ const MainSidebar = () => {
     <Sidebar>
       <div id="profile">
         <span id="profile-img">
-          {/* <img src="" alt="프로필이미지"></img> */}
+          <img src={profileImg} alt="프로필이미지"></img>
         </span>
         <span id="profile-right">
           <p className="profile-intro">
@@ -41,7 +44,14 @@ const MainSidebar = () => {
       <List>
         <div className="title">분석</div>
         <ul className="list">
-          <li>내 신용점수 분석</li>
+          <li
+            onClick={(e) => {
+              e.preventDefault();
+              nav('/editinfo');
+            }}
+          >
+            내 신용정보 수정
+          </li>
         </ul>
       </List>
       <List>
@@ -87,6 +97,10 @@ const Sidebar = styled.aside`
       border-radius: 50px;
       overflow: hidden;
       background-color: #f1f1f1;
+
+      img {
+        width: 100%;
+      }
     }
 
     #profile-right {

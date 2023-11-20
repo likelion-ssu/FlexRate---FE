@@ -1,10 +1,16 @@
 import { atom } from 'recoil';
 
-export const output = atom({
+interface outputProps {
+  Score: number;
+  maxRate: number;
+  minRate: number;
+}
+
+export const output = atom<outputProps>({
   key: 'output',
   default: {
-    Score: '',
-    maxRate: '',
-    minRate: '',
+    Score: 0,
+    maxRate: 0,
+    minRate: 0,
   },
 });

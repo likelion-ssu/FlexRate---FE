@@ -1,6 +1,11 @@
 import RadioThree from '@/components/RadioThree';
 import { BasicInput, Button } from '@/styles/BasicStyles';
 import styled from 'styled-components';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { output } from '@/state/output';
+import { LoanInfo } from '@/state/LoanInfo';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Article = styled.article`
   display: flex;
@@ -8,6 +13,7 @@ const Article = styled.article`
   align-items: flex-start;
   min-width: 567px;
   margin-top: 126px;
+  gap: 0.5rem;
 
   ul,
   li {
@@ -166,6 +172,35 @@ const ApplicationSec = styled.section`
 `;
 
 const LoanQualification = () => {
+  const nav = useNavigate();
+  const outputvalue = useRecoilValue(output);
+  const ave = (outputvalue.minRate + outputvalue.maxRate) / 2;
+
+  const [payment, setPayment] = useState('');
+  const [period, setPeriod] = useState('');
+  const [loaninfo, setloaninfo] = useRecoilState(LoanInfo);
+  const { payment_date } = loaninfo;
+
+  //radio값 변경
+  const onRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPeriod(e.target.value);
+  };
+
+  //제출
+  const submitLoan = () => {
+    const _period = parseInt(period);
+    const _payment = parseInt(payment);
+
+    setloaninfo((prev) => ({
+      ...prev,
+      loan_maturity_date: payment_date + _period,
+      payment: _payment,
+      interest: ave,
+      limit: 3000000,
+    }));
+
+    nav('/agree');
+  };
   return (
     <Article>
       <h2>
@@ -181,7 +216,7 @@ const LoanQualification = () => {
           </li>
           <li>
             <span>대출 심사 일자</span>
-            <span>2023.10.03</span>
+            <span>2023.11.21</span>
           </li>
           <li>
             <span>대출 가능 한도</span>
@@ -192,13 +227,16 @@ const LoanQualification = () => {
           <li>
             <span>초기 대출 금리</span>
             <span>
-              연 <PrimaryColor>14.5%</PrimaryColor>
+              연 <PrimaryColor>{ave}</PrimaryColor>
             </span>
           </li>
           <li>
             <span>금리 범위</span>
             <span>
-              연 <PrimaryColor>2.1% ~ 15.1%</PrimaryColor>
+              연{' '}
+              <PrimaryColor>
+                {outputvalue.minRate}% ~ {outputvalue.maxRate}%
+              </PrimaryColor>
             </span>
           </li>
           <li className="detailFooter">
@@ -220,7 +258,15 @@ const LoanQualification = () => {
         <ul className="applicationbox">
           <li className="loanpricebox">
             <label>대출 금액</label>
-            <BasicInput placeholder="숫자만 입력하세요"></BasicInput>
+            <BasicInput
+              placeholder="숫자만 입력하세요"
+              name="payment"
+              value={payment}
+              onChange={(e) => {
+                e.preventDefault();
+                setPayment(e.target.value);
+              }}
+            ></BasicInput>
             <p className="inputbottom">
               대출 금액은 <PrimaryColor>최대 한도 금액</PrimaryColor>까지
               가능합니다.
@@ -233,10 +279,13 @@ const LoanQualification = () => {
               prop2="2년"
               prop3="3년"
               commonname="period"
+              onRadioChange={onRadioChange}
             />
           </li>
           <li>
-            <Button height="55px">대출 신청하기</Button>
+            <Button height="55px" onClick={submitLoan}>
+              대출 신청하기
+            </Button>
           </li>
         </ul>
       </ApplicationSec>

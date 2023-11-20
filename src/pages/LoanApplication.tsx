@@ -241,17 +241,17 @@ const LoanApplication = () => {
     }
 
     //나머지 저장
-    setMyFeatures({
-      ...myFeatures,
+    setMyFeatures((prev) => ({
+      ...prev,
       credit_score: parseInt(loanValue.creditScore, 10),
       yearly_income: parseInt(loanValue.income, 10),
       company_enter_month: duration,
-    });
+    }));
 
     console.log(myFeatures);
 
     runModel();
-    // navigate('/qualification');
+    navigate('/qualification');
   };
 
   const runModel = () => {
@@ -262,32 +262,32 @@ const LoanApplication = () => {
     const model = new LogisticRegression();
     const newScore = model.predictScore(scaledFeatures);
     console.log('newScore', newScore); //신용점수
-    setMyOutput({
-      ...myOutput,
-      Score: newScore.toString(),
-    });
+    setMyOutput((prev) => ({
+      ...prev,
+      Score: newScore,
+    }));
 
     ///////////////////////////
     //금리 산출 모델
     // 예시: 신용평가 점수가 700일 때의 금리 범위를 계산
     const rateResult = calculateInterestRateRange(newScore);
     console.log('rateResult', rateResult);
-    setMyOutput({
-      ...myOutput,
-      maxRate: rateResult.maxRate,
-      minRate: rateResult.minRate,
-    });
+    setMyOutput((prev) => ({
+      ...prev,
+      maxRate: rateResult.maxRate - '0',
+      minRate: rateResult.minRate - '0',
+    }));
 
     ///////////////////////////
     //대출 한도 모델
     const rawSample = {
-      0: 30,
+      0: 23,
       1: 0,
       2: myFeatures.credit_score,
       3: myFeatures.yearly_income,
       4: myFeatures.company_enter_month,
       5: 1,
-      6: 50000000,
+      6: 0,
       7: 0,
       8: 0,
       9: 3.5,
@@ -414,6 +414,7 @@ const LoanApplication = () => {
           prop2="전세"
           prop3="월세"
           commonname="homeType"
+          onRadioChange={() => {}}
         />
         <div>
           <p>개인회생자 여부</p>
