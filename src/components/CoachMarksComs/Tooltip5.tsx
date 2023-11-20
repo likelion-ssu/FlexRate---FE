@@ -31,20 +31,19 @@ const arrow = [
     top: '50%',
     right: '100%',
     marginTop: '-5px', // 화살표의 높이에 따라 조정 가능
-    borderColor: 'transparent transparent transparent black',
+    borderColor: 'transparent black transparent transparent',
   },
 ];
 
-const Tooltip2 = () => {
+const Tooltip5 = () => {
   const [state, setState] = useRecoilState(CoachMarkStage);
   const { stage, totalStage } = state;
   return (
-    <TooltipContainer $directionIndex={1}>
+    <TooltipContainer $directionIndex={3}>
       <S.TooltipText>
-        <div>나의 대출 내역을 바탕으로</div>
+        <div>막대 그래프 위에 마우스를 올려보세요. </div>
         <div>
-          <S.PointColorText>대출금 상환 및 납입 정보</S.PointColorText>를
-          알려드려요!
+          <S.PointColorText>월별 대출 금리 변화</S.PointColorText>를 보여드려요!
         </div>
       </S.TooltipText>
       <S.TooltipFooter>
@@ -79,8 +78,8 @@ const TooltipContainer = styled.span<TooltipProps>`
   padding: 20px;
   position: absolute;
   z-index: 20;
-  bottom: -10rem;
-  left: 20rem;
+  top: 5rem;
+  right: -20rem;
 
   &::after {
     content: '';
@@ -99,4 +98,4 @@ const TooltipContainer = styled.span<TooltipProps>`
   justify-content: space-between;
 `;
 
-export default Tooltip2;
+export default Tooltip5;

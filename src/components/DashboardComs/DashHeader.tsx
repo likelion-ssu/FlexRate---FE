@@ -130,7 +130,7 @@ const DashHeader = () => {
           <Bold>5회차</Bold>
         </div>
       </LastContainer>
-      <Tooltip2 />
+      {isVisible && <Tooltip2 />}
     </DashHeaderWrapper>
   );
 };

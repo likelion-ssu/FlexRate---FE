@@ -15,7 +15,7 @@ const LoanHistory = () => {
     setCoachMark({ ...coachMark, stage: newStage });
   };
 
-  let isVisible = mode && stage === 1;
+  let isVisible = mode && stage === 6;
   return (
     <Dash.Wrapper $isVisible={isVisible}>
       <Dash.Title>나의 대출 히스토리</Dash.Title>
