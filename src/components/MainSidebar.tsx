@@ -47,13 +47,13 @@ const MainSidebar = () => {
 };
 
 const Sidebar = styled.aside`
-  padding: 30px;
+  padding: 1.5rem;
   position: fixed;
   top: 64px;
   left: 0px;
   border-right: 1px solid var(--Gray3, #d9d9d9);
   background: #f9fafc;
-  width: 205px;
+  width: 11.5rem;
   height: 100%;
   display: flex;
   flex-direction: column;

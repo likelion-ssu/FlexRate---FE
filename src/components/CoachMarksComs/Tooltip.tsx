@@ -72,8 +72,8 @@ const TooltipContainer = styled.span<TooltipProps>`
   padding: 20px;
   position: absolute;
   z-index: 20;
-  bottom: -150px;
-  left: 100px;
+  bottom: -10rem;
+  left: 12rem;
 
   &::after {
     content: '';

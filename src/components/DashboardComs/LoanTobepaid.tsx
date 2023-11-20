@@ -63,15 +63,16 @@ const Dash = {
     background-color: #fff;
     box-sizing: border-box;
     border-radius: 8px;
-    border: 1px solid var(--Gray3, #d9d9d9);
+    /* border: 1px solid var(--Gray3, #d9d9d9); */
+    outline: 1px solid var(--Gray3, #d9d9d9);
+    outline-offset: -1px; /* 내부로 2px 만큼 옮김 */
     padding: 22px;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-
+    z-index: 10;
     //코치마크
 
-    z-index: 10;
     &::before {
       content: '';
       position: absolute;

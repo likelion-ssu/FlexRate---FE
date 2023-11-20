@@ -76,7 +76,7 @@ const Dashboard = () => {
 };
 
 const Wrapper = styled.div<{ $isNarrowScreen: boolean; $isVisible: boolean }>`
-  margin-left: ${(props) => (props.$isNarrowScreen ? '265px' : '0')};
+  margin-left: ${(props) => (props.$isNarrowScreen ? '14.2rem' : '0')};
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -96,11 +96,9 @@ const Wrapper = styled.div<{ $isNarrowScreen: boolean; $isVisible: boolean }>`
 
 const MainDashBoard = styled.span<{ $isNarrowScreen: boolean }>`
   position: absolute;
-  width: ${(props) => (props.$isNarrowScreen ? 'calc(100% - 300px)' : '100%')};
+  width: ${(props) => (props.$isNarrowScreen ? 'calc(100% - 16rem)' : '100%')};
   height: calc(100% - 150px);
-  /* background-color: beige; */
-  /* background-color: beige; */
-  margin: 30px 15px;
+  margin: 1.5rem 1rem;
 `;
 
 const GridContainer = styled.div`
