@@ -113,7 +113,7 @@ const Wrapper = styled.div<{ $isNarrowScreen: boolean; $isVisible: boolean }>`
 const MainDashBoard = styled.span<{ $isNarrowScreen: boolean }>`
   position: absolute;
   width: ${(props) => (props.$isNarrowScreen ? 'calc(100% - 18rem)' : '100%')};
-  height: calc(100% - 150px);
+  height: calc(100% - 110px);
   margin: 1.5rem 1rem;
 `;
 
