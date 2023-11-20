@@ -2,6 +2,7 @@ import RadioThree from '@/components/RadioThree';
 import RadioTwo from '@/components/RadioTwo';
 import { BasicInput, Button } from '@/styles/BasicStyles';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Dropdown from '@/components/Dropdown';
 import DatePicker from 'react-datepicker';
@@ -13,6 +14,10 @@ const Container = styled.div`
   flex-direction: column;
   min-width: 567px;
   margin-top: 116px;
+
+  & > p {
+    margin: 1em 0;
+  }
 
   & > h2 {
     font-family: Pretendard;
@@ -72,6 +77,7 @@ const Wrapper = styled.div`
   margin-top: 75px;
   & > p {
     margin-top: 25px;
+    margin-bottom: 1em;
   }
 `;
 const Credit = styled(Wrapper)`
@@ -84,6 +90,7 @@ const Credit = styled(Wrapper)`
     & > p {
       text-align: left;
       width: 50%;
+      margin: 1em 0;
     }
   }
 `;
@@ -92,6 +99,8 @@ const CreditInput = styled(HalfInput)`
 `;
 
 const LoanApplication = () => {
+  const navigate = useNavigate();
+
   const [loanValue, setLoanValue] = useState({
     academicName: '',
     selectedDate: new Date(),
@@ -109,7 +118,19 @@ const LoanApplication = () => {
   const jobOptions = ['직장인', '사업자', '프리랜서', '기타'];
   const employmentOptions = ['정규직', '계약직', '기타'];
   const academicTypeOptions = ['고졸', '전문대졸', '대졸', '석사', '박사'];
-  const purposeOptions = ['목적1', '목적2', '목적3', '목적4', '목적5'];
+  const purposeOptions = [
+    '주택 구매',
+    '교육비',
+    '사업/창업',
+    '부채 통합',
+    '기타',
+  ];
+
+  const apply = () => {
+    //userFeatures에 정보 저장
+    //goto qulification
+    navigate('/qualification');
+  };
 
   const handleinput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoanValue({
@@ -248,7 +269,7 @@ const LoanApplication = () => {
         />
       </Wrapper>
 
-      <button>다음 단계 (1/2)</button>
+      <button onClick={apply}>신청하기</button>
     </Container>
   );
 };
