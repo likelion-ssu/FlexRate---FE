@@ -2,6 +2,7 @@ import RadioThree from '@/components/RadioThree';
 import RadioTwo from '@/components/RadioTwo';
 import { BasicInput, Button } from '@/styles/BasicStyles';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Dropdown from '@/components/Dropdown';
 import DatePicker from 'react-datepicker';
@@ -14,6 +15,10 @@ const Container = styled.div`
   flex-direction: column;
   min-width: 567px;
   margin-top: 116px;
+
+  & > p {
+    margin: 1em 0;
+  }
 
   & > h2 {
     font-family: Pretendard;
@@ -63,6 +68,7 @@ const Wrapper = styled.div`
   margin-top: 75px;
   & > p {
     margin-top: 25px;
+    margin-bottom: 1em;
   }
 `;
 const Credit = styled(Wrapper)`
@@ -75,6 +81,7 @@ const Credit = styled(Wrapper)`
     & > p {
       text-align: left;
       width: 50%;
+      margin: 1em 0;
     }
   }
 `;
@@ -102,19 +109,8 @@ const CancelButton = styled(CompleteButton)`
 `;
 
 const EditingInfo = () => {
+  const navigate = useNavigate();
   const [myLoanApplyInfo, setMyLoanApplyInfo] = useRecoilState(loanApplyInfo);
-
-  // const [academicName, setAcademicName] = useState('');
-  // const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  // const [income, setIncome] = useState('');
-  // const [creditScore, setCreditScore] = useState('');
-  // const [homeType, setHomeType] = useState('');
-  // const [personalRecovery, setPersonalRecovery] = useState(
-  //   myLoanApplyInfo.myPersonalRecovery,
-  // );
-  // const [recoveryPayment, setRecoveryPayment] = useState(
-  //   myLoanApplyInfo.myRecoveryPayment,
-  // );
 
   const [loanValue, setLoanValue] = useState({
     academicName: '',
@@ -130,43 +126,16 @@ const EditingInfo = () => {
     selectedPurpose: '',
   });
 
-  // //dropdown
-  // const [selectedJob, setSelectedJob] = useState('');
-  // const [selectedEmployment, setSelectedEmployment] = useState('');
-  // const [selectedAcademicType, setSelectedAcademic] = useState('');
-  // const [selectedPurpose, setSelectedPurpose] = useState('');
   const jobOptions = ['직장인', '사업자', '프리랜서', '기타'];
   const employmentOptions = ['정규직', '계약직', '기타'];
   const academicTypeOptions = ['고졸', '전문대졸', '대졸', '석사', '박사'];
   const purposeOptions = ['목적1', '목적2', '목적3', '목적4', '목적5'];
 
-  // const handleJobChange = (value: string) => {
-  //   setSelectedJob(value);
-  // };
-  // const handleEmploymentChange = (value: string) => {
-  //   setSelectedEmployment(value);
-  // };
-  // const handleAcademicChange = (value: string) => {
-  //   setSelectedAcademic(value);
-  // };
-  // const handlePurposeChange = (value: string) => {
-  //   setSelectedPurpose(value);
-  // };
-  // const handleAcademicNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setAcademicName(e.target.value);
-  // };
-  // const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setIncome(e.target.value);
-  // };
-  // const handleCreditScoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setCreditScore(e.target.value);
-  // };
-  // const personalRecoveryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setPersonalRecovery(e.target.value);
-  // };
-  // const recoveryPaymentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setRecoveryPayment(e.target.value);
-  // };
+  const apply = () => {
+    //userFeatures에 정보 저장
+    //goto qulification
+    navigate('/qualification');
+  };
 
   const handleinput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoanValue({
@@ -311,8 +280,12 @@ const EditingInfo = () => {
         />
       </Wrapper>
 
-      <CompleteButton>수정 완료 및 다시 심사 받기</CompleteButton>
-      <CancelButton>그만두기</CancelButton>
+      <CompleteButton onClick={apply}>
+        수정 완료 및 다시 심사 받기
+      </CompleteButton>
+      <CancelButton onClick={() => navigate('/dashboard')}>
+        그만두기
+      </CancelButton>
     </Container>
   );
 };
