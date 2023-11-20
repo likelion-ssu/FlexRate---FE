@@ -42,8 +42,9 @@ const GlobalStyle = createGlobalStyle`
 }
 
     body {
-    font-family: 'Pretendard',serif;
-    }
+    font-family: 'Pretendard','SUIT',serif;
+    
+}
 `;
 
 export default GlobalStyle;

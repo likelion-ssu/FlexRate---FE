@@ -2,9 +2,15 @@ import MainSidebar from '@/components/MainSidebar';
 import { styled } from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import DashHeader from '@/components/DashboardComs/DashHeader';
-import RateChange from '@/components/DashboardComs/RateChange';
 
 import LoanTobepaid from '@/components/DashboardComs/LoanTobepaid';
+import RateChange from '@/components/DashboardComs/RateChange';
+import Notification from '@/components/DashboardComs/Notification';
+import LoanHistory from '@/components/DashboardComs/LoanHistory';
+import Test from '@/components/DashboardComs/FlipCard';
+
+import { useRecoilState } from 'recoil';
+import { CoachMarkStage } from '@/state/CoachMarkStage';
 
 const useNarrowScreen = () => {
   // 초기 상태 설정
@@ -26,21 +32,30 @@ const useNarrowScreen = () => {
 };
 /**대시보드 페이지 */
 const Dashboard = () => {
+  const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
+
+  // stage 값에 접근
+  const { mode } = coachMark;
+
   const isNarrowScreen = useNarrowScreen();
 
   return (
-    <Wrapper $isNarrowScreen={isNarrowScreen}>
+    <Wrapper $isNarrowScreen={isNarrowScreen} $isVisible={mode}>
       {isNarrowScreen ? <MainSidebar /> : <></>}
       <MainDashBoard $isNarrowScreen={isNarrowScreen}>
         <div id="Date"></div>
         <GridContainer>
           <div className="item1">
             <DashHeader />
-          </div>{' '}
+          </div>
           {/*대출상품, 상환날짜, 납부 회차*/}
-          <div className="item2">2</div>
+          <div className="item2">
+            <Notification />
+          </div>
           {/*알림*/}
-          <div className="item3">3</div>
+          <div className="item3">
+            <Test />
+          </div>
           {/*대출금리,신용평가 점수*/}
           <div className="item4">
             <LoanTobepaid></LoanTobepaid>
@@ -50,7 +65,9 @@ const Dashboard = () => {
             <RateChange />
           </div>
           {/*금리변화*/}
-          <div className="item6">6</div>
+          <div className="item6">
+            <LoanHistory />
+          </div>
           {/*대출 히스토리*/}
         </GridContainer>
       </MainDashBoard>
@@ -58,15 +75,27 @@ const Dashboard = () => {
   );
 };
 
-const Wrapper = styled.div<{ $isNarrowScreen: boolean }>`
+const Wrapper = styled.div<{ $isNarrowScreen: boolean; $isVisible: boolean }>`
   margin-left: ${(props) => (props.$isNarrowScreen ? '265px' : '0')};
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+
+  &::before {
+    display: ${({ $isVisible }) => ($isVisible ? 'block' : 'none')};
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(25, 25, 25, 0.85); // 어두운 오버레이
+    z-index: 3; // 오버레이 z-index
+  }
 `;
 
 const MainDashBoard = styled.span<{ $isNarrowScreen: boolean }>`
-  position: fixed;
+  position: absolute;
   width: ${(props) => (props.$isNarrowScreen ? 'calc(100% - 300px)' : '100%')};
   height: calc(100% - 150px);
   /* background-color: beige; */
@@ -86,23 +115,18 @@ const GridContainer = styled.div`
   } /* 나의 대출 상품,이번달 대출금 상환 날짜, 대출금 납부 회차 */
   .item2 {
     grid-area: 1 / 4 / 4 / 5;
-    background-color: black;
   } /* 첫 번째 행, 3~4열 */
   .item3 {
     grid-area: 2 / 1 / 4 / 2;
-    background-color: black;
   } /* 2~3행, 첫 번째 열 */
   .item4 {
     grid-area: 2 / 2 / 4 / 4;
-    /* background-color: black; */
   } /* 2~3행, 2~3열 */
   .item5 {
     grid-area: 4 / 1 / 6 / 3;
-    /* background-color: black; */
   } /* 4~5행, 1~2열 */
   .item6 {
     grid-area: 4 / 3 / 6 / 5;
-    background-color: black;
   } /* 4~5행, 3~4열 */
 `;
 
