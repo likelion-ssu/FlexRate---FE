@@ -15,3 +15,14 @@ export const CoachMarkStage = atom<CoachMarkStageState>({
     mode: false,
   },
 });
+
+interface ShowCoachMark {
+  beginer: boolean;
+}
+
+export const ShowCoachMark = atom<ShowCoachMark>({
+  key: 'ShowCoachMark',
+  default: {
+    beginer: false,
+  },
+});

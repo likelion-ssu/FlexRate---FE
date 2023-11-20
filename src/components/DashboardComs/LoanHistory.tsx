@@ -1,9 +1,23 @@
 import React from 'react';
 import { styled } from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { CoachMarkStage } from '@/state/CoachMarkStage';
+import Tooltip6 from '../CoachMarksComs/Tooltip6';
 
 const LoanHistory = () => {
+  const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
+
+  // stage 값에 접근
+  const { stage, mode } = coachMark;
+
+  // stage 값을 업데이트하는 함수
+  const updateStage = (newStage: number) => {
+    setCoachMark({ ...coachMark, stage: newStage });
+  };
+
+  let isVisible = mode && stage === 6;
   return (
-    <Dash.Wrapper>
+    <Dash.Wrapper $isVisible={isVisible}>
       <Dash.Title>나의 대출 히스토리</Dash.Title>
       <Dash.Cate>
         <span>
@@ -48,22 +62,41 @@ const LoanHistory = () => {
           <p>상환 기록이 없습니다</p>
         </BoardItem>
       </Dash.ScrollBoard>
+      {isVisible && <Tooltip6 />}
     </Dash.Wrapper>
   );
 };
 
 const Dash = {
-  Wrapper: styled.div`
+  Wrapper: styled.div<{ $isVisible: boolean }>`
     position: relative;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
     border-radius: 8px;
-    border: 1px solid var(--Gray3, #d9d9d9);
+    /* border: 1px solid var(--Gray3, #d9d9d9); */
+    outline: 1px solid var(--Gray3, #d9d9d9);
+    outline-offset: -1px;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     transition: 0.5s; /* 변화가 있을 때 시간차 주기*/
+    z-index: ${({ $isVisible }) => ($isVisible ? '10' : '1')};
+    //코치마크
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      bottom: -5px;
+      left: -5px; /* 테두리 바깥쪽 영역 */
+      z-index: ${({ $isVisible }) =>
+        $isVisible ? '-1' : 'none'}; /* div 뒤에 배치 */
+      background-color: #fff;
+      border-radius: 10px;
+      display: ${({ $isVisible }) => ($isVisible ? 'block' : 'none')};
+    }
 
     &:hover {
       transform: translateY(-2px); /*위로 5px이동*/

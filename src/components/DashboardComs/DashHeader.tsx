@@ -1,16 +1,39 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { CoachMarkStage } from '@/state/CoachMarkStage';
+import Tooltip2 from '../CoachMarksComs/Tooltip2';
 
-const DashHeaderWrapper = styled.div`
+const DashHeaderWrapper = styled.div<{ $isVisible: boolean }>`
   box-sizing: border-box;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;
-  border: 1px solid #d9d9d9;
+  /* border: 1px solid #d9d9d9; */
+  outline: 1px solid var(--Gray3, #d9d9d9);
+  outline-offset: -1px;
   border-radius: 8px;
   padding: 17px 29px;
   gap: 1.5em;
+  position: relative;
+
+  z-index: ${({ $isVisible }) => ($isVisible ? '10' : '1')};
+  //코치마크
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    bottom: -5px;
+    left: -5px; /* 테두리 바깥쪽 영역 */
+    z-index: ${({ $isVisible }) =>
+      $isVisible ? '-1' : '0'}; /* div 뒤에 배치 */
+    background-color: #fff;
+    border-radius: 10px;
+    display: ${({ $isVisible }) => ($isVisible ? 'block' : 'none')};
+  }
 `;
 
 const Container = styled.div`
@@ -59,8 +82,20 @@ const Box = styled.span<{ $backgroundColor: string }>`
 `;
 
 const DashHeader = () => {
+  const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
+
+  // stage 값에 접근
+  const { stage, mode } = coachMark;
+
+  // stage 값을 업데이트하는 함수
+  const updateStage = (newStage: number) => {
+    setCoachMark({ ...coachMark, stage: newStage });
+  };
+
+  let isVisible = mode && stage === 2;
+
   return (
-    <DashHeaderWrapper>
+    <DashHeaderWrapper $isVisible={isVisible}>
       <Container>
         <div>
           <Title $borderColor="#EB9475">나의 대출 상품</Title>
@@ -95,6 +130,7 @@ const DashHeader = () => {
           <Bold>5회차</Bold>
         </div>
       </LastContainer>
+      {isVisible && <Tooltip2 />}
     </DashHeaderWrapper>
   );
 };

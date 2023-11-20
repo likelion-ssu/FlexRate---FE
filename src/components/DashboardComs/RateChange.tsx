@@ -4,16 +4,38 @@ import styled from 'styled-components';
 import '../../styles/CustomTooltip.css';
 import up from '../../assets/imgs/up.png';
 import down from '../../assets/imgs/down.png';
+import { useRecoilState } from 'recoil';
+import { CoachMarkStage } from '@/state/CoachMarkStage';
+import Tooltip5 from '../CoachMarksComs/Tooltip5';
 
-const Container = styled.div`
+const Container = styled.div<{ $isVisible: boolean }>`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  border: 1px solid #d9d9d9;
+  /* border: 1px solid #d9d9d9; */
+  outline: 1px solid var(--Gray3, #d9d9d9);
+  outline-offset: -1px;
   border-radius: 8px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  position: relative;
+
+  z-index: ${({ $isVisible }) => ($isVisible ? '10' : '1')};
+  //코치마크
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    bottom: -5px;
+    left: -5px; /* 테두리 바깥쪽 영역 */
+    z-index: ${({ $isVisible }) =>
+      $isVisible ? '-1' : '0'}; /* div 뒤에 배치 */
+    background-color: #fff;
+    border-radius: 10px;
+    display: ${({ $isVisible }) => ($isVisible ? 'block' : 'none')};
+  }
 `;
 const Wrapper = styled.div`
   padding: 1.5em 2em 0 2em;
@@ -53,6 +75,17 @@ const Chart = styled.div`
 `;
 
 const RateChange = () => {
+  const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
+
+  // stage 값에 접근
+  const { stage, mode } = coachMark;
+
+  // stage 값을 업데이트하는 함수
+  const updateStage = (newStage: number) => {
+    setCoachMark({ ...coachMark, stage: newStage });
+  };
+
+  let isVisible = mode && stage === 5;
   const lineData = [12, 14, 16, 14, 16, 13, 11, 14, 12, 12, 13, 15];
   const blockData = lineData.map((item) => item * 1.25);
   const duration = [
@@ -181,7 +214,7 @@ const RateChange = () => {
   }, []);
 
   return (
-    <Container>
+    <Container $isVisible={isVisible}>
       <Wrapper>
         <p>나의 대출 금리 변화</p>
         <div>
@@ -194,6 +227,7 @@ const RateChange = () => {
         </div>
       </Wrapper>
       <Chart id="chart"></Chart>
+      {isVisible && <Tooltip5 />}
     </Container>
   );
 };
