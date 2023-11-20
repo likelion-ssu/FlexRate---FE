@@ -1,6 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import * as S from '@/styles/CoachMarkStyles';
+import { useRecoilState } from 'recoil';
+import { CoachMarkStage } from '@/state/CoachMarkStage';
 
 interface TooltipProps {
   $directionIndex: number; // 화살표 방향을 나타내는 인덱스
@@ -33,19 +35,31 @@ const arrow = [
   },
 ];
 
-const Tooltip4 = () => {
+const Tooltip2 = () => {
+  const [state, setState] = useRecoilState(CoachMarkStage);
+  const { stage } = state;
   return (
     <TooltipContainer $directionIndex={1}>
       <S.TooltipText>
-        <div>가장 핵심정보!</div>
+        <div>나의 대출 내역을 바탕으로</div>
         <div>
-          <S.PointColorText>나의 이번 달 대출금</S.PointColorText>을 한 눈에
-          확인해요.
+          <S.PointColorText>대출금 상환 및 납입 정보</S.PointColorText>를
+          알려드려요!
         </div>
       </S.TooltipText>
       <S.TooltipFooter>
         <span className="stageStatus">stage/totalstage</span>
-        <button>다음</button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            setState((prev) => ({
+              ...prev,
+              stage: stage + 1,
+            }));
+          }}
+        >
+          다음
+        </button>
       </S.TooltipFooter>
     </TooltipContainer>
   );
@@ -56,7 +70,7 @@ const TooltipContainer = styled.span<TooltipProps>`
   visibility: visible;
   box-sizing: border-box;
   width: 298px;
-  height: 111px;
+  height: 130px;
   background-color: black;
   color: white;
   border-radius: 13px;
@@ -64,7 +78,7 @@ const TooltipContainer = styled.span<TooltipProps>`
   position: absolute;
   z-index: 20;
   bottom: -10rem;
-  left: 12rem;
+  left: 20rem;
 
   &::after {
     content: '';
@@ -83,4 +97,4 @@ const TooltipContainer = styled.span<TooltipProps>`
   justify-content: space-between;
 `;
 
-export default Tooltip4;
+export default Tooltip2;
