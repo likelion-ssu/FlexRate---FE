@@ -16,5 +16,4 @@ function calculateInterestRateRange(creditScore: number) {
   return { minRate: minRate.toFixed(2), maxRate: maxRate.toFixed(2) };
 }
 
-// 예시: 신용평가 점수가 700일 때의 금리 범위를 계산
-console.log(calculateInterestRateRange(700)); // 결과 예: { minRate: "X.XX%", maxRate: "Y.YY%" }
+export default calculateInterestRateRange;

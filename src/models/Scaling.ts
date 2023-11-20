@@ -18,14 +18,24 @@ export interface Features {
   houseown_type_전월세: number;
 }
 
-export default function Scaling(features: Features): Features {
-  features.credit_score = (features.credit_score - 60) / (1000 - 60);
-  features.yearly_income = features.yearly_income / 10000000000;
-  features.company_enter_month =
-    features.company_enter_month / 122.15616438356165;
-  features.existing_loan_cnt = features.existing_loan_cnt / 229;
-  features.existing_loan_amt = features.existing_loan_amt / 7512000000;
-  features.debt_rate = features.debt_rate / 10000000000.0;
-  // 다른 범주형 변수들은 그대로 유지
-  return features;
+export default function Scaling(features: Features): number[] {
+  return [
+    (features.credit_score - 60) / (1000 - 60),
+    features.yearly_income / 10000000000,
+    features.company_enter_month / 122.15616438356165,
+    features.existing_loan_cnt / 229,
+    features.existing_loan_amt / 7512000000,
+    features.debt_rate / 10000000000.0,
+    features.income_type_EARNEDINCOME2,
+    features.income_type_FREELANCER,
+    features.income_type_OTHERINCOME,
+    features.income_type_PRACTITIONER,
+    features.income_type_PRIVATEBUSINESS,
+    features.employment_type_기타,
+    features.employment_type_일용직,
+    features.employment_type_정규직,
+    features.houseown_type_배우자,
+    features.houseown_type_자가,
+    features.houseown_type_전월세,
+  ];
 }

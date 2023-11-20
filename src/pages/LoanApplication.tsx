@@ -7,7 +7,13 @@ import styled from 'styled-components';
 import Dropdown from '@/components/Dropdown';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { faL } from '@fortawesome/free-solid-svg-icons';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { userFeatures } from '@/state/userFeatures';
+import Scaling from '../models/Scaling';
+import predict from '../models/calcLoanLimit';
+import LogisticRegression from '../models/calScore';
+import calculateInterestRateRange from '../models/calculateInterestRateRange';
+import { output } from '@/state/output';
 
 const Container = styled.div`
   display: flex;
@@ -100,6 +106,8 @@ const CreditInput = styled(HalfInput)`
 
 const LoanApplication = () => {
   const navigate = useNavigate();
+  const [myFeatures, setMyFeatures] = useRecoilState(userFeatures);
+  const [myOutput, setMyOutput] = useRecoilState(output);
 
   const [loanValue, setLoanValue] = useState({
     academicName: '',
@@ -115,8 +123,8 @@ const LoanApplication = () => {
     selectedPurpose: '',
   });
 
-  const jobOptions = ['직장인', '사업자', '프리랜서', '기타'];
-  const employmentOptions = ['정규직', '계약직', '기타'];
+  const jobOptions = ['직장인', '사업자', '프리랜서', '전문직', '기타'];
+  const employmentOptions = ['정규직', '일용직', '기타'];
   const academicTypeOptions = ['고졸', '전문대졸', '대졸', '석사', '박사'];
   const purposeOptions = [
     '주택 구매',
@@ -126,10 +134,180 @@ const LoanApplication = () => {
     '기타',
   ];
 
+  //근속년수 계산 함수
+  const calcDuration = () => {
+    const currentDate = new Date(); // 현재 날짜
+    const pastDate = new Date(loanValue.selectedDate); // 비교할 과거의 날짜
+
+    // 두 날짜 간의 연도와 월 차이 계산
+    let yearDifference = currentDate.getFullYear() - pastDate.getFullYear();
+    let monthDifference = currentDate.getMonth() - pastDate.getMonth();
+
+    // 과거 날짜가 현재 날짜보다 월에서 더 크면 연도에서 1을 빼고 월 차이를 조정
+    if (monthDifference < 0) {
+      yearDifference--;
+      monthDifference += 12;
+    }
+
+    // 연도와 월 차이를 합산하여 소수점으로 표현 후 첫째 자리에서 반올림
+    return Math.round((yearDifference + monthDifference / 12) * 10) / 10;
+  };
+
   const apply = () => {
-    //userFeatures에 정보 저장
-    //goto qulification
-    navigate('/qualification');
+    const duration = calcDuration();
+
+    //home_type 추가 해야함
+
+    //근무형태 저장
+    switch (loanValue.selectedEmployment) {
+      case '정규직':
+        setMyFeatures({
+          ...myFeatures,
+          employment_type_기타: 0,
+          employment_type_일용직: 0,
+          employment_type_정규직: 1,
+        });
+        break;
+      case '일용직':
+        setMyFeatures({
+          ...myFeatures,
+          employment_type_기타: 0,
+          employment_type_일용직: 1,
+          employment_type_정규직: 0,
+        });
+        break;
+      case '기타':
+        setMyFeatures({
+          ...myFeatures,
+          employment_type_기타: 1,
+          employment_type_일용직: 0,
+          employment_type_정규직: 0,
+        });
+        break;
+    }
+
+    //수익유형 저장
+    switch (loanValue.selectedJob) {
+      case '직장인':
+        setMyFeatures({
+          ...myFeatures,
+          income_type_EARNEDINCOME2: 1, // 수익 유형 근로소득2 (4대보험 미가입)
+          income_type_FREELANCER: 0, // 수익 유형 프리랜서
+          income_type_OTHERINCOME: 0, // 수익 유형 기타 소득
+          income_type_PRACTITIONER: 0, // 수익 유형 전문직
+          income_type_PRIVATEBUSINESS: 0, // 수익 유형 개인 사업
+        });
+        break;
+      case '프리랜서':
+        setMyFeatures({
+          ...myFeatures,
+          income_type_EARNEDINCOME2: 0, // 수익 유형 근로소득2 (4대보험 미가입)
+          income_type_FREELANCER: 1, // 수익 유형 프리랜서
+          income_type_OTHERINCOME: 0, // 수익 유형 기타 소득
+          income_type_PRACTITIONER: 0, // 수익 유형 전문직
+          income_type_PRIVATEBUSINESS: 0, // 수익 유형 개인 사업
+        });
+        break;
+      case '전문직':
+        setMyFeatures({
+          ...myFeatures,
+          income_type_EARNEDINCOME2: 0, // 수익 유형 근로소득2 (4대보험 미가입)
+          income_type_FREELANCER: 0, // 수익 유형 프리랜서
+          income_type_OTHERINCOME: 0, // 수익 유형 기타 소득
+          income_type_PRACTITIONER: 1, // 수익 유형 전문직
+          income_type_PRIVATEBUSINESS: 0, // 수익 유형 개인 사업
+        });
+        break;
+      case '사업자':
+        setMyFeatures({
+          ...myFeatures,
+          income_type_EARNEDINCOME2: 0, // 수익 유형 근로소득2 (4대보험 미가입)
+          income_type_FREELANCER: 0, // 수익 유형 프리랜서
+          income_type_OTHERINCOME: 0, // 수익 유형 기타 소득
+          income_type_PRACTITIONER: 0, // 수익 유형 전문직
+          income_type_PRIVATEBUSINESS: 1, // 수익 유형 개인 사업
+        });
+        break;
+      case '기타':
+        setMyFeatures({
+          ...myFeatures,
+          income_type_EARNEDINCOME2: 0, // 수익 유형 근로소득2 (4대보험 미가입)
+          income_type_FREELANCER: 0, // 수익 유형 프리랜서
+          income_type_OTHERINCOME: 1, // 수익 유형 기타 소득
+          income_type_PRACTITIONER: 0, // 수익 유형 전문직
+          income_type_PRIVATEBUSINESS: 0, // 수익 유형 개인 사업
+        });
+        break;
+    }
+
+    //나머지 저장
+    setMyFeatures({
+      ...myFeatures,
+      credit_score: parseInt(loanValue.creditScore, 10),
+      yearly_income: parseInt(loanValue.income, 10),
+      company_enter_month: duration,
+    });
+
+    console.log(myFeatures);
+
+    runModel();
+    // navigate('/qualification');
+  };
+
+  const runModel = () => {
+    ///////////////////////////
+    //신용점수 모델
+    const scaledFeatures: number[] = Scaling(myFeatures);
+    console.log('scaledFeatures', scaledFeatures);
+    const model = new LogisticRegression();
+    const newScore = model.predictScore(scaledFeatures);
+    console.log('newScore', newScore); //신용점수
+    setMyOutput({
+      ...myOutput,
+      Score: newScore.toString(),
+    });
+
+    ///////////////////////////
+    //금리 산출 모델
+    // 예시: 신용평가 점수가 700일 때의 금리 범위를 계산
+    const rateResult = calculateInterestRateRange(newScore);
+    console.log('rateResult', rateResult);
+    setMyOutput({
+      ...myOutput,
+      maxRate: rateResult.maxRate,
+      minRate: rateResult.minRate,
+    });
+
+    ///////////////////////////
+    //대출 한도 모델
+    const rawSample = {
+      0: 30,
+      1: 0,
+      2: myFeatures.credit_score,
+      3: myFeatures.yearly_income,
+      4: myFeatures.company_enter_month,
+      5: 1,
+      6: 50000000,
+      7: 0,
+      8: 0,
+      9: 3.5,
+      10: -0.5,
+      11: myFeatures.income_type_EARNEDINCOME2,
+      12: myFeatures.income_type_FREELANCER,
+      13: myFeatures.income_type_OTHERINCOME,
+      14: myFeatures.income_type_PRACTITIONER,
+      15: myFeatures.income_type_PRIVATEBUSINESS,
+      16: myFeatures.employment_type_기타,
+      17: myFeatures.employment_type_일용직,
+      18: myFeatures.employment_type_정규직,
+      19: 0,
+      20: 0,
+    };
+    const result = predict(rawSample);
+    console.log(result);
+    ////////////////////////
+
+    console.log(myOutput);
   };
 
   const handleinput = (e: React.ChangeEvent<HTMLInputElement>) => {
