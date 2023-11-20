@@ -118,7 +118,7 @@ const RateChange = () => {
       },
     ],
     chart: {
-      height: 170,
+      height: 185,
       type: 'line',
       toolbar: {
         show: false,
