@@ -1,7 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { useRecoilState } from 'recoil';
+import { CoachMarkStage } from '@/state/CoachMarkStage';
+
 const MainSidebar = () => {
+  const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
+
+  // stage 값에 접근
+  const { stage, mode } = coachMark;
+
+  // stage 값을 업데이트하는 함수
+  const updateStage = (newStage: number) => {
+    setCoachMark({ ...coachMark, stage: newStage });
+  };
+
+  let isVisible = mode && stage === 1;
   return (
     <Sidebar>
       <div id="profile">
@@ -150,4 +164,5 @@ const ClickPage = styled.span`
   border-radius: 0px 5px 5px 0px;
   background: var(--Primary, #63c393);
 `;
+
 export default MainSidebar;

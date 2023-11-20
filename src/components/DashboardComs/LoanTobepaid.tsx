@@ -6,7 +6,7 @@ import AmountSection from './AmountSection';
 
 import { useRecoilState } from 'recoil';
 import { CoachMarkStage } from '@/state/CoachMarkStage';
-import Tooltip from '../CoachMarksComs/Tooltip';
+import Tooltip4 from '../CoachMarksComs/Tooltip4';
 
 const LoanTobepaid = () => {
   const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
@@ -19,7 +19,7 @@ const LoanTobepaid = () => {
     setCoachMark({ ...coachMark, stage: newStage });
   };
 
-  let isVisible = mode && stage == 4;
+  let isVisible = mode && stage === 4;
 
   const value = 70; // 예시 데이터
   return (
@@ -49,7 +49,7 @@ const LoanTobepaid = () => {
             period="12개월"
           />
         </div>
-        {isVisible && <Tooltip />}
+        {isVisible && <Tooltip4 />}
       </Dash.Wrapper>
     </>
   );
@@ -70,7 +70,7 @@ const Dash = {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    z-index: 10;
+    z-index: ${({ $isVisible }) => ($isVisible ? '10' : '1')};
     //코치마크
 
     &::before {

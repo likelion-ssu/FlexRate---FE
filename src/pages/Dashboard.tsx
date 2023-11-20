@@ -9,8 +9,9 @@ import Notification from '@/components/DashboardComs/Notification';
 import LoanHistory from '@/components/DashboardComs/LoanHistory';
 import Test from '@/components/DashboardComs/FlipCard';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { CoachMarkStage } from '@/state/CoachMarkStage';
+import { ShowCoachMark } from '@/state/CoachMarkStage';
 
 const useNarrowScreen = () => {
   // 초기 상태 설정
@@ -30,6 +31,7 @@ const useNarrowScreen = () => {
 
   return isNarrowScreen;
 };
+
 /**대시보드 페이지 */
 const Dashboard = () => {
   const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
@@ -38,6 +40,20 @@ const Dashboard = () => {
   const { mode } = coachMark;
 
   const isNarrowScreen = useNarrowScreen();
+
+  //처음 Dashboard시작시 코지마크 실행
+  const showCoachMark = useRecoilValue(ShowCoachMark);
+  const { beginer } = showCoachMark;
+
+  useEffect(() => {
+    if (beginer === true) {
+      //처음이면(coachMark를 보여줘야하면)
+      setCoachMark((prevCoachMark) => ({
+        ...prevCoachMark,
+        mode: true,
+      }));
+    }
+  }, []);
 
   return (
     <Wrapper $isNarrowScreen={isNarrowScreen} $isVisible={mode}>
@@ -76,7 +92,7 @@ const Dashboard = () => {
 };
 
 const Wrapper = styled.div<{ $isNarrowScreen: boolean; $isVisible: boolean }>`
-  margin-left: ${(props) => (props.$isNarrowScreen ? '14.2rem' : '0')};
+  margin-left: ${(props) => (props.$isNarrowScreen ? '15rem' : '0')};
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -96,7 +112,7 @@ const Wrapper = styled.div<{ $isNarrowScreen: boolean; $isVisible: boolean }>`
 
 const MainDashBoard = styled.span<{ $isNarrowScreen: boolean }>`
   position: absolute;
-  width: ${(props) => (props.$isNarrowScreen ? 'calc(100% - 16rem)' : '100%')};
+  width: ${(props) => (props.$isNarrowScreen ? 'calc(100% - 18rem)' : '100%')};
   height: calc(100% - 150px);
   margin: 1.5rem 1rem;
 `;
