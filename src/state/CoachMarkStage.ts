@@ -10,7 +10,7 @@ interface CoachMarkStageState {
 export const CoachMarkStage = atom<CoachMarkStageState>({
   key: 'coachMarkStage',
   default: {
-    stage: 5,
+    stage: 0,
     totalStage: 6,
     mode: false,
   },
@@ -23,6 +23,6 @@ interface ShowCoachMark {
 export const ShowCoachMark = atom<ShowCoachMark>({
   key: 'ShowCoachMark',
   default: {
-    beginer: true,
+    beginer: false,
   },
 });
