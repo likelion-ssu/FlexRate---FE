@@ -31,20 +31,24 @@ const arrow = [
     top: '50%',
     right: '100%',
     marginTop: '-5px', // 화살표의 높이에 따라 조정 가능
-    borderColor: 'transparent transparent transparent black',
+    borderColor: 'transparent black transparent transparent',
   },
 ];
 
-const Tooltip4 = () => {
+const Tooltip5 = () => {
   const [state, setState] = useRecoilState(CoachMarkStage);
   const { stage, totalStage } = state;
   return (
-    <TooltipContainer $directionIndex={1}>
+    <TooltipContainer $directionIndex={3}>
       <S.TooltipText>
-        <div>가장 핵심정보!</div>
+        <div>나의 대출 금리와 함께 Flex Rate </div>
         <div>
-          <S.PointColorText>나의 이번 달 대출금</S.PointColorText>을 한 눈에
-          확인해요.
+          <S.PointColorText>자체 신용 평가 점수</S.PointColorText>를 볼 수
+          있어요!
+        </div>
+        <div className="small">
+          <S.PointColorText>신용평가모델</S.PointColorText>에 대해 알고싶다면
+          블럭을 클릭해보세요!
         </div>
       </S.TooltipText>
       <S.TooltipFooter>
@@ -84,22 +88,21 @@ const TooltipContainer = styled.span<TooltipProps>`
   /* 기본 스타일 */
   visibility: visible;
   box-sizing: border-box;
-  width: 298px;
-  height: 121px;
+  width: 320px;
+  height: 160px;
   background-color: black;
   color: white;
   border-radius: 13px;
   padding: 20px;
   position: absolute;
   z-index: 20;
-  bottom: -10rem;
-  left: 12rem;
-  line-height: 25px;
+  top: 4rem;
+  right: -22rem;
 
   &::after {
     content: '';
     position: absolute;
-    border-width: 5px;
+    border-width: 10px;
     border-style: solid;
 
     /* 화살표 위치 스타일 조정 */
@@ -111,6 +114,11 @@ const TooltipContainer = styled.span<TooltipProps>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  & .small {
+    margin-top: 5px;
+    font-size: 13px;
+  }
 `;
 
-export default Tooltip4;
+export default Tooltip5;

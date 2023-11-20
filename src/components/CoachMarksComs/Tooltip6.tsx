@@ -40,6 +40,7 @@ const Tooltip6 = () => {
   const nav = useNavigate();
   const [coachmarkState, setCoachMarkState] = useRecoilState(ShowCoachMark);
   const [coach, setcoach] = useRecoilState(CoachMarkStage);
+  const { stage, totalStage } = coach;
   const [state, setState] = useState(0);
 
   return (
@@ -56,15 +57,30 @@ const Tooltip6 = () => {
             </div>
           </S.TooltipText>
           <S.TooltipFooter>
-            <span className="stageStatus">6/6</span>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setState(1);
-              }}
-            >
-              다음
-            </button>
+            <span className="stageStatus">
+              {stage}/{totalStage}
+            </span>
+            <span>
+              <S.Btn
+                onClick={(e) => {
+                  e.preventDefault();
+                  setcoach((prev) => ({
+                    ...prev,
+                    stage: stage - 1,
+                  }));
+                }}
+              >
+                이전
+              </S.Btn>
+              <S.Btn
+                onClick={(e) => {
+                  e.preventDefault();
+                  setState(1);
+                }}
+              >
+                다음
+              </S.Btn>
+            </span>
           </S.TooltipFooter>
         </>
       ) : (

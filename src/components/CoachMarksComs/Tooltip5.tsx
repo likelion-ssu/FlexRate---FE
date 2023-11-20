@@ -50,17 +50,30 @@ const Tooltip5 = () => {
         <span className="stageStatus">
           {stage}/{totalStage}
         </span>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setState((prev) => ({
-              ...prev,
-              stage: stage + 1,
-            }));
-          }}
-        >
-          다음
-        </button>
+        <span>
+          <S.Btn
+            onClick={(e) => {
+              e.preventDefault();
+              setState((prev) => ({
+                ...prev,
+                stage: stage - 1,
+              }));
+            }}
+          >
+            이전
+          </S.Btn>
+          <S.Btn
+            onClick={(e) => {
+              e.preventDefault();
+              setState((prev) => ({
+                ...prev,
+                stage: stage + 1,
+              }));
+            }}
+          >
+            다음
+          </S.Btn>
+        </span>
       </S.TooltipFooter>
     </TooltipContainer>
   );
