@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { LoanInfo } from '@/state/LoanInfo';
 import { CoachMarkStage } from '@/state/CoachMarkStage';
 import Tooltip2 from '../CoachMarksComs/Tooltip2';
 
@@ -94,6 +95,9 @@ const DashHeader = () => {
 
   let isVisible = mode && stage === 2;
 
+  //loanInfo
+  const info = useRecoilValue(LoanInfo);
+
   return (
     <DashHeaderWrapper $isVisible={isVisible}>
       <Container>
@@ -104,21 +108,21 @@ const DashHeader = () => {
           <BoldGreen>Flexrate</BoldGreen>
           <Bold>신용대출</Bold>
           <Box color="#682A1A" $backgroundColor="#f6e5df">
-            300만원
+            {`${info.payment / 10000}만원`}
           </Box>
           <Box color="#682A1A" $backgroundColor="#f6e5df">
-            12개월
+            {`${info.period * 12}개월`}
           </Box>
         </div>
       </Container>
       <Container>
         <div>
-          <Title $borderColor="#60C5C5">이번 달 대출금 상환 날짜</Title>
+          <Title $borderColor="#60C5C5">다음 달 대출금 상환 날짜</Title>
         </div>
         <div>
-          <Bold>2023년 11월 7일</Bold>
+          <Bold>2023년 12월 21일</Bold>
           <Box color="#406969" $backgroundColor="#E0F2F3">
-            D-8일 남았어요
+            D-30일 남았어요
           </Box>
         </div>
       </Container>
@@ -127,7 +131,7 @@ const DashHeader = () => {
           <Title $borderColor="#4D81BF">대출금 납부 회차</Title>
         </div>
         <div>
-          <Bold>5회차</Bold>
+          <Bold>0회차</Bold>
         </div>
       </LastContainer>
       {isVisible && <Tooltip2 />}

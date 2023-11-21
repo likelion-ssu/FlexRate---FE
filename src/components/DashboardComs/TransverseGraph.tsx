@@ -5,10 +5,12 @@ import { styled } from 'styled-components';
 
 type BarChartProps = {
   value: number;
+  min: number;
+  max: number;
 }; // 데이터 타입 정의
 
 /** 가로막대차트 구현 */
-const TransverseGraph: React.FC<BarChartProps> = ({ value }) => {
+const TransverseGraph: React.FC<BarChartProps> = ({ value, min, max }) => {
   const ref = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -19,13 +21,14 @@ const TransverseGraph: React.FC<BarChartProps> = ({ value }) => {
       svg.selectAll('*').remove();
 
       // x축 스케일을 설정합니다. value의 최댓값으로 도메인을 설정합니다.
-      const xScale = d3.scaleLinear().domain([0, 100]);
+      const rate = (value / (max + 5)) * 100;
+      console.log(rate);
       const gradient = svg
         .append('defs')
         .append('linearGradient')
         .attr('id', 'gradient')
         .attr('x1', '0%')
-        .attr('x2', '100%')
+        .attr('x2', `100%`)
         .attr('y1', '0%')
         .attr('y2', '0%');
 
@@ -47,7 +50,7 @@ const TransverseGraph: React.FC<BarChartProps> = ({ value }) => {
 
       svg
         .append('rect')
-        .attr('width', '100%') // 배경 막대의 전체 너비
+        .attr('width', `100%`) // 배경 막대의 전체 너비
         .attr('height', '12px') // 막대와 동일한 높이
         .attr('fill', '#EEF9F5') // 배경 막대의 색상
         .attr('rx', '8px') // 둥근 모서리를 위한 x축 반경
@@ -63,23 +66,30 @@ const TransverseGraph: React.FC<BarChartProps> = ({ value }) => {
         .attr('width', 0) // 애니메이션 시작을 위해 초기 너비를 0으로 설정합니다.
         .transition()
         .duration(1500)
-        .attr('width', `${value}%`); // 애니메이션을 통해 최종 너비로 변경합니다.
+        .attr('width', `${rate}%`); // 애니메이션을 통해 최종 너비로 변경합니다.
 
       // 막대에 텍스트를 추가합니다.
       svg
         .append('text')
         .attr('x', 0) // 텍스트의 x 위치
         .attr('y', 25) // 텍스트의 y 위치
-        .text('0%')
+        .text(`0%`)
         .attr('font-size', '8px')
         .attr('fill', '#BFBFBF');
       svg
         .append('text')
         .attr('x', '95%')
         .attr('y', 25) // 텍스트의 y 위치
-        .text('100%')
+        .text(`${max + 5}%`)
         .attr('font-size', '8px')
         .attr('fill', '#BFBFBF');
+      svg
+        .append('text')
+        .attr('x', `${rate}%`)
+        .attr('y', 25) // 텍스트의 y 위치
+        .text(`${value}%`)
+        .attr('font-size', '8px')
+        .attr('fill', '#51b13a');
     }
   }, [value]);
 
