@@ -50,7 +50,7 @@ const Password = () => {
       <img className="invisible" src={visible} alt="가리기" onClick={showPwd} />
       <ValidationText
         className="pwCheck"
-        isValid={passwordValidations.isLongEnough}
+        $isValid={passwordValidations.isLongEnough}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +70,7 @@ const Password = () => {
       </ValidationText>
       <ValidationText
         className="pwCheck"
-        isValid={
+        $isValid={
           [
             passwordValidations.hasUpperCase,
             passwordValidations.hasLowerCase,
@@ -114,9 +114,9 @@ const Wrappeer = styled.div`
   }
 `;
 
-const ValidationText = styled.div<{ isValid: boolean }>`
-  color: ${(props) => (props.isValid ? '#63c393' : '#909090')};
-  stroke: ${(props) => (props.isValid ? '#63c393' : '#909090')};
+const ValidationText = styled.div<{ $isValid: boolean }>`
+  color: ${(props) => (props.$isValid ? '#63c393' : '#909090')};
+  stroke: ${(props) => (props.$isValid ? '#63c393' : '#909090')};
 `;
 
 export default Password;
