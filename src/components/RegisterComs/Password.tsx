@@ -5,6 +5,7 @@ import visible from '../../assets/imgs/visible.png';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { registerInfo } from '../../state/register';
+//비밀번호
 
 const Password = () => {
   const [registerValue, setRegisterValue] = useRecoilState(registerInfo);
