@@ -304,10 +304,14 @@ const LoanApplication = () => {
       20: 0,
     };
     const result = predict(rawSample);
-    console.log(result);
+    console.log('loanLimit :', result);
+    setMyOutput((prev) => ({
+      ...prev,
+      loanLimit: result,
+    }));
     ////////////////////////
 
-    console.log(myOutput);
+    console.log('output :', myOutput);
   };
 
   const handleinput = (e: React.ChangeEvent<HTMLInputElement>) => {

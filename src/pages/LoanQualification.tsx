@@ -221,13 +221,13 @@ const LoanQualification = () => {
           <li>
             <span>대출 가능 한도</span>
             <span>
-              <PrimaryColor>3,000,000</PrimaryColor>원
+              <PrimaryColor>{outputvalue.loanLimit}</PrimaryColor>원
             </span>
           </li>
           <li>
             <span>초기 대출 금리</span>
             <span>
-              연 <PrimaryColor>{ave}</PrimaryColor>
+              연 <PrimaryColor>{outputvalue.maxRate}</PrimaryColor>
             </span>
           </li>
           <li>

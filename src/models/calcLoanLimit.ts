@@ -24,10 +24,15 @@ class DecisionTreeNode {
     if (this.feature === -2) {
       return this.value[0][0];
     }
+    // if (inputData[this.feature] <= this.threshold) {
+    //   return this.left ? this.left.predict(inputData) : 0;
+    // } else {
+    //   return this.right ? this.right.predict(inputData) : 0;
+    // }
     if (inputData[this.feature] <= this.threshold) {
-      return this.left ? this.left.predict(inputData) : 0;
+      return this.left ? this.left.predict(inputData) : this.value[0][0];
     } else {
-      return this.right ? this.right.predict(inputData) : 0;
+      return this.right ? this.right.predict(inputData) : this.value[0][0];
     }
   }
 }
@@ -139,8 +144,10 @@ const tree = nodes[0];
 
 // 예측 함수
 function predict(inputData: Record<number, number>): number {
-  console.log('predict', inputData);
-  return tree.predict(inputData);
+  const res = tree.predict(inputData);
+
+  // 100000 단위로 반올림
+  return Math.round(res / 100000) * 100000;
 }
 
 export default predict;
