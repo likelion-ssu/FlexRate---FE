@@ -3,6 +3,10 @@ import { BasicInput, Button } from '@/styles/BasicStyles';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
+import { useRecoilValue } from 'recoil';
+import { output } from '@/state/output';
+import { LoanInfo } from '@/state/LoanInfo';
+
 const Article = styled.article`
   display: flex;
   flex-direction: column;
@@ -173,6 +177,8 @@ const ApplicationSec = styled.section`
 const LoanAgree = () => {
   const nav = useNavigate();
 
+  const info = useRecoilValue(LoanInfo);
+
   return (
     <Article>
       <h2>대출 신청이 완료되었습니다</h2>
@@ -184,22 +190,24 @@ const LoanAgree = () => {
           <li>
             <span>대출 신청 금액</span>
             <span>
-              <PrimaryColor>3,000,000</PrimaryColor>원
+              <PrimaryColor>{info.payment}</PrimaryColor>원
             </span>
           </li>
           <li>
             <span>대출 금리</span>
             <span>
-              연 <PrimaryColor>14.5%</PrimaryColor>
+              연 <PrimaryColor>{info.interest}</PrimaryColor>
             </span>
           </li>
           <li>
             <span>대출 실행일</span>
-            <span>2023.10.07</span>
+            <span>{info.payment_date}.11.21</span>
           </li>
           <li>
             <span>대출 기간</span>
-            <span>2023.10.07~2026.10.07</span>
+            <span>
+              {info.payment_date}.11.21~{info.loan_maturity_date}.11.21
+            </span>
           </li>
           <li className="detailFooter">
             <span>

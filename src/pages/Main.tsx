@@ -1,42 +1,34 @@
-import { Features } from '../models/Scaling.ts';
-import Scaling from '../models/Scaling.ts';
-import SemiCircleCharts from '@/components/SemiCircleChart';
+import { styled } from 'styled-components';
+import onBoardingImg from '@/assets/imgs/onBoarding.png';
+import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
-  const tmp = 67;
-
-  // 예제 사용
-  const rawFeatures: Features = {
-    credit_score: 1,
-    yearly_income: 11111,
-    company_enter_month: 1111,
-    existing_loan_cnt: 1,
-    existing_loan_amt: 1,
-    debt_rate: 1,
-    income_type_EARNEDINCOME2: 1,
-    income_type_FREELANCER: 1,
-    income_type_OTHERINCOME: 1,
-    income_type_PRACTITIONER: 1,
-    income_type_PRIVATEBUSINESS: 1,
-    employment_type_기타: 1,
-    employment_type_일용직: 1,
-    employment_type_정규직: 1,
-    houseown_type_배우자: 1,
-    houseown_type_자가: 1,
-    houseown_type_전월세: 1,
-  };
-
-  const preprocessedFeatures: Features = Scaling(rawFeatures);
-  const featureValues: number[] = Object.values(preprocessedFeatures);
-  console.log(featureValues);
-  // console.log(model.predictScore(featureValues));
-
-
+  const nav = useNavigate();
   return (
-    <div>
-      <SemiCircleCharts num={tmp} />
-    </div>
+    <OnBoarding>
+      <Bg
+        $onBoardingImg={onBoardingImg}
+        onClick={() => {
+          nav('/dashboard');
+        }}
+      ></Bg>
+    </OnBoarding>
   );
 };
+
+const OnBoarding = styled.div`
+  position: relative;
+  width: 100%;
+  height: 4000px;
+`;
+
+const Bg = styled.div<{ $onBoardingImg: string }>`
+  position: absolute;
+  top: -64px;
+  width: 100%;
+  height: 100%;
+  background-image: url(${(props) => props.$onBoardingImg});
+  background-size: cover;
+`;
 
 export default Main;

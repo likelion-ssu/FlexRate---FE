@@ -30,7 +30,8 @@ const Logo = styled.button`
   border: none;
   font-size: 1.5rem;
   font-weight: 700;
-  width: 199px;
+  width: 150px;
+  margin-right: 30px;
 
   & > img {
     height: 2rem;

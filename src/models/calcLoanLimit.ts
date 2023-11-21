@@ -139,7 +139,7 @@ const tree = nodes[0];
 
 // 예측 함수
 function predict(inputData: Record<number, number>): number {
-  console.log(inputData);
+  console.log('predict', inputData);
   return tree.predict(inputData);
 }
 

@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import flip1 from '@/assets/imgs/Flip1.png';
 import upCircle from '../../assets/imgs/upCircle.png';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { CoachMarkStage } from '@/state/CoachMarkStage';
 import Tooltip3 from '../CoachMarksComs/Tooltip3';
+
+import { LoanInfo } from '@/state/LoanInfo';
+import { output } from '@/state/output';
 
 const CardContainer = styled.div<{ $isFlipped: boolean; $isVisible: boolean }>`
   width: 100%;
@@ -169,6 +172,10 @@ const CardBack = styled(CardFace)`
 `;
 
 const FlipCard: React.FC = () => {
+  const Info = useRecoilValue(LoanInfo);
+  const outputValue = useRecoilValue(output);
+  const score = Math.floor(outputValue.Score);
+
   const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
 
   // stage 값에 접근
@@ -199,7 +206,7 @@ const FlipCard: React.FC = () => {
               <h1>나의 대출 금리</h1>
               <div>
                 <span>
-                  <h2>12</h2>
+                  <h2>{Info.interest}</h2>
                   <h3>%</h3>
                   <h4>이번 분기 기준</h4>
                 </span>
@@ -218,7 +225,7 @@ const FlipCard: React.FC = () => {
               <h1>나의 신용 평가 점수</h1>
               <div>
                 <span>
-                  <h2>640</h2>
+                  <h2>{score}</h2>
                   <h3>점</h3>
                 </span>
                 <span>

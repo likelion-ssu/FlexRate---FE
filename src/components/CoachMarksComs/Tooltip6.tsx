@@ -105,7 +105,7 @@ const Tooltip6 = () => {
                   ...prev,
                   mode: false,
                 }));
-                nav('/login');
+                nav('/LoanApplication');
               }}
             >
               다음
