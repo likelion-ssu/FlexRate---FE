@@ -108,6 +108,8 @@ const LoanApplication = () => {
   const navigate = useNavigate();
   const [myFeatures, setMyFeatures] = useRecoilState(userFeatures);
   const [myOutput, setMyOutput] = useRecoilState(output);
+  const [prIng, setPrIng] = useState(0);
+  const [prDone, setPrDone] = useState(0);
 
   const [loanValue, setLoanValue] = useState({
     academicName: '',
@@ -156,7 +158,33 @@ const LoanApplication = () => {
   const apply = () => {
     const duration = calcDuration();
 
-    //home_type 추가 해야함
+    //home_type 저장
+    switch (loanValue.homeType) {
+      case '자가':
+        setMyFeatures({
+          ...myFeatures,
+          houseown_type_배우자: 0, // 거주지소유형태 배우자
+          houseown_type_자가: 1, // 거주지소유형태 자가
+          houseown_type_전월세: 0, // 거주지소유형태 전월세
+        });
+        break;
+      case '전월세':
+        setMyFeatures({
+          ...myFeatures,
+          houseown_type_배우자: 0, // 거주지소유형태 배우자
+          houseown_type_자가: 0, // 거주지소유형태 자가
+          houseown_type_전월세: 1, // 거주지소유형태 전월세
+        });
+        break;
+      case '기타':
+        setMyFeatures({
+          ...myFeatures,
+          houseown_type_배우자: 1, // 거주지소유형태 배우자
+          houseown_type_자가: 0, // 거주지소유형태 자가
+          houseown_type_전월세: 0, // 거주지소유형태 전월세
+        });
+        break;
+    }
 
     //근무형태 저장
     switch (loanValue.selectedEmployment) {
@@ -184,6 +212,20 @@ const LoanApplication = () => {
           employment_type_정규직: 0,
         });
         break;
+    }
+
+    //개인 회생자 여부 저장
+    if (loanValue.personalRecovery) {
+      setPrIng(1);
+    } else {
+      setPrIng(0);
+    }
+
+    //개인 회생 납부 여부 저장
+    if (loanValue.recoveryPayment) {
+      setPrDone(1);
+    } else {
+      setPrDone(0);
     }
 
     //수익유형 저장
@@ -288,8 +330,8 @@ const LoanApplication = () => {
       4: myFeatures.company_enter_month,
       5: 1,
       6: 0,
-      7: 0,
-      8: 0,
+      7: prIng,
+      8: prDone,
       9: 3.5,
       10: -0.5,
       11: myFeatures.income_type_EARNEDINCOME2,
@@ -300,8 +342,8 @@ const LoanApplication = () => {
       16: myFeatures.employment_type_기타,
       17: myFeatures.employment_type_일용직,
       18: myFeatures.employment_type_정규직,
-      19: 0,
-      20: 0,
+      19: myFeatures.houseown_type_배우자,
+      20: myFeatures.houseown_type_자가,
     };
     const result = predict(rawSample);
     console.log('loanLimit :', result);
@@ -327,6 +369,14 @@ const LoanApplication = () => {
     setLoanValue({
       ...loanValue,
       [e.target.name]: e.target.value === 'true',
+    });
+    console.log(loanValue);
+  };
+
+  const handlethree = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoanValue({
+      ...loanValue,
+      [e.target.name]: e.target.value,
     });
     console.log(loanValue);
   };
@@ -415,10 +465,10 @@ const LoanApplication = () => {
         <p>주거정보</p>
         <RadioThree
           prop1="자가"
-          prop2="전세"
-          prop3="월세"
+          prop2="전월세"
+          prop3="기타"
           commonname="homeType"
-          onRadioChange={() => {}}
+          onRadioChange={handlethree}
         />
         <div>
           <p>개인회생자 여부</p>
