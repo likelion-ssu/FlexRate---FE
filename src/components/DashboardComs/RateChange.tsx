@@ -74,6 +74,18 @@ const Chart = styled.div`
   width: 100%;
 `;
 
+interface ChartFunctionParams {
+  series: number[][];
+  seriesIndex: number;
+  dataPointIndex: number;
+  w: {
+    globals: {
+      labels: string[];
+    };
+    // ...w에 대한 추가적인 타입 정의
+  };
+}
+
 const RateChange = () => {
   const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
 
@@ -130,8 +142,13 @@ const RateChange = () => {
       },
     },
     tooltip: {
-      custom: function ({ series, seriesIndex, dataPointIndex, w }) {
-        const idx = w.globals.labels[dataPointIndex] - 1;
+      custom: function ({
+        series,
+        seriesIndex,
+        dataPointIndex,
+        w,
+      }: ChartFunctionParams) {
+        const idx = parseInt(w.globals.labels[dataPointIndex]) - 1;
         const rate = series[seriesIndex][dataPointIndex]; // 해당 월의 금리
         const previousRate = series[seriesIndex][dataPointIndex - 1] || 0; // 전달의 금리
         const rateChange = rate - previousRate; // 금리 변동폭
