@@ -197,6 +197,7 @@ const LoanQualification = () => {
       payment: _payment,
       interest: ave,
       limit: 3000000,
+      period: _period,
     }));
 
     nav('/agree');
@@ -221,13 +222,16 @@ const LoanQualification = () => {
           <li>
             <span>대출 가능 한도</span>
             <span>
-              <PrimaryColor>{outputvalue.loanLimit}</PrimaryColor>원
+              <PrimaryColor>
+                {outputvalue.loanLimit.toLocaleString()}
+              </PrimaryColor>
+              원
             </span>
           </li>
           <li>
             <span>초기 대출 금리</span>
             <span>
-              연 <PrimaryColor>{outputvalue.maxRate}</PrimaryColor>
+              연 <PrimaryColor>{outputvalue.maxRate}%</PrimaryColor>
             </span>
           </li>
           <li>

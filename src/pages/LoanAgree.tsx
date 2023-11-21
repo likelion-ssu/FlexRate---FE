@@ -190,13 +190,13 @@ const LoanAgree = () => {
           <li>
             <span>대출 신청 금액</span>
             <span>
-              <PrimaryColor>{info.payment}</PrimaryColor>원
+              <PrimaryColor>{info.payment.toLocaleString()}</PrimaryColor>원
             </span>
           </li>
           <li>
             <span>대출 금리</span>
             <span>
-              연 <PrimaryColor>{info.interest}</PrimaryColor>
+              연 <PrimaryColor>{info.interest}%</PrimaryColor>
             </span>
           </li>
           <li>

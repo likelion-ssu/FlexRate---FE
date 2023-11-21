@@ -4,12 +4,26 @@ import payback from '../../assets/imgs/paybackTag.png';
 import TransverseGraph from './TransverseGraph';
 import AmountSection from './AmountSection';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { CoachMarkStage } from '@/state/CoachMarkStage';
+import { LoanInfo } from '@/state/LoanInfo';
+import { output } from '@/state/output';
 import Tooltip4 from '../CoachMarksComs/Tooltip4';
 
 const LoanTobepaid = () => {
   const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
+  const info = useRecoilValue(LoanInfo);
+  const outputVal=useRecoilValue(output);
+
+  const monthPeriod = info.period * 12;
+
+  //원금 이자 계산
+  const amount = Math.floor(info.payment / monthPeriod); //총액 / 개월수
+  const interestVal = Math.floor(
+    (info.payment * info.interest) / (monthPeriod * 100),
+  ); //총액 *금리 / 개월수
+
+  const paidtoAmount = amount + interestVal;
 
   // stage 값에 접근
   const { stage, mode } = coachMark;
@@ -21,32 +35,31 @@ const LoanTobepaid = () => {
 
   let isVisible = mode && stage === 4;
 
-  const value = 70; // 예시 데이터
   return (
     <>
       <Dash.Wrapper $isVisible={isVisible}>
         <Dash.Title>나의 이번 달 대출금</Dash.Title>
         <Dash.LoanPrice>
           <span>
-            <Big>280,000 </Big>
+            <Big>{paidtoAmount.toLocaleString()} </Big>
           </span>
           <img src={payback} />
         </Dash.LoanPrice>
         <Dash.Grape>
-          <TransverseGraph value={value} />
+          <TransverseGraph value={info.interest} min={outputVal.minRate} max={outputVal.maxRate}/>
         </Dash.Grape>
         <div className="amount-section">
           <AmountSection
-            title="원리금"
-            amount="250,000"
-            totalAmount="3,000,000원"
-            period="12개월"
+            title="원금"
+            amount={amount.toLocaleString()}
+            totalAmount={`${info.payment.toLocaleString()}원`}
+            period={`${monthPeriod}개월`}
           />
           <AmountSection
             title="이자"
-            amount="30,000"
-            totalAmount="3,000,000원"
-            period="12개월"
+            amount={interestVal.toLocaleString()}
+            totalAmount={`${info.payment.toLocaleString()}원`}
+            period={`${info.period * 12}개월`}
           />
         </div>
         {isVisible && <Tooltip4 />}

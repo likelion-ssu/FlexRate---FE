@@ -1,11 +1,13 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { CoachMarkStage } from '@/state/CoachMarkStage';
+import { LoanInfo } from '@/state/LoanInfo';
 import Tooltip6 from '../CoachMarksComs/Tooltip6';
 
 const LoanHistory = () => {
   const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
+  const info = useRecoilValue(LoanInfo);
 
   // stage 값에 접근
   const { stage, mode } = coachMark;
@@ -22,7 +24,7 @@ const LoanHistory = () => {
       <Dash.Cate>
         <span>
           <Dash.Label>대출시작일</Dash.Label>
-          <Dash.Content>2022년 12월 10일</Dash.Content>
+          <Dash.Content>{info.payment_date}년 11월 21일</Dash.Content>
         </span>
         <span>
           <Dash.Label>금리 변경 횟수</Dash.Label>

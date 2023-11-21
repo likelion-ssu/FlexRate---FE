@@ -19,7 +19,7 @@ const Main = () => {
 const OnBoarding = styled.div`
   position: relative;
   width: 100%;
-  height: 4000px;
+  height: 4500px;
 `;
 
 const Bg = styled.div<{ $onBoardingImg: string }>`
