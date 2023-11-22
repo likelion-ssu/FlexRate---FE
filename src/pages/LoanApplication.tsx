@@ -452,7 +452,7 @@ const LoanApplication = () => {
         </div>
         <div>
           <CreditInput
-            placeholder="만원"
+            placeholder="원"
             name="income"
             value={loanValue.income}
             onChange={handleinput}
