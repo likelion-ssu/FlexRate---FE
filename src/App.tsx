@@ -28,10 +28,9 @@ function App() {
       <BrowserRouter>
         <GlobalStyle />
         <MainHeader />
-        {/* <MainSidebar /> */}
         <MainLayout>
           <Routes>
-            <Route path="/" element={<Navigate to="/main" />} />
+            <Route path="/" element={<Main />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/main" element={<Main />} />
             <Route path="/login" element={<Login />} />
