@@ -69,36 +69,29 @@ const Register = () => {
   }, [registerValue]);
 
   const submitRegister = () => {
-    console.log(registerValue);
+    const tmp = {
+      account: registerValue.user_id,
+      password: registerValue.pwd,
+      nickname: registerValue.nickname,
+      name: registerValue.nickname,
+      email: registerValue.email,
+      birth: registerValue.birth_year,
+      gender: registerValue.gender,
+      phonenumber: registerValue.phone_num,
+      address: registerValue.address,
+    };
+    console.log(tmp);
     //서버통신
     axiosInstance
-      .post('/register', {
-        account: registerValue.user_id,
-        password: registerValue.pwd,
-        nickname: registerValue.nickname,
-        name: registerValue.nickname,
-        email: registerValue.email,
-        birth: registerValue.birth_year,
-        gender: registerValue.gender,
-        phonenumber: registerValue.phone_num,
-        address: registerValue.address,
-      })
+      .post('/register', tmp)
       .then((res) => {
         console.log(res);
-        // navigate('/login');
+        navigate('/login');
       })
       .catch((err) => {
         console.log(err.response);
+        alert('회원가입에 실패했습니다.');
       });
-    // axiosInstance
-    //   .get('/main')
-    //   .then((res) => {
-    //     console.log(res);
-    //     navigate('/login');
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response);
-    //   });
   };
 
   return (

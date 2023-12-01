@@ -5,7 +5,7 @@ const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // CORS 요청에 쿠키/인증 헤더 포함
+  // withCredentials: true, // CORS 요청에 쿠키/인증 헤더 포함
   // 기타 설정
 });
 

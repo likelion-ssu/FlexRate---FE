@@ -4,6 +4,7 @@ import { useState } from 'react';
 import visible from '../assets/imgs/visible.png';
 import flexrateLogo from '../assets/Logos/flexrateLogo.png';
 import { BasicInput } from '@/styles/BasicStyles';
+import axiosInstance from '@/apis/axiosinstance';
 
 const Container = styled.div`
   display: flex;
@@ -122,12 +123,27 @@ const Login = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+    const tmp = {
+      account: username,
+      password: password,
+    };
     //로그인 api 호출
-
-    setIdFailed(true);
-    setPwFailed(true);
+    await axiosInstance
+      .post('/login', tmp)
+      .then((res) => {
+        console.log(res);
+        console.log(res.data.token);
+        localStorage.setItem('accessToken', res.data.token); //로컬스토리지에 토큰 저장
+        localStorage.setItem('memberid', res.data.id); //로컬스토리지에 멤버아이디 저장
+        navigate('/dashboard'); //대시보드로 이동
+      })
+      .catch((err) => {
+        console.log(err.response);
+        setIdFailed(true);
+        setPwFailed(true);
+      });
   };
 
   return (

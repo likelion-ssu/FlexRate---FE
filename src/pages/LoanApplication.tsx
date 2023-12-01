@@ -14,6 +14,7 @@ import predict from '../models/calcLoanLimit';
 import LogisticRegression from '../models/calScore';
 import calculateInterestRateRange from '../models/calculateInterestRateRange';
 import { output } from '@/state/output';
+import axiosInstance from '@/apis/axiosinstance';
 
 const Container = styled.div`
   display: flex;
@@ -155,7 +156,7 @@ const LoanApplication = () => {
     return Math.round((yearDifference + monthDifference / 12) * 10) / 10;
   };
 
-  const apply = () => {
+  const apply = async () => {
     const duration = calcDuration();
 
     //home_type 저장
@@ -291,6 +292,30 @@ const LoanApplication = () => {
     }));
 
     console.log(myFeatures);
+
+    //////////////////////
+    /// api 호출 신용평가정보 기입
+    const memberid = localStorage.getItem('memberid');
+    await axiosInstance
+      .put(`/credit/${memberid}`, {
+        id: 38,
+        member: null,
+        loan: null,
+        credit_score: 750,
+        yearly_income: 60000,
+        company_month: 7,
+        existing_loan_cnt: 2,
+        existing_loan_amt: 10000,
+        debt_rate: 6,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+
+    ////////////////////////
 
     runModel();
     navigate('/qualification');
