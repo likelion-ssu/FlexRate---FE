@@ -18,6 +18,8 @@ import Password from '@/components/RegisterComs/Password';
 
 import { useRecoilState } from 'recoil';
 import { registerInfo } from '../state/register';
+import axiosInstance from '@/apis/axiosinstance';
+import { useNavigate } from 'react-router-dom';
 
 // interface RegisterValue {
 //   user_id: string;
@@ -32,6 +34,8 @@ import { registerInfo } from '../state/register';
 // }
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [registerValue, setRegisterValue] = useRecoilState(registerInfo);
   const [checkPw, setCheckPw] = useState(''); //비밀번호 확인
   const [isequal, setIsequal] = useState(false);
@@ -65,7 +69,36 @@ const Register = () => {
   }, [registerValue]);
 
   const submitRegister = () => {
+    console.log(registerValue);
     //서버통신
+    axiosInstance
+      .post('/register', {
+        account: registerValue.user_id,
+        password: registerValue.pwd,
+        nickname: registerValue.nickname,
+        name: registerValue.nickname,
+        email: registerValue.email,
+        birth: registerValue.birth_year,
+        gender: registerValue.gender,
+        phonenumber: registerValue.phone_num,
+        address: registerValue.address,
+      })
+      .then((res) => {
+        console.log(res);
+        // navigate('/login');
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+    // axiosInstance
+    //   .get('/main')
+    //   .then((res) => {
+    //     console.log(res);
+    //     navigate('/login');
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.response);
+    //   });
   };
 
   return (
