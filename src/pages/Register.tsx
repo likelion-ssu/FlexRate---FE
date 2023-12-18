@@ -1,5 +1,4 @@
 import RadioTwo from '@/components/RadioTwo';
-import SearchAddress from '@/components/RegisterComs/SearchAddress';
 import {
   Wrapper,
   SignupBox,
@@ -13,25 +12,18 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import flexrateLogo from '../assets/Logos/flexrateLogo.png';
-import visible from '../assets/imgs/visible.png';
 import Password from '@/components/RegisterComs/Password';
 
 import { useRecoilState } from 'recoil';
 import { registerInfo } from '../state/register';
 import axiosInstance from '@/apis/axiosinstance';
 import { useNavigate } from 'react-router-dom';
-
-// interface RegisterValue {
-//   user_id: string;
-//   pwd: string;
-//   nickname: string;
-//   birth_year: Date;
-//   gender: boolean;
-//   nation: boolean;
-//   phone_num: string;
-//   email: string;
-//   address: string;
-// }
+import {
+  CircleCheckColor,
+  CircleCheckIcon,
+  HiddenIcon,
+} from '@/assets/svgs/0_index';
+import formatDateToString from '@/utils/formatDateToString';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -39,6 +31,7 @@ const Register = () => {
   const [registerValue, setRegisterValue] = useRecoilState(registerInfo);
   const [checkPw, setCheckPw] = useState(''); //비밀번호 확인
   const [isequal, setIsequal] = useState(false);
+  const [birthValue, setBirthValue] = useState(new Date());
 
   const handleinput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRegisterValue({
@@ -57,9 +50,9 @@ const Register = () => {
 
   //비밀번호 확인 맞는지
   const checkPwvalue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (registerValue.pwd === e.target.value) {
+    if (registerValue.password === e.target.value) {
       setIsequal(false);
-    } else if (e.target.value || registerValue.pwd !== e.target.value) {
+    } else if (e.target.value || registerValue.password !== e.target.value) {
       setIsequal(true);
     }
   };
@@ -70,15 +63,14 @@ const Register = () => {
 
   const submitRegister = () => {
     const tmp = {
-      account: registerValue.user_id,
-      password: registerValue.pwd,
-      nickname: registerValue.nickname,
-      name: registerValue.nickname,
+      account: registerValue.accout,
+      password: registerValue.password,
+      name: registerValue.name,
       email: registerValue.email,
-      birth: registerValue.birth_year,
+      birth: formatDateToString(birthValue),
       gender: registerValue.gender,
-      phonenumber: registerValue.phone_num,
-      address: registerValue.address,
+      nationality: registerValue.nationality,
+      phonenumber: registerValue.phonenumber,
     };
     console.log(tmp);
     //서버통신
@@ -103,12 +95,12 @@ const Register = () => {
         <SignupInfobox>
           <ul>
             <li>
-              <label htmlFor="user_id">아이디</label>
+              <label htmlFor="accout">아이디</label>
               <BasicInput
                 type="text"
-                id="user_id"
-                name="user_id"
-                value={registerValue.user_id}
+                id="accout"
+                name="accout"
+                value={registerValue.accout}
                 onChange={handleinput}
               ></BasicInput>
             </li>
@@ -126,7 +118,7 @@ const Register = () => {
                   checkPwvalue(e);
                 }}
               />
-              <img className="invisible" src={visible} alt="" />
+              <HiddenIcon className="invisible" />
               {isequal && (
                 <p className="notequal">비밀번호가 일치하지 않습니다</p>
               )}
@@ -134,22 +126,18 @@ const Register = () => {
             <li>
               <label>이름</label>
               <BasicInput
-                name="nickname"
-                value={registerValue.nickname}
+                name="name"
+                value={registerValue.name}
                 onChange={handleinput}
               ></BasicInput>
             </li>
             <li>
               <label>생년월일</label>
-              {/* <SelectDate /> */}
               <SelectDate
-                selected={registerValue.birth_year}
-                name="birth_year"
+                selected={birthValue}
+                name="birth"
                 onChange={(date: Date) => {
-                  setRegisterValue((prevState) => ({
-                    ...prevState,
-                    birth_year: date,
-                  }));
+                  setBirthValue(date);
                 }}
                 dateFormat="yyyy-MM-dd"
                 popperPlacement="bottom"
@@ -171,7 +159,7 @@ const Register = () => {
                 <RadioTwo
                   prop1="내국인"
                   prop2="외국인"
-                  commonname="nation"
+                  commonname="nationality"
                   onRadioChange={handleBooleanInput}
                 />
               </span>
@@ -180,8 +168,8 @@ const Register = () => {
               <label>휴대폰번호</label>
               <BasicInput
                 type="text"
-                name="phone_num"
-                value={registerValue.phone_num}
+                name="phonenumber"
+                value={registerValue.phonenumber}
                 onChange={handleinput}
               ></BasicInput>
             </li>
@@ -194,92 +182,16 @@ const Register = () => {
                 onChange={handleinput}
               ></BasicInput>
             </li>
-            <li>
-              <label>주소</label>
-              <SearchAddress />
-            </li>
           </ul>
         </SignupInfobox>
         <SignupBottombox>
           <ul>
             <li>
-              <span>
-                {false ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="22"
-                    height="22"
-                    viewBox="0 0 22 22"
-                    fill="none"
-                  >
-                    <circle cx="11" cy="11" r="11" fill="#63C393" />
-                    <path
-                      d="M9.49375 13.6125L6.8875 11.0063L6 11.8875L9.49375 15.3813L16.9937 7.88125L16.1125 7L9.49375 13.6125Z"
-                      fill="white"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="22"
-                    height="22"
-                    viewBox="0 0 22 22"
-                    fill="none"
-                  >
-                    <circle
-                      cx="11"
-                      cy="11"
-                      r="10.25"
-                      stroke="#D9D9D9"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M9.49375 13.6125L6.8875 11.0063L6 11.8875L9.49375 15.3813L16.9937 7.88125L16.1125 7L9.49375 13.6125Z"
-                      fill="#D9D9D9"
-                    />
-                  </svg>
-                )}
-              </span>
+              <span>{false ? <CircleCheckColor /> : <CircleCheckIcon />}</span>
               <span>[필수] 개인정보 수집 및 이용 동의</span>
             </li>
             <li>
-              <span>
-                {false ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="22"
-                    height="22"
-                    viewBox="0 0 22 22"
-                    fill="none"
-                  >
-                    <circle cx="11" cy="11" r="11" fill="#63C393" />
-                    <path
-                      d="M9.49375 13.6125L6.8875 11.0063L6 11.8875L9.49375 15.3813L16.9937 7.88125L16.1125 7L9.49375 13.6125Z"
-                      fill="white"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="22"
-                    height="22"
-                    viewBox="0 0 22 22"
-                    fill="none"
-                  >
-                    <circle
-                      cx="11"
-                      cy="11"
-                      r="10.25"
-                      stroke="#D9D9D9"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M9.49375 13.6125L6.8875 11.0063L6 11.8875L9.49375 15.3813L16.9937 7.88125L16.1125 7L9.49375 13.6125Z"
-                      fill="#D9D9D9"
-                    />
-                  </svg>
-                )}
-              </span>
+              <span>{false ? <CircleCheckColor /> : <CircleCheckIcon />}</span>
               <span>[필수] 개인정보 수집 및 이용 동의</span>
             </li>
           </ul>

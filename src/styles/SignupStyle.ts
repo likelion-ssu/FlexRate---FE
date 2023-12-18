@@ -91,6 +91,7 @@ export const SignupInfobox = styled.div`
 `;
 
 export const SignupBottombox = styled.div`
+  margin-top: 2rem;
   width: 100%;
   display: flex;
   flex-direction: column;

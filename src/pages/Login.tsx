@@ -125,10 +125,12 @@ const Login = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
     const tmp = {
       account: username,
       password: password,
     };
+    console.log(tmp);
     //로그인 api 호출
     await axiosInstance
       .post('/login', tmp)
