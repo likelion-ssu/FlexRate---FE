@@ -57,7 +57,14 @@ const MainSidebar = () => {
       <List>
         <div className="title">설정</div>
         <ul className="list">
-          <li>마이페이지</li>
+          <li
+            onClick={(e) => {
+              e.preventDefault();
+              nav('/mypage');
+            }}
+          >
+            마이페이지
+          </li>
         </ul>
       </List>
       <List>

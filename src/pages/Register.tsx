@@ -32,6 +32,8 @@ const Register = () => {
   const [checkPw, setCheckPw] = useState(''); //비밀번호 확인
   const [isequal, setIsequal] = useState(false);
   const [birthValue, setBirthValue] = useState(new Date());
+  const [btn1, setBtn1] = useState(false); //약관1
+  const [btn2, setBtn2] = useState(false); //약관2
 
   const handleinput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRegisterValue({
@@ -57,9 +59,13 @@ const Register = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(registerValue);
-  }, [registerValue]);
+  //체크버튼
+  const handleCheckBtn1 = () => {
+    setBtn1(!btn1);
+  };
+  const handleCheckBtn2 = () => {
+    setBtn2(!btn2);
+  };
 
   const submitRegister = () => {
     const tmp = {
@@ -89,7 +95,6 @@ const Register = () => {
   return (
     <Wrapper>
       <SignupBox>
-        {/* <div className="logo">로고</div> */}
         <Logo src={flexrateLogo} alt="flexrateLogo" />
         <p>회원가입</p>
         <SignupInfobox>
@@ -187,11 +192,19 @@ const Register = () => {
         <SignupBottombox>
           <ul>
             <li>
-              <span>{false ? <CircleCheckColor /> : <CircleCheckIcon />}</span>
+              {btn1 ? (
+                <CircleCheckColor onClick={handleCheckBtn1} />
+              ) : (
+                <CircleCheckIcon onClick={handleCheckBtn1} />
+              )}
               <span>[필수] 개인정보 수집 및 이용 동의</span>
             </li>
             <li>
-              <span>{false ? <CircleCheckColor /> : <CircleCheckIcon />}</span>
+              {btn2 ? (
+                <CircleCheckColor onClick={handleCheckBtn2} />
+              ) : (
+                <CircleCheckIcon onClick={handleCheckBtn2} />
+              )}
               <span>[필수] 개인정보 수집 및 이용 동의</span>
             </li>
           </ul>

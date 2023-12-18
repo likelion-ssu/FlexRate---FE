@@ -1,12 +1,10 @@
 import styled from 'styled-components';
 import { BasicInput } from '@/styles/BasicStyles';
-import visible from '../../assets/imgs/visible.png';
 
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { registerInfo } from '../../state/register';
-import { HiddenIcon } from '@/assets/svgs/0_index';
-
+import { GreenCheckIcon, HiddenIcon } from '@/assets/svgs/0_index';
 import { CheckIcon } from '@/assets/svgs/0_index';
 //비밀번호
 
@@ -56,7 +54,7 @@ const Password = () => {
         className="pwCheck"
         $isValid={passwordValidations.isLongEnough}
       >
-        <CheckIcon />
+        {passwordValidations.isLongEnough ? <GreenCheckIcon /> : <CheckIcon />}
         최소 8글자 이상
       </ValidationText>
       <ValidationText
@@ -70,7 +68,16 @@ const Password = () => {
           ].filter(Boolean).length >= 3
         }
       >
-        <CheckIcon />
+        {[
+          passwordValidations.hasUpperCase,
+          passwordValidations.hasLowerCase,
+          passwordValidations.hasNumber,
+          passwordValidations.hasSpecialChar,
+        ].filter(Boolean).length >= 3 ? (
+          <GreenCheckIcon />
+        ) : (
+          <CheckIcon />
+        )}
         대문자, 소문자, 숫자, 특수문자 중 3종류 이상
       </ValidationText>
     </Wrappeer>
