@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import * as S from '../styles/MypageStyle';
-import axiosInstance from '@/apis/axiosinstance';
+import axiosInstance from '../apis/axiosinstance';
 
 const Mypage = () => {
   let memberId: string | null;
