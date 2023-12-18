@@ -23,6 +23,6 @@ interface ShowCoachMark {
 export const ShowCoachMark = atom<ShowCoachMark>({
   key: 'ShowCoachMark',
   default: {
-    beginer: true,
+    beginer: false,
   },
 });

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import profileImg from '@/assets/imgs/profileImg.png';
 
 import { useRecoilState } from 'recoil';
-import { CoachMarkStage } from '@/state/CoachMarkStage';
+import { CoachMarkStage, ShowCoachMark } from '@/state/CoachMarkStage';
 import { useNavigate } from 'react-router-dom';
 
 const MainSidebar = () => {
@@ -19,6 +19,22 @@ const MainSidebar = () => {
   };
 
   let isVisible = mode && stage === 1;
+
+  const [, setShow] = useRecoilState(ShowCoachMark);
+
+  //로그아웃
+  const logout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('memberid');
+    nav('/');
+  };
+
+  const handelShow = () => {
+    setShow(() => ({
+      beginer: true,
+    }));
+  };
+
   return (
     <Sidebar>
       <div id="profile">
@@ -65,12 +81,19 @@ const MainSidebar = () => {
           >
             마이페이지
           </li>
+          <li onClick={logout}>로그아웃</li>
         </ul>
       </List>
       <List>
-        <div className="title">이번주 미션</div>
+        <div className="title">설명</div>
         <ul className="list">
-          <li>행운퀴즈</li>
+          <li
+            onClick={() => {
+              handelShow();
+            }}
+          >
+            설명보기
+          </li>
         </ul>
       </List>
     </Sidebar>

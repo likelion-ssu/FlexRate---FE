@@ -105,7 +105,9 @@ const Tooltip6 = () => {
                   ...prev,
                   mode: false,
                 }));
-                nav('/LoanApplication');
+                if (!localStorage.getItem('accessToken')) {
+                  nav('/LoanApplication');
+                }
               }}
             >
               다음

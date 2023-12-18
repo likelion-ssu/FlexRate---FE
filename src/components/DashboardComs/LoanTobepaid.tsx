@@ -1,4 +1,3 @@
-import React from 'react';
 import { styled } from 'styled-components';
 import payback from '../../assets/imgs/paybackTag.png';
 import TransverseGraph from './TransverseGraph';
@@ -13,7 +12,7 @@ import Tooltip4 from '../CoachMarksComs/Tooltip4';
 const LoanTobepaid = () => {
   const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
   const info = useRecoilValue(LoanInfo);
-  const outputVal=useRecoilValue(output);
+  const outputVal = useRecoilValue(output);
 
   const monthPeriod = info.period * 12;
 
@@ -46,7 +45,11 @@ const LoanTobepaid = () => {
           <img src={payback} />
         </Dash.LoanPrice>
         <Dash.Grape>
-          <TransverseGraph value={info.interest} min={outputVal.minRate} max={outputVal.maxRate}/>
+          <TransverseGraph
+            value={info.interest}
+            min={outputVal.minRate}
+            max={outputVal.maxRate}
+          />
         </Dash.Grape>
         <div className="amount-section">
           <AmountSection

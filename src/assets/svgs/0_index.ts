@@ -3,6 +3,7 @@ import CheckIcon from './CheckIcon.svg?react';
 import GreenCheckIcon from './GreenCheckIcon.svg?react';
 import CircleCheckIcon from './CircleCheckIcon.svg?react';
 import CircleCheckColor from './CircleCheckColor.svg?react';
+import EditIcon from './EditIcon.svg?react';
 
 export {
   HiddenIcon,
@@ -10,4 +11,5 @@ export {
   GreenCheckIcon,
   CircleCheckIcon,
   CircleCheckColor,
+  EditIcon,
 };

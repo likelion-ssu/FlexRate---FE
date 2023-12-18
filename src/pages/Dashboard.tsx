@@ -46,7 +46,7 @@ const Dashboard = () => {
   const { beginer } = showCoachMark;
 
   useEffect(() => {
-    if (beginer === true) {
+    if (!localStorage.getItem('accessToken') || beginer) {
       //처음이면(coachMark를 보여줘야하면)
       setCoachMark((prevCoachMark) => ({
         ...prevCoachMark,
