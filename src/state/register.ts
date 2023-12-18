@@ -3,14 +3,13 @@ import { atom } from 'recoil';
 export const registerInfo = atom({
   key: 'registerInfo',
   default: {
-    user_id: '',
-    pwd: '',
-    nickname: '',
-    birth_year: new Date(),
+    accout: '',
+    password: '',
+    name: '',
+    birth: '',
     gender: false,
-    nation: false,
-    phone_num: '',
+    nationality: false,
+    phonenumber: '',
     email: '',
-    address: '',
   },
 });

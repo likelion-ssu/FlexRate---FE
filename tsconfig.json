@@ -17,8 +17,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": { "@/*": ["./src/*"] },
-    "typeRoots": ["./node_modules/@types", "./src/@types"]
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "types": ["vite-plugin-svgr/client"]
   },
-  "include": ["src", "setupTests.ts", "./src/@types"],
+  "include": ["src", "setupTests.ts", "./src/@types", "svg.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

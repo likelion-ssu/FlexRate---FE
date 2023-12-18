@@ -12,6 +12,7 @@ import LoanDisagree from './pages/LoanDisagree';
 import EditingInfo from './pages/EditingInfo';
 import MainSidebar from './components/MainSidebar';
 import GlobalStyle from './GlobalStyle';
+import Mypage from './pages/Mypage';
 
 const MainLayout = styled.div`
   display: flex;
@@ -39,8 +40,8 @@ function App() {
             <Route path="/Agree" element={<LoanAgree />} />
             <Route path="/DisAgree" element={<LoanDisagree />} />
             <Route path="/LoanApplication" element={<LoanApplication />} />
-            <Route path="dashboard" element={<Dashboard />} />
             <Route path="/editInfo" element={<EditingInfo />} />
+            <Route path="/mypage" element={<Mypage />} />
           </Routes>
         </MainLayout>
       </BrowserRouter>

@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import { BasicInput } from '@/styles/BasicStyles';
-import visible from '../../assets/imgs/visible.png';
 
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { registerInfo } from '../../state/register';
+import { GreenCheckIcon, HiddenIcon } from '@/assets/svgs/0_index';
+import { CheckIcon } from '@/assets/svgs/0_index';
 //비밀번호
 
 const Password = () => {
@@ -32,7 +33,7 @@ const Password = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRegisterValue({
       ...registerValue,
-      pwd: event.target.value,
+      password: event.target.value,
     });
     validatePassword(event.target.value);
   };
@@ -46,27 +47,14 @@ const Password = () => {
       <BasicInput
         type={pwisvisible ? 'text' : 'password'}
         onChange={handleChange}
-        value={registerValue.pwd}
+        value={registerValue.password}
       ></BasicInput>
-      <img className="invisible" src={visible} alt="가리기" onClick={showPwd} />
+      <HiddenIcon className="invisible" onClick={showPwd} />
       <ValidationText
         className="pwCheck"
         $isValid={passwordValidations.isLongEnough}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="17"
-          height="17"
-          viewBox="0 0 17 17"
-          fill="none"
-        >
-          <path
-            d="M12.75 4.9585L6.67857 12.0418L4.25 9.2085"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        {passwordValidations.isLongEnough ? <GreenCheckIcon /> : <CheckIcon />}
         최소 8글자 이상
       </ValidationText>
       <ValidationText
@@ -80,20 +68,16 @@ const Password = () => {
           ].filter(Boolean).length >= 3
         }
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="17"
-          height="17"
-          viewBox="0 0 17 17"
-          fill="none"
-        >
-          <path
-            d="M12.75 4.9585L6.67857 12.0418L4.25 9.2085"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        {[
+          passwordValidations.hasUpperCase,
+          passwordValidations.hasLowerCase,
+          passwordValidations.hasNumber,
+          passwordValidations.hasSpecialChar,
+        ].filter(Boolean).length >= 3 ? (
+          <GreenCheckIcon />
+        ) : (
+          <CheckIcon />
+        )}
         대문자, 소문자, 숫자, 특수문자 중 3종류 이상
       </ValidationText>
     </Wrappeer>

@@ -91,6 +91,7 @@ export const SignupInfobox = styled.div`
 `;
 
 export const SignupBottombox = styled.div`
+  margin-top: 2rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -99,6 +100,9 @@ export const SignupBottombox = styled.div`
   & > ul {
     list-style-type: none;
     padding: 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 
     & > li {
       color: var(--Black, #262626);
@@ -141,21 +145,6 @@ export const SignupBottombox = styled.div`
         line-height: normal;
         text-decoration-line: underline;
       }
-
-      /* & > button {
-        width: 97px;
-        height: 43px;
-        border-radius: 7px;
-        background: var(--Primary, #63c393);
-        border: none;
-
-        color: var(--White, #fff);
-        font-family: Pretendard;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
-      } */
     }
     .btn {
       width: 97px;

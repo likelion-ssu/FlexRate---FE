@@ -75,11 +75,13 @@ const MainHeader = () => {
   const pathSegments = location.pathname.split('/'); //경로는 /로 구분
   const nowpath = pathSegments[1];
 
+  //로그인 되어있는지
+  let isLogin = localStorage.getItem('accessToken');
   return (
     <Header>
       <div>
         <Logo>
-          <img src={logo} alt="로고" />
+          <img src={logo} alt="로고" onClick={() => navigate('/dashboard')} />
         </Logo>
         <Button onClick={() => navigate('/main')} $active={nowpath === 'main'}>
           메인
@@ -91,12 +93,18 @@ const MainHeader = () => {
           한 눈에 보는 대시보드
         </Button>
       </div>
-      <div>
-        <LoginButton onClick={() => navigate('/login')}>로그인</LoginButton>
-        <SignupButton onClick={() => navigate('/signup')}>
-          회원가입하기
-        </SignupButton>
-      </div>
+      {isLogin ? (
+        <div>
+          <p>유저이름</p>
+        </div>
+      ) : (
+        <div>
+          <LoginButton onClick={() => navigate('/login')}>로그인</LoginButton>
+          <SignupButton onClick={() => navigate('/signup')}>
+            회원가입하기
+          </SignupButton>
+        </div>
+      )}
     </Header>
   );
 };
