@@ -90,7 +90,6 @@ interface ChartFunctionParams {
 const RateChange = () => {
   const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
   const data = useRecoilValue(userInfo);
-  console.log(data.changes);
 
   // stage 값에 접근
   const { stage, mode } = coachMark;
@@ -129,7 +128,7 @@ const RateChange = () => {
     },
     plotOptions: {
       bar: {
-        columnWidth: '65%',
+        columnWidth: '20%',
       },
     },
     tooltip: {
@@ -139,11 +138,10 @@ const RateChange = () => {
         dataPointIndex,
         w,
       }: ChartFunctionParams) {
-        const idx = parseInt(w.globals.labels[dataPointIndex]) - 1;
-        const rate = series[seriesIndex][dataPointIndex]; // 해당 월의 금리
-        const previousRate = series[seriesIndex][dataPointIndex - 1] || 0; // 전달의 금리
-        const rateChange = rate - previousRate; // 금리 변동폭
-
+        let idx = parseInt(w.globals.labels[dataPointIndex]) - 1;
+        let rate = series[seriesIndex][dataPointIndex]; // 해당 월의 금리
+        let previousRate = series[seriesIndex][dataPointIndex - 1] || 0; // 전달의 금리
+        let rateChange = rate - previousRate; // 금리 변동폭
         const startDate = duration[idx] + '.01';
         const endDate = duration[idx] + '.31';
 

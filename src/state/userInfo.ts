@@ -1,7 +1,6 @@
 import { atom } from 'recoil';
 
 interface userInfoProps {
-  isLoan: boolean; //대출심사 받았는지
   insert_time: string;
   loan_request: number;
   loan_repay_term: number;
@@ -20,7 +19,6 @@ interface userInfoProps {
 export const userInfo = atom<userInfoProps>({
   key: 'userInfo',
   default: {
-    isLoan: false,
     loan_request: 100000,
     insert_time: '',
     loan_repay_term: 1,

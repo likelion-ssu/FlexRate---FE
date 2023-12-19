@@ -80,8 +80,7 @@ const Dashboard = () => {
       .then((res) => {
         console.log(res.data);
         if (res.data.loan_request) {
-          const newData = { ...res.data, isLoan: data.isLoan };
-          setData(newData);
+          setData(res.data);
         }
       })
       .catch((err) => {

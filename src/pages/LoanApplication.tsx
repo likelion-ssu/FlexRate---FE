@@ -308,7 +308,7 @@ const LoanApplication = () => {
         company_enter_month: foramtedDate,
         academic_ability_school: loanValue.academicName,
         academic_ability: loanValue.selectedAcademicType,
-        yearly_income: loanValue.income,
+        yearly_income: loanValue.income.replace(/,/g, ''),
         credit_score: loanValue.creditScore,
         houseown_type: loanValue.homeType,
         personal_rehabilitation_yn: loanValue.personalRecovery,
@@ -484,7 +484,12 @@ const LoanApplication = () => {
             placeholder="원"
             name="income"
             value={loanValue.income}
-            onChange={handleinput}
+            onChange={(e) => {
+              setLoanValue({
+                ...loanValue,
+                income: customLocaleString(e.target.value),
+              });
+            }}
           ></CreditInput>
           <CreditInput
             placeholder="점"
