@@ -8,18 +8,20 @@ import { CoachMarkStage } from '@/state/CoachMarkStage';
 import { LoanInfo } from '@/state/LoanInfo';
 import { output } from '@/state/output';
 import Tooltip4 from '../CoachMarksComs/Tooltip4';
+import { userInfo } from '@/state/userInfo';
 
 const LoanTobepaid = () => {
   const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
   const info = useRecoilValue(LoanInfo);
   const outputVal = useRecoilValue(output);
+  const data = useRecoilValue(userInfo);
 
-  const monthPeriod = info.period * 12;
+  const monthPeriod = data.loan_repay_term * 12;
 
   //원금 이자 계산
-  const amount = Math.floor(info.payment / monthPeriod); //총액 / 개월수
+  const amount = Math.floor(data.loan_request / monthPeriod); //총액 / 개월수
   const interestVal = Math.floor(
-    (info.payment * info.interest) / (monthPeriod * 100),
+    (data.loan_request * data.loan_initial) / (monthPeriod * 100),
   ); //총액 *금리 / 개월수
 
   const paidtoAmount = amount + interestVal;
@@ -32,7 +34,7 @@ const LoanTobepaid = () => {
     setCoachMark({ ...coachMark, stage: newStage });
   };
 
-  let isVisible = mode && stage === 4;
+  let isVisible = mode && stage === 3;
 
   return (
     <>
@@ -46,23 +48,25 @@ const LoanTobepaid = () => {
         </Dash.LoanPrice>
         <Dash.Grape>
           <TransverseGraph
-            value={info.interest}
-            min={outputVal.minRate}
-            max={outputVal.maxRate}
+            value={data.loan_payment_count + 1}
+            min={0}
+            max={100}
           />
         </Dash.Grape>
         <div className="amount-section">
           <AmountSection
             title="원금"
             amount={amount.toLocaleString()}
-            totalAmount={`${info.payment.toLocaleString()}원`}
+            totalAmount={`${data.loan_request.toLocaleString()}원`}
             period={`${monthPeriod}개월`}
           />
           <AmountSection
             title="이자"
             amount={interestVal.toLocaleString()}
-            totalAmount={`${info.payment.toLocaleString()}원`}
-            period={`${info.period * 12}개월`}
+            totalAmount={`${data.loan_request.toLocaleString()}원 x ${
+              data.loan_initial / 100
+            }`}
+            period={`${data.loan_repay_term * 12}개월`}
           />
         </div>
         {isVisible && <Tooltip4 />}

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import * as S from '@/styles/CoachMarkStyles';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { ShowCoachMark, CoachMarkStage } from '@/state/CoachMarkStage';
+import { userInfo } from '@/state/userInfo';
 
 interface TooltipProps {
   $directionIndex: number; // 화살표 방향을 나타내는 인덱스
@@ -42,6 +43,7 @@ const Tooltip6 = () => {
   const [coach, setcoach] = useRecoilState(CoachMarkStage);
   const { stage, totalStage } = coach;
   const [state, setState] = useState(0);
+  const data = useRecoilValue(userInfo);
 
   return (
     <TooltipContainer $directionIndex={2}>
@@ -105,7 +107,11 @@ const Tooltip6 = () => {
                   ...prev,
                   mode: false,
                 }));
-                if (!localStorage.getItem('accessToken')) {
+
+                if (
+                  localStorage.getItem('accessToken') &&
+                  data.loan_payment_count === 80
+                ) {
                   nav('/LoanApplication');
                 }
               }}

@@ -9,6 +9,8 @@ import formatDateToString from '../utils/formatDateToString';
 import formatDateToKorean from '../utils/formatDateToKorean';
 import axiosInstance from '@/apis/axiosinstance';
 import { loanDateState } from '@/state/loanDateState';
+import { userInfo } from '@/state/userInfo';
+import { LoanInfo } from '@/state/LoanInfo';
 
 const Article = styled.article`
   display: flex;
@@ -177,10 +179,8 @@ const ApplicationSec = styled.section`
 
 const LoanQualification = () => {
   const [username, setUsername] = useState('');
-  useEffect(() => {
-    window.scrollTo(0, 0); //스크롤 상단으로
-    getUsername();
-  }, []);
+  const [isLoan, setIsLoan] = useRecoilState(userInfo);
+  const memberId = localStorage.getItem('memberid');
 
   //이름 가져오기
   const getUsername = async () => {
@@ -198,23 +198,29 @@ const LoanQualification = () => {
 
   const nav = useNavigate();
   const outputvalue = useRecoilValue(output);
-  const ave = (outputvalue.minRate + outputvalue.maxRate) / 2;
+  // const ave = (outputvalue.minRate + outputvalue.maxRate) / 2;
 
   const [payment, setPayment] = useState('');
   const [period, setPeriod] = useState('');
   const [creditResult, setCreditResult] = useState({
-    name: 'Sample Name',
-    insert_time: '2023-12-05',
-    loan_limit: 50000000,
-    loan_initial: 15.0,
-    loan_range_min: 5.0,
-    loan_range_max: 16.0,
+    name: '',
+    insert_time: '',
+    loan_limit: 0,
+    loan_initial: 0,
+    loan_range_min: 0,
+    loan_range_max: 0,
+    newCreditScore: 0,
   });
   const [loanInfo, setLoanInfo] = useState({
-    loan_reqeust: 1500000,
+    loan_request: 1500000,
     loan_repay_term: 1,
   });
   const [loanDate, setLoanDate] = useRecoilState(loanDateState);
+
+  useEffect(() => {
+    window.scrollTo(0, 0); //스크롤 상단으로
+    getUsername();
+  }, []);
 
   const handleInputChange = (e: any) => {
     const rawValue = e.target.value.replace(/,/g, ''); // 입력에서 쉼표를 제거
@@ -228,23 +234,25 @@ const LoanQualification = () => {
   };
 
   //제출
-  const memberId = localStorage.getItem('memberid');
+
+  const [localLoaninfo, setLocalLoaninfo] = useRecoilState(LoanInfo);
 
   const submitLoan = async () => {
     const _period = parseInt(period);
-    const _payment = parseInt(payment);
+    const _payment = parseInt(payment.replace(/,/g, ''));
 
     setCreditResult({
-      name: 'Sample Name',
+      name: username,
       insert_time: formatDateToString(today),
-      loan_initial: ave,
+      loan_initial: outputvalue.maxRate,
       loan_limit: outputvalue.loanLimit,
       loan_range_min: outputvalue.minRate,
       loan_range_max: outputvalue.maxRate,
+      newCreditScore: outputvalue.Score,
     });
 
     setLoanInfo({
-      loan_reqeust: _payment,
+      loan_request: _payment,
       loan_repay_term: _period,
     });
 
@@ -255,15 +263,42 @@ const LoanQualification = () => {
       day: today.getDate(),
     });
 
+    setIsLoan((prev) => ({
+      ...prev,
+      isLoan: true,
+    }));
+    setLocalLoaninfo((prev) => ({
+      ...prev,
+      payment: _payment,
+      interest: outputvalue.maxRate,
+    }));
+
+    putLoanData();
+    postLoanData();
+
+    nav('/agree');
+  };
+
+  const putLoanData = async () => {
     await axiosInstance
-      .put(`/loan/result/${memberId}`, creditResult)
+      .put(`/loan/result/${memberId}`, {
+        name: username,
+        insert_time: formatDateToString(today),
+        loan_initial: outputvalue.maxRate,
+        loan_limit: outputvalue.loanLimit,
+        loan_range_min: outputvalue.minRate,
+        loan_range_max: outputvalue.maxRate,
+        newCreditScore: outputvalue.Score,
+      })
       .then((res) => {
         console.log(res);
       })
       .catch((err) => {
         console.log(err.response);
       });
+  };
 
+  const postLoanData = async () => {
     await axiosInstance
       .post(`/loan/request/${memberId}`, loanInfo)
       .then((res) => {
@@ -272,9 +307,8 @@ const LoanQualification = () => {
       .catch((err) => {
         console.log(err.response);
       });
-
-    nav('/agree');
   };
+
   return (
     <Article>
       <h2>

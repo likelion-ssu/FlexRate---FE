@@ -61,7 +61,7 @@ const Wrapper = styled.div`
   }
 
   .tag {
-    width: 112px;
+    max-width: 135px;
     height: 20px;
     display: flex;
     justify-content: center;
@@ -73,6 +73,7 @@ const Wrapper = styled.div`
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+    border-radius: 4px;
   }
 
   &:nth-child(2) {

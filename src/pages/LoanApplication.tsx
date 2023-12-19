@@ -16,6 +16,7 @@ import calculateInterestRateRange from '../models/calculateInterestRateRange';
 import { output } from '@/state/output';
 import axiosInstance from '@/apis/axiosinstance';
 import formatDateToString from '@/utils/formatDateToString';
+import customLocaleString from '@/utils/customLocaleString';
 
 const Container = styled.div`
   display: flex;
@@ -331,10 +332,8 @@ const LoanApplication = () => {
     ///////////////////////////
     //신용점수 모델
     const scaledFeatures: number[] = Scaling(myFeatures);
-    console.log('scaledFeatures', scaledFeatures);
     const model = new LogisticRegression();
     const newScore = model.predictScore(scaledFeatures);
-    console.log('newScore', newScore); //신용점수
     setMyOutput((prev) => ({
       ...prev,
       Score: newScore,
@@ -344,7 +343,6 @@ const LoanApplication = () => {
     //금리 산출 모델
     // 예시: 신용평가 점수가 700일 때의 금리 범위를 계산
     const rateResult = calculateInterestRateRange(newScore);
-    console.log('rateResult', rateResult);
     const tmp1 = parseInt(rateResult.maxRate);
     const tmp2 = parseInt(rateResult.minRate);
     setMyOutput((prev) => ({

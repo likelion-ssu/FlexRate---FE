@@ -8,19 +8,23 @@ import RateChange from '@/components/DashboardComs/RateChange';
 import Notification from '@/components/DashboardComs/Notification';
 import LoanHistory from '@/components/DashboardComs/LoanHistory';
 import Test from '@/components/DashboardComs/FlipCard';
+import axiosInstance from '@/apis/axiosinstance';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { CoachMarkStage } from '@/state/CoachMarkStage';
 import { ShowCoachMark } from '@/state/CoachMarkStage';
+import { userInfo } from '@/state/userInfo';
 
 const useNarrowScreen = () => {
   // 초기 상태 설정
-  const [isNarrowScreen, setIsNarrowScreen] = useState(window.innerWidth > 600);
+  const [isNarrowScreen, setIsNarrowScreen] = useState(
+    window.innerWidth > 1300,
+  );
 
   useEffect(() => {
     // 화면 크기 변경 시 호출될 함수
     const handleResize = () => {
-      setIsNarrowScreen(window.innerWidth > 1000);
+      setIsNarrowScreen(window.innerWidth > 1300);
     };
     window.addEventListener('resize', handleResize); // 이벤트 리스너 추가
     return () => {
@@ -44,17 +48,47 @@ const Dashboard = () => {
   //처음 Dashboard시작시 코지마크 실행
   const showCoachMark = useRecoilValue(ShowCoachMark);
   const { beginer } = showCoachMark;
+  const [data, setData] = useRecoilState(userInfo);
+  const { loan_payment_count } = data;
 
   useEffect(() => {
-    if (!localStorage.getItem('accessToken') || beginer) {
+    if (
+      !localStorage.getItem('accessToken') ||
+      beginer ||
+      loan_payment_count === 80
+    ) {
       //처음이면(coachMark를 보여줘야하면)
       setCoachMark((prevCoachMark) => ({
         ...prevCoachMark,
+        stage: 1,
         mode: true,
       }));
     }
+  }, [beginer]);
+
+  //서버에서 정보 가져오기
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
+  const fetchData = async () => {
+    const memberId = localStorage.getItem('memberid');
+    //서버통신
+    await axiosInstance
+      .get(`/main/dashboard/${memberId}`)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.loan_request) {
+          const newData = { ...data, ...res.data, isLoan: data.isLoan };
+          setData(newData);
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+  console.log(data);
   return (
     <Wrapper $isNarrowScreen={isNarrowScreen} $isVisible={mode}>
       {isNarrowScreen ? <MainSidebar /> : <></>}

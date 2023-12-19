@@ -4,9 +4,10 @@ import styled from 'styled-components';
 import '../../styles/CustomTooltip.css';
 import up from '../../assets/imgs/up.png';
 import down from '../../assets/imgs/down.png';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { CoachMarkStage } from '@/state/CoachMarkStage';
 import Tooltip5 from '../CoachMarksComs/Tooltip5';
+import { userInfo } from '@/state/userInfo';
 
 const Container = styled.div<{ $isVisible: boolean }>`
   width: 100%;
@@ -88,6 +89,8 @@ interface ChartFunctionParams {
 
 const RateChange = () => {
   const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
+  const data = useRecoilValue(userInfo);
+  console.log(data.changes);
 
   // stage 값에 접근
   const { stage, mode } = coachMark;
@@ -97,23 +100,11 @@ const RateChange = () => {
     setCoachMark({ ...coachMark, stage: newStage });
   };
 
-  let isVisible = mode && stage === 5;
-  const lineData = [12, 14, 16, 14, 16, 13, 11, 14, 12, 12, 13, 15];
+  let isVisible = mode && stage === 4;
+  const changes = data.changes;
+  const lineData = changes.map((item) => item.change_loan_initial);
   const blockData = lineData.map((item) => item * 1.25);
-  const duration = [
-    '2023.01',
-    '2023.02',
-    '2023.03',
-    '2023.04',
-    '2023.05',
-    '2023.06',
-    '2023.07',
-    '2023.08',
-    '2023.09',
-    '2023.10',
-    '2023.11',
-    '2023.12',
-  ];
+  const duration = changes.map((item) => item.change_insert_time);
 
   const options = {
     colors: ['#FBEAB2', '#80D2D0'],
@@ -235,10 +226,10 @@ const RateChange = () => {
       <Wrapper>
         <p>나의 대출 금리 변화</p>
         <div>
-          <Num>7</Num>
+          <Num>{data.loan_initial}</Num>
           <Per>%</Per>
           <Text>역대 최저 금리</Text>
-          <Num>14</Num>
+          <Num>{data.loan_initial}</Num>
           <Per>%</Per>
           <Text>역대 최고 금리</Text>
         </div>
