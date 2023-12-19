@@ -81,7 +81,7 @@ const MainHeader = () => {
     <Header>
       <div>
         <Logo>
-          <img src={logo} alt="로고" onClick={() => navigate('/dashboard')} />
+          <img src={logo} alt="로고" onClick={() => navigate('/main')} />
         </Logo>
         <Button onClick={() => navigate('/main')} $active={nowpath === 'main'}>
           메인

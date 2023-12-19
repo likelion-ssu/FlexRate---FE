@@ -46,17 +46,18 @@ const Dashboard = () => {
   const isNarrowScreen = useNarrowScreen();
 
   //처음 Dashboard시작시 코지마크 실행
-  const showCoachMark = useRecoilValue(ShowCoachMark);
+  const [showCoachMark, setShow] = useRecoilState(ShowCoachMark);
   const { beginer } = showCoachMark;
   const [data, setData] = useRecoilState(userInfo);
   const { loan_payment_count } = data;
 
   useEffect(() => {
-    if (
-      !localStorage.getItem('accessToken') ||
-      beginer ||
-      loan_payment_count === 80
-    ) {
+    console.log(
+      localStorage.getItem('accessToken'),
+      beginer,
+      loan_payment_count,
+    );
+    if (!localStorage.getItem('accessToken') || beginer === true) {
       //처음이면(coachMark를 보여줘야하면)
       setCoachMark((prevCoachMark) => ({
         ...prevCoachMark,
@@ -80,8 +81,12 @@ const Dashboard = () => {
       .then((res) => {
         console.log(res.data);
         if (res.data.loan_request) {
-          const newData = { ...res.data, isLoan: data.isLoan };
-          setData(newData);
+          setData(res.data);
+          const change = res.data.changes;
+        } else {
+          setShow(() => ({
+            beginer: true,
+          }));
         }
       })
       .catch((err) => {

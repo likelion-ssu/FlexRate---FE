@@ -83,6 +83,17 @@ const Tooltip6 = () => {
                 다음
               </S.Btn>
             </span>
+            <Xbtn
+              onClick={(e) => {
+                e.preventDefault();
+                setcoach((prev) => ({
+                  ...prev,
+                  mode: false,
+                }));
+              }}
+            >
+              x
+            </Xbtn>
           </S.TooltipFooter>
         </>
       ) : (
@@ -124,6 +135,15 @@ const Tooltip6 = () => {
     </TooltipContainer>
   );
 };
+
+const Xbtn = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 const TooltipContainer = styled.span<TooltipProps>`
   /* 기본 스타일 */

@@ -164,7 +164,7 @@ const EditingInfo = () => {
           ...loanValue,
           academicName: data.academic_ability_school,
           selectedDate: formatedDate,
-          income: data.yearly_income,
+          income: data.yearly_income.replace(/,/g, ''),
           creditScore: data.credit_score,
           homeType: data.houseown_type,
           personalRecovery: data.personal_rehabilitation_yn,
@@ -434,7 +434,7 @@ const EditingInfo = () => {
   const handleinput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoanValue({
       ...loanValue,
-      [e.target.name]: customLocaleString(e.target.value),
+      [e.target.name]: e.target.value,
     });
     console.log(loanValue);
   };
@@ -529,7 +529,12 @@ const EditingInfo = () => {
             name="income"
             value={loanValue.income}
             placeholder="원"
-            onChange={handleinput}
+            onChange={(e) => {
+              setLoanValue({
+                ...loanValue,
+                income: customLocaleString(e.target.value),
+              });
+            }}
           ></CreditInput>
           <CreditInput
             name="creditScore"
