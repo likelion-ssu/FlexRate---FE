@@ -48,7 +48,7 @@ const Tooltip5 = () => {
         </div>
         <div className="small">
           <S.PointColorText>신용평가모델</S.PointColorText>에 대해 알고싶다면
-          블럭을 클릭해보세요!
+          블럭을 <S.PointColorText>클릭</S.PointColorText>해보세요!
         </div>
       </S.TooltipText>
       <S.TooltipFooter>

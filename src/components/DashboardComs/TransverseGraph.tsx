@@ -21,8 +21,7 @@ const TransverseGraph: React.FC<BarChartProps> = ({ value, min, max }) => {
       svg.selectAll('*').remove();
 
       // x축 스케일을 설정합니다. value의 최댓값으로 도메인을 설정합니다.
-      const rate = (value / (max + 5)) * 100;
-      console.log(rate);
+      const rate = value;
       const gradient = svg
         .append('defs')
         .append('linearGradient')

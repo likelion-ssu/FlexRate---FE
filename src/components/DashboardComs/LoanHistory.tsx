@@ -4,10 +4,13 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { CoachMarkStage } from '@/state/CoachMarkStage';
 import { LoanInfo } from '@/state/LoanInfo';
 import Tooltip6 from '../CoachMarksComs/Tooltip6';
+import { userInfo } from '@/state/userInfo';
+import customLocaleString from '@/utils/customLocaleString';
 
 const LoanHistory = () => {
   const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
-  const info = useRecoilValue(LoanInfo);
+  const isloan = useRecoilValue(userInfo);
+  const data = useRecoilValue(userInfo);
 
   // stage 값에 접근
   const { stage, mode } = coachMark;
@@ -17,14 +20,14 @@ const LoanHistory = () => {
     setCoachMark({ ...coachMark, stage: newStage });
   };
 
-  let isVisible = mode && stage === 6;
+  let isVisible = mode && stage === 5;
   return (
     <Dash.Wrapper $isVisible={isVisible}>
       <Dash.Title>나의 대출 히스토리</Dash.Title>
       <Dash.Cate>
         <span>
           <Dash.Label>대출시작일</Dash.Label>
-          <Dash.Content>{info.payment_date}년 11월 21일</Dash.Content>
+          <Dash.Content>2023년 12월 19일</Dash.Content>
         </span>
         <span>
           <Dash.Label>금리 변경 횟수</Dash.Label>

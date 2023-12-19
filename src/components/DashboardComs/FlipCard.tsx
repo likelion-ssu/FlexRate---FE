@@ -8,6 +8,7 @@ import Tooltip3 from '../CoachMarksComs/Tooltip3';
 
 import { LoanInfo } from '@/state/LoanInfo';
 import { output } from '@/state/output';
+import { userInfo } from '@/state/userInfo';
 
 const CardContainer = styled.div<{ $isFlipped: boolean; $isVisible: boolean }>`
   width: 100%;
@@ -177,6 +178,7 @@ const FlipCard: React.FC = () => {
   const score = Math.floor(outputValue.Score);
 
   const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
+  const data = useRecoilValue(userInfo);
 
   // stage 값에 접근
   const { stage, mode } = coachMark;
@@ -186,7 +188,7 @@ const FlipCard: React.FC = () => {
     setCoachMark({ ...coachMark, stage: newStage });
   };
 
-  let isVisible = mode && stage === 3;
+  let isVisible = mode && stage === 2;
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleClick = () => {
@@ -206,13 +208,13 @@ const FlipCard: React.FC = () => {
               <h1>나의 대출 금리</h1>
               <div>
                 <span>
-                  <h2>{Info.interest}</h2>
+                  <h2>{data.loan_initial}</h2>
                   <h3>%</h3>
                   <h4>이번 분기 기준</h4>
                 </span>
                 <span>
                   <img src={upCircle} alt="" />
-                  <h5>3%</h5>
+                  <h5>%</h5>
                   <h6>전달 대비</h6>
                 </span>
               </div>
@@ -225,7 +227,7 @@ const FlipCard: React.FC = () => {
               <h1>나의 신용 평가 점수</h1>
               <div>
                 <span>
-                  <h2>{score}</h2>
+                  <h2>{data.newCreditScore}</h2>
                   <h3>점</h3>
                 </span>
                 <span>
@@ -233,7 +235,8 @@ const FlipCard: React.FC = () => {
                 </span>
               </div>
               <ScoreBox>
-                NICE 신용평가점수보다 약 <div>220점</div> 더 높게 평가 받았어요
+                NICE 신용평가점수보다 약{' '}
+                <div>{data.newCreditScore - data.creditScore}점</div> 차이나요!
               </ScoreBox>
             </Wrapper>
           </div>

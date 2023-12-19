@@ -3,9 +3,12 @@ import { BasicInput, Button } from '@/styles/BasicStyles';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { output } from '@/state/output';
 import { LoanInfo } from '@/state/LoanInfo';
+import { useEffect } from 'react';
+import { loanDateState } from '@/state/loanDateState';
+import { userInfo } from '@/state/userInfo';
 
 const Article = styled.article`
   display: flex;
@@ -178,6 +181,13 @@ const LoanAgree = () => {
   const nav = useNavigate();
 
   const info = useRecoilValue(LoanInfo);
+  const [, setUserInfo] = useRecoilState(userInfo);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const loanDate = useRecoilValue(loanDateState);
 
   return (
     <Article>
@@ -201,12 +211,15 @@ const LoanAgree = () => {
           </li>
           <li>
             <span>대출 실행일</span>
-            <span>{info.payment_date}.11.21</span>
+            <span>
+              {loanDate.startYear}.{loanDate.month}.{loanDate.day}
+            </span>
           </li>
           <li>
             <span>대출 기간</span>
             <span>
-              {info.payment_date}.11.21~{info.loan_maturity_date}.11.21
+              {loanDate.startYear}.{loanDate.month}.{loanDate.day}~
+              {loanDate.endYear}.{loanDate.month}.{loanDate.day}
             </span>
           </li>
           <li className="detailFooter">
@@ -218,7 +231,16 @@ const LoanAgree = () => {
         </ul>
       </DetailSec>
 
-      <Button height="55px" onClick={() => nav('/dashboard')}>
+      <Button
+        height="55px"
+        onClick={() => {
+          setUserInfo((prev) => ({
+            ...prev,
+            isLoan: true,
+          }));
+          nav('/dashboard');
+        }}
+      >
         대시보드로 이동
       </Button>
     </Article>

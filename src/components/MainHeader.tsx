@@ -94,9 +94,7 @@ const MainHeader = () => {
         </Button>
       </div>
       {isLogin ? (
-        <div>
-          <p>유저이름</p>
-        </div>
+        <div></div>
       ) : (
         <div>
           <LoginButton onClick={() => navigate('/login')}>로그인</LoginButton>

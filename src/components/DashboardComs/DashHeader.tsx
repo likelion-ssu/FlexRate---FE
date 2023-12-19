@@ -4,6 +4,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { LoanInfo } from '@/state/LoanInfo';
 import { CoachMarkStage } from '@/state/CoachMarkStage';
 import Tooltip2 from '../CoachMarksComs/Tooltip2';
+import { userInfo } from '@/state/userInfo';
 
 const DashHeaderWrapper = styled.div<{ $isVisible: boolean }>`
   box-sizing: border-box;
@@ -84,6 +85,7 @@ const Box = styled.span<{ $backgroundColor: string }>`
 
 const DashHeader = () => {
   const [coachMark, setCoachMark] = useRecoilState(CoachMarkStage);
+  const data = useRecoilValue(userInfo);
 
   // stage 값에 접근
   const { stage, mode } = coachMark;
@@ -93,7 +95,7 @@ const DashHeader = () => {
     setCoachMark({ ...coachMark, stage: newStage });
   };
 
-  let isVisible = mode && stage === 2;
+  let isVisible = mode && stage === 1;
 
   //loanInfo
   const info = useRecoilValue(LoanInfo);
@@ -108,10 +110,10 @@ const DashHeader = () => {
           <BoldGreen>Flexrate</BoldGreen>
           <Bold>신용대출</Bold>
           <Box color="#682A1A" $backgroundColor="#f6e5df">
-            {`${info.payment / 10000}만원`}
+            {`${data.loan_request / 10000}만원`}
           </Box>
           <Box color="#682A1A" $backgroundColor="#f6e5df">
-            {`${info.period * 12}개월`}
+            {`${data.loan_repay_term * 12}개월`}
           </Box>
         </div>
       </Container>
@@ -120,18 +122,18 @@ const DashHeader = () => {
           <Title $borderColor="#60C5C5">다음 달 대출금 상환 날짜</Title>
         </div>
         <div>
-          <Bold>2023년 12월 21일</Bold>
+          <Bold>2024년 1월 19일</Bold>
           <Box color="#406969" $backgroundColor="#E0F2F3">
-            D-30일 남았어요
+            D-31일 남았어요
           </Box>
         </div>
       </Container>
       <LastContainer>
         <div>
-          <Title $borderColor="#4D81BF">대출금 납부 회차</Title>
+          <Title $borderColor="#4D81BF">금리 갱신 회차</Title>
         </div>
         <div>
-          <Bold>0회차</Bold>
+          <Bold>{data.changes.length}회차</Bold>
         </div>
       </LastContainer>
       {isVisible && <Tooltip2 />}

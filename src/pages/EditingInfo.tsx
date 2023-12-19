@@ -19,6 +19,7 @@ import LogisticRegression from '../models/calScore';
 import calculateInterestRateRange from '../models/calculateInterestRateRange';
 import formatStringToDate from '@/utils/formatStringToDate';
 import { from } from 'stylis';
+import customLocaleString from '@/utils/customLocaleString';
 
 const Container = styled.div`
   display: flex;
@@ -433,7 +434,7 @@ const EditingInfo = () => {
   const handleinput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoanValue({
       ...loanValue,
-      [e.target.name]: e.target.value,
+      [e.target.name]: customLocaleString(e.target.value),
     });
     console.log(loanValue);
   };
@@ -527,6 +528,7 @@ const EditingInfo = () => {
           <CreditInput
             name="income"
             value={loanValue.income}
+            placeholder="원"
             onChange={handleinput}
           ></CreditInput>
           <CreditInput

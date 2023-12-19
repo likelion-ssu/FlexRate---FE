@@ -3,16 +3,21 @@ import { BasicInput, Button } from '@/styles/BasicStyles';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { output } from '@/state/output';
-import { LoanInfo } from '@/state/LoanInfo';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import formatDateToString from '../utils/formatDateToString';
+import formatDateToKorean from '../utils/formatDateToKorean';
+import axiosInstance from '@/apis/axiosinstance';
+import { loanDateState } from '@/state/loanDateState';
+import { userInfo } from '@/state/userInfo';
+import { LoanInfo } from '@/state/LoanInfo';
 
 const Article = styled.article`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   min-width: 567px;
-  margin-top: 126px;
+  margin-top: 5rem;
   gap: 0.5rem;
 
   ul,
@@ -33,6 +38,7 @@ const DetailSec = styled.section`
   justify-content: center;
   align-items: flex-start;
   width: 100%;
+  margin-top: 2rem;
 
   & > ul[id='detailbox'] {
     width: 100%;
@@ -172,14 +178,55 @@ const ApplicationSec = styled.section`
 `;
 
 const LoanQualification = () => {
+  const [username, setUsername] = useState('');
+  const [isLoan, setIsLoan] = useRecoilState(userInfo);
+  const memberId = localStorage.getItem('memberid');
+
+  //이름 가져오기
+  const getUsername = async () => {
+    await axiosInstance
+      .get(`/mypage/${memberId}`)
+      .then((res) => {
+        setUsername(res.data.name);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+
+  const today = new Date();
+
   const nav = useNavigate();
   const outputvalue = useRecoilValue(output);
-  const ave = (outputvalue.minRate + outputvalue.maxRate) / 2;
+  // const ave = (outputvalue.minRate + outputvalue.maxRate) / 2;
 
   const [payment, setPayment] = useState('');
   const [period, setPeriod] = useState('');
-  const [loaninfo, setloaninfo] = useRecoilState(LoanInfo);
-  const { payment_date } = loaninfo;
+  const [creditResult, setCreditResult] = useState({
+    name: '',
+    insert_time: '',
+    loan_limit: 0,
+    loan_initial: 0,
+    loan_range_min: 0,
+    loan_range_max: 0,
+    newCreditScore: 0,
+  });
+  const [loanInfo, setLoanInfo] = useState({
+    loan_request: 1500000,
+    loan_repay_term: 1,
+  });
+  const [loanDate, setLoanDate] = useRecoilState(loanDateState);
+
+  useEffect(() => {
+    window.scrollTo(0, 0); //스크롤 상단으로
+    getUsername();
+  }, []);
+
+  const handleInputChange = (e: any) => {
+    const rawValue = e.target.value.replace(/,/g, ''); // 입력에서 쉼표를 제거
+    const formattedValue = Number(rawValue).toLocaleString(); // 천 단위로 쉼표를 추가
+    setPayment(formattedValue);
+  };
 
   //radio값 변경
   const onRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -187,25 +234,85 @@ const LoanQualification = () => {
   };
 
   //제출
-  const submitLoan = () => {
-    const _period = parseInt(period);
-    const _payment = parseInt(payment);
 
-    setloaninfo((prev) => ({
+  const [localLoaninfo, setLocalLoaninfo] = useRecoilState(LoanInfo);
+
+  const submitLoan = async () => {
+    const _period = parseInt(period);
+    const _payment = parseInt(payment.replace(/,/g, ''));
+
+    setCreditResult({
+      name: username,
+      insert_time: formatDateToString(today),
+      loan_initial: outputvalue.maxRate,
+      loan_limit: outputvalue.loanLimit,
+      loan_range_min: outputvalue.minRate,
+      loan_range_max: outputvalue.maxRate,
+      newCreditScore: outputvalue.Score,
+    });
+
+    setLoanInfo({
+      loan_request: _payment,
+      loan_repay_term: _period,
+    });
+
+    setLoanDate({
+      startYear: today.getFullYear(),
+      endYear: today.getFullYear() + _period,
+      month: today.getMonth() + 1,
+      day: today.getDate(),
+    });
+
+    setIsLoan((prev) => ({
       ...prev,
-      loan_maturity_date: payment_date + _period,
-      payment: _payment,
-      interest: ave,
-      limit: 3000000,
-      period: _period,
+      isLoan: true,
     }));
+    setLocalLoaninfo((prev) => ({
+      ...prev,
+      payment: _payment,
+      interest: outputvalue.maxRate,
+    }));
+
+    putLoanData();
+    postLoanData();
 
     nav('/agree');
   };
+
+  const putLoanData = async () => {
+    await axiosInstance
+      .put(`/loan/result/${memberId}`, {
+        name: username,
+        insert_time: formatDateToString(today),
+        loan_initial: outputvalue.maxRate,
+        loan_limit: outputvalue.loanLimit,
+        loan_range_min: outputvalue.minRate,
+        loan_range_max: outputvalue.maxRate,
+        newCreditScore: outputvalue.Score,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+
+  const postLoanData = async () => {
+    await axiosInstance
+      .post(`/loan/request/${memberId}`, loanInfo)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+
   return (
     <Article>
       <h2>
-        <PrimaryColor>숭멋사</PrimaryColor>님의 대출 심사 결과
+        <PrimaryColor>{username}</PrimaryColor>님의 대출 심사 결과
       </h2>
       <DetailSec>
         {/*상세내용*/}
@@ -213,11 +320,11 @@ const LoanQualification = () => {
         <ul id="detailbox">
           <li>
             <span>성명</span>
-            <span>숭멋사</span>
+            <span>{username}</span>
           </li>
           <li>
             <span>대출 심사 일자</span>
-            <span>2023.11.21</span>
+            <span>{formatDateToKorean(formatDateToString(today))}</span>
           </li>
           <li>
             <span>대출 가능 한도</span>
@@ -266,10 +373,7 @@ const LoanQualification = () => {
               placeholder="숫자만 입력하세요"
               name="payment"
               value={payment}
-              onChange={(e) => {
-                e.preventDefault();
-                setPayment(e.target.value);
-              }}
+              onChange={handleInputChange}
             ></BasicInput>
             <p className="inputbottom">
               대출 금액은 <PrimaryColor>최대 한도 금액</PrimaryColor>까지
