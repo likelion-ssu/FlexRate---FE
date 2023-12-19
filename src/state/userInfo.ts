@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
 
 interface userInfoProps {
   insert_time: string;
@@ -15,6 +16,11 @@ interface userInfoProps {
   creditScore: number;
   newCreditScore: number;
 }
+
+const { persistAtom } = recoilPersist({
+  key: 'localStorage',
+  storage: localStorage,
+});
 
 export const userInfo = atom<userInfoProps>({
   key: 'userInfo',
@@ -39,4 +45,5 @@ export const userInfo = atom<userInfoProps>({
     creditScore: 600,
     newCreditScore: 800,
   },
+  effects_UNSTABLE: [persistAtom],
 });

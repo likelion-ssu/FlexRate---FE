@@ -1,6 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import * as S from '@/styles/CoachMarkStyles';
+import { CoachMarkStage } from '@/state/CoachMarkStage';
+import { useRecoilState } from 'recoil';
 
 interface TooltipProps {
   $directionIndex: number; // 화살표 방향을 나타내는 인덱스
@@ -34,6 +36,8 @@ const arrow = [
 ];
 
 const Tooltip1 = () => {
+  const [state, setState] = useRecoilState(CoachMarkStage);
+  const { stage, totalStage } = state;
   return (
     <TooltipContainer $directionIndex={3}>
       <S.TooltipText>
@@ -45,11 +49,41 @@ const Tooltip1 = () => {
       </S.TooltipText>
       <S.TooltipFooter>
         <span className="stageStatus">stage/totalstage</span>
-        <button>다음</button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            setState((prev) => ({
+              ...prev,
+              stage: stage + 1,
+            }));
+          }}
+        >
+          다음
+        </button>
       </S.TooltipFooter>
+      <Xbtn
+        onClick={(e) => {
+          e.preventDefault();
+          setState((prev) => ({
+            ...prev,
+            mode: false,
+          }));
+        }}
+      >
+        x
+      </Xbtn>
     </TooltipContainer>
   );
 };
+
+const Xbtn = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 const TooltipContainer = styled.span<TooltipProps>`
   /* 기본 스타일 */

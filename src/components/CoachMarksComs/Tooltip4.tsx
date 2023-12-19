@@ -76,9 +76,29 @@ const Tooltip4 = () => {
           </S.Btn>
         </span>
       </S.TooltipFooter>
+      <Xbtn
+        onClick={(e) => {
+          e.preventDefault();
+          setState((prev) => ({
+            ...prev,
+            mode: false,
+          }));
+        }}
+      >
+        x
+      </Xbtn>
     </TooltipContainer>
   );
 };
+
+const Xbtn = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 const TooltipContainer = styled.span<TooltipProps>`
   /* 기본 스타일 */

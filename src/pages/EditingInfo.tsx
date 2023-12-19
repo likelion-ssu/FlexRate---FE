@@ -434,7 +434,7 @@ const EditingInfo = () => {
   const handleinput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoanValue({
       ...loanValue,
-      [e.target.name]: customLocaleString(e.target.value),
+      [e.target.name]: e.target.value,
     });
     console.log(loanValue);
   };

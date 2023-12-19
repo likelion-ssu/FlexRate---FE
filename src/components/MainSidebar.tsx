@@ -49,6 +49,7 @@ const MainSidebar = () => {
   };
 
   const handelShow = () => {
+    setCoachMark({ ...coachMark, stage: 1, mode: true });
     setShow(() => ({
       beginer: true,
     }));

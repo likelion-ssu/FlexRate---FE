@@ -128,7 +128,7 @@ const RateChange = () => {
     },
     plotOptions: {
       bar: {
-        columnWidth: '20%',
+        columnWidth: '65%',
       },
     },
     tooltip: {
@@ -139,11 +139,11 @@ const RateChange = () => {
         w,
       }: ChartFunctionParams) {
         let idx = parseInt(w.globals.labels[dataPointIndex]) - 1;
-        let rate = series[seriesIndex][dataPointIndex]; // 해당 월의 금리
+        let rate = series[seriesIndex][dataPointIndex] / 1.25; // 해당 월의 금리
         let previousRate = series[seriesIndex][dataPointIndex - 1] || 0; // 전달의 금리
         let rateChange = rate - previousRate; // 금리 변동폭
-        const startDate = duration[idx] + '.01';
-        const endDate = duration[idx] + '.31';
+        const startDate = duration[idx];
+        const endDate = duration[idx];
 
         // 양수 또는 음수에 따른 아이콘 결정
         const changeIcon =
